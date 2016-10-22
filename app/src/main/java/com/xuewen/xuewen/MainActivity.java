@@ -115,69 +115,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        public PlaceholderFragment() {
-        }
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            int sectionNumber = getArguments().getInt(ARG_SECTION_NUMBER);
-
-            if (sectionNumber == 0) {
-                View rootView = inflater.inflate(R.layout.fragment_0, container, false);
-
-                ListView questionListView = (ListView)rootView.findViewById(R.id.question_list_view);
-                List<Question> questionList = new ArrayList<>();
-                questionList.add(new Question("师兄好，软件学院的学生毕业后有哪些出路呢？"));
-                QuestionListAdapter questionListAdapter = new QuestionListAdapter(questionList, getActivity());
-
-                questionListView.setAdapter(questionListAdapter);
-                questionListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Intent intent = new Intent(getActivity(), QuestionDetailActivity.class);
-                        startActivity(intent);
-                    }
-                });
-
-                return rootView;
-            }
-            else if (sectionNumber == 1) {
-                View rootView = inflater.inflate(R.layout.fragment_1, container, false);
-                return rootView;
-            }
-            else if (sectionNumber == 2) {
-                View rootView = inflater.inflate(R.layout.fragment_2, container, false);
-                return rootView;
-            }
-            else {
-                return null;
-            }
-        }
-    }
-
-    /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
      */
@@ -189,9 +126,22 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position);
+            if (position == 0) {
+                return new RecommendationFragment();
+            }
+            else if (position == 1) {
+                return new SearchingFragment();
+            }
+            else if (position == 2) {
+                return new ProfileFragment();
+            }
+            else {
+                return null;
+            }
+
+//            // getItem is called to instantiate the fragment for the given page.
+//            // Return a PlaceholderFragment (defined as a static inner class below).
+//            return PlaceholderFragment.newInstance(position);
         }
 
         @Override
