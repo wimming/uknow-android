@@ -8,6 +8,7 @@ import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import com.xuewen.bean.Question;
+import com.xuewen.bean.User;
 
 import java.sql.SQLException;
 
@@ -28,6 +29,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     public void onCreate(SQLiteDatabase sqLiteDatabase, ConnectionSource connectionSource) {
         try {
             TableUtils.createTable(connectionSource, Question.class);
+            TableUtils.createTable(connectionSource, User.class);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -37,6 +39,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, ConnectionSource connectionSource, int i, int i1) {
         try {
             TableUtils.dropTable(connectionSource, Question.class, true);
+            TableUtils.dropTable(connectionSource, User.class, true);
             onCreate(sqLiteDatabase, connectionSource);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -66,8 +69,9 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     }
 
     private Dao<Question, Integer> questionDao;
+    private Dao<User, Integer> userDao;
     /**
-     * 获得homeworkDao
+     * 获得Dao
      *
      * @return
      * @throws SQLException
@@ -79,6 +83,14 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             questionDao = getDao(Question.class);
         }
         return questionDao;
+    }
+    public Dao<User, Integer> getUserDao() throws SQLException
+    {
+        if (userDao == null)
+        {
+            userDao = getDao(User.class);
+        }
+        return userDao;
     }
 
     /**

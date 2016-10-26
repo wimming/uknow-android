@@ -66,6 +66,9 @@ public class MainActivity extends AppCompatActivity {
 
         tabLayout = (TabLayout)findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(mViewPager);
+        tabLayout.getTabAt(0).setIcon(android.R.drawable.stat_notify_chat);
+        tabLayout.getTabAt(1).setIcon(android.R.drawable.stat_notify_chat);
+        tabLayout.getTabAt(2).setIcon(android.R.drawable.stat_notify_chat);
 
 //        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 //        fab.setOnClickListener(new View.OnClickListener() {

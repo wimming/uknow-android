@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.xuewen.bean.Question;
@@ -54,7 +56,13 @@ public class QuestionListAdapter extends BaseAdapter {
         if (convertView == null) {
             view = LayoutInflater.from(context).inflate(R.layout.question_list_view_item, null);
             viewHolder = new ViewHolder();
-            viewHolder.content = (TextView)view.findViewById(R.id.content);
+
+            viewHolder.que_description = (TextView)view.findViewById(R.id.que_description);
+            viewHolder.ans_description = (TextView)view.findViewById(R.id.ans_description);
+            viewHolder.ans_headimgurl = (ImageView) view.findViewById(R.id.ans_headimgurl);
+            viewHolder.listen = (ImageButton) view.findViewById(R.id.listen);
+            viewHolder.review = (TextView)view.findViewById(R.id.review);
+
             view.setTag(viewHolder);
         }
         else {
@@ -62,12 +70,20 @@ public class QuestionListAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        viewHolder.content.setText(list.get(position).content);
+        viewHolder.que_description.setText(list.get(position).que_description);
+        viewHolder.ans_description.setText(list.get(position).ans_description);
+//        viewHolder.ans_headimgurl
+//        viewHolder.listen
+        viewHolder.review.setText(list.get(position).heard+"人听过，"+list.get(position).liked+"人觉得好");
 
         return view;
     }
 
     private class ViewHolder {
-        public TextView content;
+        public TextView que_description;
+        public TextView ans_description;
+        public ImageView ans_headimgurl;
+        public ImageButton listen;
+        public TextView review;
     }
 }
