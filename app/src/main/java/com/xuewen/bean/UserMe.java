@@ -7,9 +7,9 @@ import com.j256.ormlite.table.DatabaseTable;
  * Created by ym on 16-10-26.
  */
 
-@DatabaseTable(tableName = "tb_user")
-public class User {
-    public User() {}
+@DatabaseTable(tableName = "tb_user_me")
+public class UserMe {
+    public UserMe() {}
 
     @DatabaseField(generatedId = true)
     private int id;
@@ -17,14 +17,11 @@ public class User {
     @DatabaseField(columnName = "username")
     public String username;
 
-    @DatabaseField(columnName = "password")
-    public String password;
-
     @DatabaseField(columnName = "headimgurl")
     public String headimgurl;
 
     @DatabaseField(columnName = "status")
-    public String status;
+    public boolean status;
 
     @DatabaseField(columnName = "description")
     public String description;
@@ -38,7 +35,13 @@ public class User {
     @DatabaseField(columnName = "grade")
     public String grade;
 
-    @DatabaseField(columnName = "openid")
-    public String openid;
+    @DatabaseField(columnName = "followed")
+    public int followed;
+
+    @DatabaseField(columnName = "que_num")
+    public int que_num;
+
+    @DatabaseField(columnName = "ans_num")
+    public int ans_num;
 
 }

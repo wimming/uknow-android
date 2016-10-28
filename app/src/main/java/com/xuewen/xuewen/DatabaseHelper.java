@@ -8,7 +8,8 @@ import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import com.xuewen.bean.Question;
-import com.xuewen.bean.User;
+import com.xuewen.bean.UserMe;
+import com.xuewen.bean.UserOther;
 
 import java.sql.SQLException;
 
@@ -29,7 +30,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     public void onCreate(SQLiteDatabase sqLiteDatabase, ConnectionSource connectionSource) {
         try {
             TableUtils.createTable(connectionSource, Question.class);
-            TableUtils.createTable(connectionSource, User.class);
+            TableUtils.createTable(connectionSource, UserMe.class);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -39,7 +40,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, ConnectionSource connectionSource, int i, int i1) {
         try {
             TableUtils.dropTable(connectionSource, Question.class, true);
-            TableUtils.dropTable(connectionSource, User.class, true);
+            TableUtils.dropTable(connectionSource, UserMe.class, true);
             onCreate(sqLiteDatabase, connectionSource);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -69,7 +70,8 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     }
 
     private Dao<Question, Integer> questionDao;
-    private Dao<User, Integer> userDao;
+    private Dao<UserMe, Integer> userMeDao;
+    private Dao<UserOther, Integer> userOtherDao;
     /**
      * 获得Dao
      *
@@ -84,13 +86,21 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         }
         return questionDao;
     }
-    public Dao<User, Integer> getUserDao() throws SQLException
+    public Dao<UserMe, Integer> getUserMeDao() throws SQLException
     {
-        if (userDao == null)
+        if (userMeDao == null)
         {
-            userDao = getDao(User.class);
+            userMeDao = getDao(UserMe.class);
         }
-        return userDao;
+        return userMeDao;
+    }
+    public Dao<UserOther, Integer> getUserOtherDao() throws SQLException
+    {
+        if (userOtherDao == null)
+        {
+            userOtherDao = getDao(UserOther.class);
+        }
+        return userOtherDao;
     }
 
     /**
