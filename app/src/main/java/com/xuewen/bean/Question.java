@@ -17,7 +17,7 @@ public class Question {
     @DatabaseField(generatedId = true)
     private int id;
 
-    @DatabaseField(columnName = "que__id")
+    @DatabaseField(columnName = "que_id")
     public String que__id;
 
     @DatabaseField(columnName = "que_description")

@@ -57,6 +57,8 @@
             android:id="@+id/tab_layout"
             app:tabMode="fixed"
             app:tabIndicatorHeight="0dp"
+            app:tabTextColor="@color/tab_unselected_text_color"
+            app:tabSelectedTextColor="@color/tab_selected_text_color"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 

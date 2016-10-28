@@ -2,7 +2,7 @@ package com.xuewen.xuewen;
 
 import android.app.SearchManager;
 import android.content.Context;
-import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
@@ -13,21 +13,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.ListView;
-import android.widget.TextView;
-
-import com.xuewen.bean.Question;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -66,9 +53,19 @@ public class MainActivity extends AppCompatActivity {
 
         tabLayout = (TabLayout)findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(mViewPager);
-        tabLayout.getTabAt(0).setIcon(android.R.drawable.stat_notify_chat);
-        tabLayout.getTabAt(1).setIcon(android.R.drawable.stat_notify_chat);
-        tabLayout.getTabAt(2).setIcon(android.R.drawable.stat_notify_chat);
+
+        final int unselectedResId [] = {R.drawable.star_black, R.drawable.search_black, R.drawable.user_black};
+        final int selectedResId [] = {R.drawable.star_full, R.drawable.search_full, R.drawable.user_full};
+        final Drawable unselectedResDrawable [] = new Drawable[3];
+        final Drawable selectedResDrawable [] = new Drawable[3];
+        for (int i = 0; i < unselectedResId.length; ++i) {
+            unselectedResDrawable[i] = getResources().getDrawable(unselectedResId[i]);
+            selectedResDrawable[i] = getResources().getDrawable(selectedResId[i]);
+        }
+
+        tabLayout.getTabAt(0).setIcon(R.drawable.star_selector);
+        tabLayout.getTabAt(1).setIcon(R.drawable.search_selector);
+        tabLayout.getTabAt(2).setIcon(R.drawable.user_selector);
 
 //        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 //        fab.setOnClickListener(new View.OnClickListener() {
