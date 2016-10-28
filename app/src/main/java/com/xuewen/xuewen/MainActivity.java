@@ -54,15 +54,6 @@ public class MainActivity extends AppCompatActivity {
         tabLayout = (TabLayout)findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(mViewPager);
 
-        final int unselectedResId [] = {R.drawable.star_black, R.drawable.search_black, R.drawable.user_black};
-        final int selectedResId [] = {R.drawable.star_full, R.drawable.search_full, R.drawable.user_full};
-        final Drawable unselectedResDrawable [] = new Drawable[3];
-        final Drawable selectedResDrawable [] = new Drawable[3];
-        for (int i = 0; i < unselectedResId.length; ++i) {
-            unselectedResDrawable[i] = getResources().getDrawable(unselectedResId[i]);
-            selectedResDrawable[i] = getResources().getDrawable(selectedResId[i]);
-        }
-
         tabLayout.getTabAt(0).setIcon(R.drawable.star_selector);
         tabLayout.getTabAt(1).setIcon(R.drawable.search_selector);
         tabLayout.getTabAt(2).setIcon(R.drawable.user_selector);
