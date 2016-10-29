@@ -28,17 +28,16 @@ public class RecommendationFragment extends Fragment {
 
         ListView questionListView = (ListView)rootView.findViewById(R.id.question_list_view);
         List<Question> questionList = new ArrayList<>();
+
         Question q;
-        q = new Question("师兄好，软件学院的学生毕业后有哪些出路呢？");
-        q.ans_description = "张三，超级学霸";
-        q.heard = 100;
-        q.liked = 10;
-        questionList.add(q);
-        q = new Question("师兄好，软件学院的学生毕业后有哪些出路呢？");
-        q.ans_description = "张三，超级学霸";
-        q.heard = 100;
-        q.liked = 10;
-        questionList.add(q);
+        for (int i = 0; i < 10; ++i) {
+            q = new Question("师兄好，软件学院的学生毕业后有哪些出路呢？");
+            q.ans_description = "张三 | 清华大学计算机系，ACM校队队长，喜欢钻研算法，喜欢钻研算法";
+            q.heard = 100;
+            q.liked = 10;
+            questionList.add(q);
+        }
+
         QuestionListAdapter questionListAdapter = new QuestionListAdapter(questionList, getActivity());
 
         questionListView.setAdapter(questionListAdapter);
