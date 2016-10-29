@@ -18,7 +18,7 @@ public class Question {
     private int id;
 
     @DatabaseField(columnName = "que_id")
-    public String que__id;
+    public int que_id;
 
     @DatabaseField(columnName = "que_description")
     public String que_description;
