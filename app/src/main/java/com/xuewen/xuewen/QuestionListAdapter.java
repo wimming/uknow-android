@@ -9,6 +9,10 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.display.CircleBitmapDisplayer;
+import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.xuewen.bean.Question;
 
 import java.util.List;
@@ -72,7 +76,10 @@ public class QuestionListAdapter extends BaseAdapter {
 
         viewHolder.que_description.setText(list.get(position).que_description);
         viewHolder.ans_description.setText(list.get(position).ans_description);
-//        viewHolder.ans_headimgurl
+        DisplayImageOptions options = new DisplayImageOptions.Builder()
+                .displayer(new CircleBitmapDisplayer()) //rounded corner bitmap
+                .build();
+        ImageLoader.getInstance().displayImage("http://"+"www.jd.com/favicon.ico", viewHolder.ans_headimgurl, options);
 //        viewHolder.listen
         viewHolder.review.setText(list.get(position).heard+"人听过，"+list.get(position).liked+"人觉得好");
 

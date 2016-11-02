@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.xuewen.bean.Question;
 
 import java.util.ArrayList;
@@ -37,6 +39,7 @@ public class RecommendationFragment extends Fragment {
             q.liked = 10;
             questionList.add(q);
         }
+
 
         QuestionListAdapter questionListAdapter = new QuestionListAdapter(questionList, getActivity());
 
