@@ -26,9 +26,15 @@ public class QuestionListAdapter extends BaseAdapter {
     private List<Question> list;
     private Context context;
 
+    private DisplayImageOptions options;
+
     public QuestionListAdapter(List<Question> list, Context context) {
         this.list = list;
         this.context = context;
+
+        this.options = new DisplayImageOptions.Builder()
+                .displayer(new CircleBitmapDisplayer())  // rounded corner bitmap
+                .build();
     }
 
     @Override
@@ -76,10 +82,7 @@ public class QuestionListAdapter extends BaseAdapter {
 
         viewHolder.que_description.setText(list.get(position).que_description);
         viewHolder.ans_description.setText(list.get(position).ans_description);
-        DisplayImageOptions options = new DisplayImageOptions.Builder()
-                .displayer(new CircleBitmapDisplayer()) //rounded corner bitmap
-                .build();
-        ImageLoader.getInstance().displayImage("http://"+"www.jd.com/favicon.ico", viewHolder.ans_headimgurl, options);
+        ImageLoader.getInstance().displayImage(list.get(position).ans_headimgurl, viewHolder.ans_headimgurl, options);
 //        viewHolder.listen
         viewHolder.review.setText(list.get(position).heard+"人听过，"+list.get(position).liked+"人觉得好");
 

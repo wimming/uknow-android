@@ -37,6 +37,7 @@ public class RecommendationFragment extends Fragment {
             q.ans_description = "张三 | 清华大学计算机系，ACM校队队长，喜欢钻研算法，喜欢钻研算法";
             q.heard = 100;
             q.liked = 10;
+            q.ans_headimgurl = "http://www.jd.com/favicon.ico";
             questionList.add(q);
         }
 
