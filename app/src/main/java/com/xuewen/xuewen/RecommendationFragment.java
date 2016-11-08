@@ -1,20 +1,26 @@
 package com.xuewen.xuewen;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.google.gson.Gson;
 import com.xuewen.bean.Question;
+import com.xuewen.networkservice.Contributor;
+import com.xuewen.networkservice.GitHubService;
+import com.xuewen.networkservice.NetworkResult;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by ym on 16-10-23.
@@ -48,8 +54,51 @@ public class RecommendationFragment extends Fragment {
         questionListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getActivity(), QuestionDetailActivity.class);
-                startActivity(intent);
+//                Intent intent = new Intent(getActivity(), QuestionDetailActivity.class);
+//                startActivity(intent);
+
+                GitHubService gitHubService = GitHubService.retrofit.create(GitHubService.class);
+                final Call<List<Contributor>> call =
+                        gitHubService.repoContributors("square", "retrofit");
+
+                call.enqueue(new Callback<List<Contributor>>() {
+                    @Override
+                    public void onResponse(Call<List<Contributor>> call, Response<List<Contributor>> response) {
+                        Log.e("MyRequest when success", response.body().toString());
+
+                        String str = "{\n" +
+                                "  'status': 200,\n" +
+                                "  'result': [ \n" +
+                                "    {\n" +
+                                "      'que__id': 1,\n" +
+                                "      'que__description': '问题描述',\n" +
+                                "      'ans_id': 11,\n" +
+                                "      'ans_status': '回答者身份',\n" +
+                                "      'ans_description': '回答者描述',\n" +
+                                "      'ans_headimgurl': '回答者头像路径',\n" +
+                                "      'heard': 12,\n" +
+                                "      'liked': 14\n" +
+                                "    },\n" +
+                                "    {\n" +
+                                "      'que__id': 1,\n" +
+                                "      'que__description': '问题描述',\n" +
+                                "      'ans_id': 11,\n" +
+                                "      'ans_status': '回答者身份',\n" +
+                                "      'ans_description': '回答者描述',\n" +
+                                "      'ans_headimgurl': '回答者头像路径',\n" +
+                                "      'heard': 12,\n" +
+                                "      'liked': 14\n" +
+                                "    }\n" +
+                                "  ]\n" +
+                                "}";
+                        Gson gson = new Gson();
+                        NetworkResult networkResult = gson.fromJson(str, NetworkResult.class);
+                    }
+                    @Override
+                    public void onFailure(Call<List<Contributor>> call, Throwable t) {
+                        Log.e("MyRequest when failure", "Something went wrong: " + t.getMessage());
+                    }
+                });
             }
         });
 
