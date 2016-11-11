@@ -25,5 +25,6 @@ public class QuestionDetailActivity extends AppCompatActivity {
                 finish();
             }
         });
+
     }
 }
