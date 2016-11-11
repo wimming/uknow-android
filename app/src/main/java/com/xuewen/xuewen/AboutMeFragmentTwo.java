@@ -25,25 +25,25 @@ public class AboutMeFragmentTwo extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View rootView = inflater.inflate(R.layout.fragment_about_me_fragment_two, container, false);
-        ListView questionListView = (ListView) rootView.findViewById(R.id.aboutMe_unanswer_list);
-        List<Question> questionList = new ArrayList<>();
-
-        Question q;
-        for (int i = 0; i < 10; ++i) {
-            q = new Question("师兄好，软件学院的学生毕业后有哪些出路呢？");
-            q.ans_description = "张三的回答";
-            questionList.add(q);
-        }
-        AboutMeQuestionListUnAnswerAdapter questionListAdapter = new AboutMeQuestionListUnAnswerAdapter(questionList, getActivity());
-
-        questionListView.setAdapter(questionListAdapter);
-        questionListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getActivity(), QuestionDetailActivity.class);
-                startActivity(intent);
-            }
-        });
+//        ListView questionListView = (ListView) rootView.findViewById(R.id.aboutMe_unanswer_list);
+//        List<Question> questionList = new ArrayList<>();
+//
+//        Question q;
+//        for (int i = 0; i < 10; ++i) {
+//            q = new Question("师兄好，软件学院的学生毕业后有哪些出路呢？");
+//            q.ans_description = "张三的回答";
+//            questionList.add(q);
+//        }
+//        AboutMeQuestionListUnAnswerAdapter questionListAdapter = new AboutMeQuestionListUnAnswerAdapter(questionList, getActivity());
+//
+//        questionListView.setAdapter(questionListAdapter);
+//        questionListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                Intent intent = new Intent(getActivity(), QuestionDetailActivity.class);
+//                startActivity(intent);
+//            }
+//        });
 
         return rootView;
     }
