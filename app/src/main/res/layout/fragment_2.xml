@@ -1,10 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="20dp"
+    android:paddingBottom="10dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/base_margin"
+            >
+            <ImageView
+                android:id="@+id/aboutme_iv_eye"
+                android:src="@drawable/eye"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_width="@dimen/base_icon"
+                android:layout_height="@dimen/base_icon"
+                android:layout_marginRight="@dimen/base_margin"/>
+            <TextView
+                android:text="24人关注"
+                android:layout_toRightOf="@+id/aboutme_iv_eye"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:id="@+id/aboutme_iv_setting"
+                android:src="@drawable/setting"
+                android:layout_width="@dimen/base_icon"
+                android:layout_height="@dimen/base_icon"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true" />
 
-    <TextView
-        android:text="我的"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+            <ImageView
+                android:src="@drawable/edit"
+                android:layout_width="@dimen/base_icon"
+                android:layout_height="@dimen/base_icon"
+                android:layout_toLeftOf="@id/aboutme_iv_setting"
+                android:layout_marginRight="@dimen/base_margin"/>
+        </RelativeLayout>
+
+        <ImageView
+            android:src="@mipmap/avatar"
+            android:layout_width="@dimen/base_mediun_avatar"
+            android:layout_height="@dimen/base_mediun_avatar"
+            android:layout_marginBottom="@dimen/base_margin"/>
+        <TextView
+            android:text="张三"
+            android:textSize="@dimen/base_big_font"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="中山大学软件学院大三学生"
+            android:layout_marginBottom="@dimen/base_margin"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="爱好产品，曾在腾讯工作，略懂开发"/>
+
+    </LinearLayout>
+
+    <android.support.design.widget.TabLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        app:tabMode="fixed"
+        android:id="@+id/aboutme_tbl">
+
+        <android.support.design.widget.TabItem
+            android:text="我答 20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <android.support.design.widget.TabItem
+            android:text="我问 20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+    </android.support.design.widget.TabLayout>
+
+    <com.xuewen.xuewen.NoScrollViewPager
+        android:id="@+id/aboutme_pager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        android:layout_below="@id/aboutme_tbl"/>
+
+
 </LinearLayout>

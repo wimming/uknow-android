@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="20dp"
+    android:paddingBottom="10dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="@dimen/base_margin">
+        <ImageView
+            android:id="@+id/aboutMe_answerItem_iv_avator"
+            android:src="@mipmap/avatar"
+            android:layout_width="@dimen/base_small_avatar"
+            android:layout_height="@dimen/base_small_avatar" 
+            android:layout_marginRight="@dimen/base_margin"/>
+        <TextView
+            android:id="@+id/aboutMe_answerItem_tv_ask"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="李四的提问:"/>
+    </LinearLayout>
+    
+    <TextView
+        android:id="@+id/aboutMe_answerItem_tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/base_medium_font"
+        android:textColor="#000000"
+        android:text="师兄好，我想问问腾讯的产品经理的流程是怎么样的， 能说说么？"/>
+    <ImageView
+        android:src="@drawable/answer"
+        android:layout_gravity="end"
+        android:layout_width="100dp"
+        android:layout_height="@dimen/base_icon" />
+</LinearLayout>
