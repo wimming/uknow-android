@@ -5,7 +5,7 @@
     tools:context="com.xuewen.xuewen.AboutMeFragmentTwo">
 
     <ListView
-        android:id="@+id/aboutMe_unanswer_list"
+        android:id="@+id/aboutMe_ask_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
