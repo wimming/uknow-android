@@ -1,4 +1,4 @@
-package com.xuewen.xuewen;
+package com.xuewen.databaseservice;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
