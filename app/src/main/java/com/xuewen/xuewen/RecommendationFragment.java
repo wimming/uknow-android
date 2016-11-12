@@ -57,6 +57,8 @@ public class RecommendationFragment extends Fragment {
 //                Intent intent = new Intent(getActivity(), QuestionDetailActivity.class);
 //                startActivity(intent);
 
+
+
                 GitHubService gitHubService = GitHubService.retrofit.create(GitHubService.class);
                 final Call<List<Contributor>> call =
                         gitHubService.repoContributors("square", "retrofit");

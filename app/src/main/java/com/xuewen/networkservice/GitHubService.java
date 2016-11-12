@@ -18,6 +18,11 @@ public interface GitHubService {
             @Path("owner") String owner,
             @Path("repo") String repo);
 
+    @GET("repos/{owner}/{repo}/contributors")
+    Call<List<Contributor> > sssssss(
+            @Path("owner") String owner,
+            @Path("repo") String repo);
+
     public static final Retrofit retrofit = new Retrofit.Builder()
             .baseUrl("https://api.github.com/")
             .addConverterFactory(GsonConverterFactory.create())
