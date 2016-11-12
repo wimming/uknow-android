@@ -54,6 +54,16 @@ public class SearchingFragment extends Fragment {
         UserListAdapter userListAdapter2 = new UserListAdapter(list2, getActivity());
         concernPerson.setAdapter(userListAdapter);
         recommendedPerson.setAdapter(userListAdapter2);
+
+        concernPerson.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //fragment下面用 getActivity获取它所在的activity
+                Intent intent = new Intent(getActivity(), AskActivity.class);
+                startActivity(intent);
+            }
+        });
+
         return rootView;
     }
 }

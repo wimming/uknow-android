@@ -39,7 +39,8 @@
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
         </activity>
-        <activity android:name=".ModifyInfoActivity"></activity>
+        <activity android:name=".ModifyInfoActivity" />
+        <activity android:name=".AskActivity"></activity>
     </application>
 
 </manifest>
