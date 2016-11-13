@@ -104,6 +104,9 @@ public class RecommendationFragment extends Fragment {
             }
         });
 
+
+
+
         return rootView;
     }
 }

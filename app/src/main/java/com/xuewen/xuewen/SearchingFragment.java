@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.xuewen.adapter.UserListAdapter;
 import com.xuewen.bean.Question;
@@ -22,13 +23,17 @@ import java.util.List;
 
 public class SearchingFragment extends Fragment {
 
+    private TextView concernPersonTitle;
+    private TextView recommendedPersonTitle;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
     {
         View rootView = inflater.inflate(R.layout.fragment_1, container, false);
-        ListView concernPerson = (ListView) rootView.findViewById(R.id.concernPerson);
-        ListView recommendedPerson = (ListView) rootView.findViewById(R.id.recommendedPerson);
+        final ListView concernPerson = (ListView) rootView.findViewById(R.id.concernPerson);
+        final ListView recommendedPerson = (ListView) rootView.findViewById(R.id.recommendedPerson);
+        concernPersonTitle = (TextView) rootView.findViewById(R.id.concernPersonTitle);
+        recommendedPersonTitle =  (TextView) rootView.findViewById(R.id.recommendedPersonTitle);
 
         List<UserMe> list = new ArrayList<>();
         UserMe userMe;
@@ -63,6 +68,39 @@ public class SearchingFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
+        //交互思路，把两个Listview的高度都设置为 自动填充剩余空间 weight = 1
+        // 这样的话 一个不见 另外一个占据屏幕  两个都在平分
+
+        //2种状态 （2开） （1开1关） * 2
+        concernPersonTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (concernPerson.getVisibility() == View.VISIBLE && recommendedPerson.getVisibility() == View.VISIBLE) {
+                    recommendedPerson.setVisibility(View.GONE);
+                } else if (concernPerson.getVisibility() == View.VISIBLE && recommendedPerson.getVisibility() == View.GONE) {
+                    recommendedPerson.setVisibility(View.VISIBLE);
+                } else {
+                    concernPerson.setVisibility(View.VISIBLE);
+                    recommendedPerson.setVisibility(View.GONE);
+                }
+            }
+        });
+
+        recommendedPersonTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (concernPerson.getVisibility() == View.VISIBLE && recommendedPerson.getVisibility() == View.VISIBLE) {
+                    concernPerson.setVisibility(View.GONE);
+                } else if (recommendedPerson.getVisibility() == View.VISIBLE && concernPerson.getVisibility() == View.GONE) {
+                    concernPerson.setVisibility(View.VISIBLE);
+                } else {
+                    recommendedPerson.setVisibility(View.VISIBLE);
+                    concernPerson.setVisibility(View.GONE);
+                }
+            }
+        });
+
 
         return rootView;
     }
