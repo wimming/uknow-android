@@ -23,8 +23,8 @@
                 android:src="@drawable/eye"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
-                android:layout_width="@dimen/base_icon"
-                android:layout_height="@dimen/base_icon"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_marginRight="@dimen/base_margin"/>
             <TextView
                 android:text="24人关注"
@@ -35,26 +35,28 @@
             <ImageView
                 android:id="@+id/aboutme_iv_setting"
                 android:src="@drawable/setting"
-                android:layout_width="@dimen/base_icon"
-                android:layout_height="@dimen/base_icon"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true" />
 
             <ImageView
                 android:src="@drawable/edit"
-                android:layout_width="@dimen/base_icon"
-                android:layout_height="@dimen/base_icon"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_toLeftOf="@id/aboutme_iv_setting"
                 android:layout_marginRight="@dimen/base_margin"/>
         </RelativeLayout>
 
         <ImageView
+            android:id="@+id/avatar"
             android:src="@mipmap/avatar"
             android:layout_width="@dimen/base_mediun_avatar"
             android:layout_height="@dimen/base_mediun_avatar"
             android:layout_marginBottom="@dimen/base_margin"/>
         <TextView
             android:text="张三"
+            android:textColor="@color/black_color"
             android:textSize="@dimen/base_big_font"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -62,7 +64,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="中山大学软件学院大三学生"
-            android:layout_marginBottom="@dimen/base_margin"/>
+            android:layout_marginBottom="@dimen/base_small_margin"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -9,10 +9,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.display.CircleBitmapDisplayer;
-import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.xuewen.bean.Question;
 import com.xuewen.utility.GlobalUtil;
 
@@ -77,7 +74,10 @@ public class QuestionListAdapter extends BaseAdapter {
 
         viewHolder.que_description.setText(list.get(position).que_description);
         viewHolder.ans_description.setText(list.get(position).ans_description);
-        ImageLoader.getInstance().displayImage(list.get(position).ans_headimgurl, viewHolder.ans_headimgurl, GlobalUtil.getInstance().circleBitmapOptions);
+//        ImageLoader.getInstance().displayImage(list.get(position).ans_headimgurl, viewHolder.ans_headimgurl, GlobalUtil.getInstance().circleBitmapOptions);
+
+        ImageLoader.getInstance().displayImage("drawable://" +  R.drawable.avatar, viewHolder.ans_headimgurl, GlobalUtil.getInstance().circleBitmapOptions);
+
 //        viewHolder.listen
         viewHolder.review.setText(list.get(position).heard+"人听过，"+list.get(position).liked+"人觉得好");
 

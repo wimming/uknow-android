@@ -23,6 +23,7 @@
             android:text="头像"
             android:textSize="@dimen/base_medium_font"/>
         <ImageView
+            android:id="@+id/avatar"
             android:layout_alignParentRight="true"
             android:src="@mipmap/avatar"
             android:layout_width="@dimen/base_mediun_avatar"
@@ -152,9 +153,11 @@
                 android:text="中山大学" />
 
             <TextView
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/base_medium_font"
+                android:textSize="@dimen/base_big_font"
+                android:paddingRight="@dimen/base_margin"
                 android:text=">" />
         </TableRow>
 
@@ -185,7 +188,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/base_medium_font"
+                android:textSize="@dimen/base_big_font"
+                android:paddingRight="@dimen/base_margin"
                 android:text=">" />
         </TableRow>
 

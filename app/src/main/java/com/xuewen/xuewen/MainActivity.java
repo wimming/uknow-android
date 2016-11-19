@@ -58,10 +58,11 @@ public class MainActivity extends AppCompatActivity {
 
         tabLayout = (TabLayout)findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(mViewPager);
-
         tabLayout.getTabAt(0).setIcon(R.drawable.star_selector);
         tabLayout.getTabAt(1).setIcon(R.drawable.search_selector);
         tabLayout.getTabAt(2).setIcon(R.drawable.user_selector);
+
+
 
 //        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 //        fab.setOnClickListener(new View.OnClickListener() {
@@ -144,14 +145,14 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public CharSequence getPageTitle(int position) {
-            switch (position) {
-                case 0:
-                    return "推荐";
-                case 1:
-                    return "找人";
-                case 2:
-                    return "我的";
-            }
+//            switch (position) {
+//                case 0:
+//                    return "推荐";
+//                case 1:
+//                    return "找人";
+//                case 2:
+//                    return "我的";
+//            }
             return null;
         }
     }

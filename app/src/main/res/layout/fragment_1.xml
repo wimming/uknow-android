@@ -34,10 +34,10 @@
         android:layout_height="wrap_content">
     </ListView>
 
-    <View
-        android:background="@color/gray_color"
-        android:layout_width="match_parent"
-        android:layout_height="10px"/>
+    <!--<View-->
+        <!--android:background="@color/gray_color"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="10px"/>-->
 
     <View
         android:background="@color/gray_color"

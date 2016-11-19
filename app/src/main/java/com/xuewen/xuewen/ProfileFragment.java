@@ -7,15 +7,15 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TabHost;
+
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.xuewen.utility.GlobalUtil;
 
 /**
  * Created by ym on 16-10-23.
@@ -24,12 +24,17 @@ import android.widget.TabHost;
 public class ProfileFragment extends Fragment {
 
     private ImageView aboutme_iv_setting;
+    private ImageView avatar;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
     {
         View rootView = inflater.inflate(R.layout.fragment_2, container, false);
         TabLayout tabLayout = (TabLayout) rootView.findViewById(R.id.aboutme_tbl);
+        aboutme_iv_setting = (ImageView) rootView.findViewById(R.id.aboutme_iv_setting);
+        avatar = (ImageView) rootView.findViewById(R.id.avatar);
+
+        ImageLoader.getInstance().displayImage("drawable://" +  R.drawable.avatar, avatar, GlobalUtil.getInstance().circleBitmapOptions);
 
         NoScrollViewPager viewPager = (NoScrollViewPager) rootView.findViewById(R.id.aboutme_pager);
 
@@ -64,7 +69,7 @@ public class ProfileFragment extends Fragment {
         tabLayout.setupWithViewPager(viewPager);
 
 
-        aboutme_iv_setting = (ImageView) rootView.findViewById(R.id.aboutme_iv_setting);
+
         aboutme_iv_setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
