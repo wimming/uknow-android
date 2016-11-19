@@ -31,11 +31,11 @@ public class ProfileFragment extends Fragment {
     {
         View rootView = inflater.inflate(R.layout.fragment_2, container, false);
         TabLayout tabLayout = (TabLayout) rootView.findViewById(R.id.aboutme_tbl);
-//        aboutme_iv_setting = (ImageView) rootView.findViewById(R.id.aboutme_iv_setting);
-//        avatar = (ImageView) rootView.findViewById(R.id.avatar);
-//
-//        ImageLoader.getInstance().displayImage("drawable://" +  R.drawable.avatar, avatar, GlobalUtil.getInstance().circleBitmapOptions);
-//
+        aboutme_iv_setting = (ImageView) rootView.findViewById(R.id.aboutme_iv_setting);
+        avatar = (ImageView) rootView.findViewById(R.id.avatar);
+
+        ImageLoader.getInstance().displayImage("drawable://" +  R.drawable.avatar, avatar, GlobalUtil.getInstance().circleBitmapOptions);
+
         ViewPager viewPager = (ViewPager) rootView.findViewById(R.id.aboutme_pager);
 
         // 两个tablayout嵌套的话，子的必须使用getChildPragmentManager
@@ -67,16 +67,16 @@ public class ProfileFragment extends Fragment {
             }
         });
         tabLayout.setupWithViewPager(viewPager);
-//
-//
-//
-//        aboutme_iv_setting.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(getActivity(), ModifyInfoActivity.class);
-//                startActivity(intent);
-//            }
-//        });
+
+
+
+        aboutme_iv_setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ModifyInfoActivity.class);
+                startActivity(intent);
+            }
+        });
 
 
         return rootView;
