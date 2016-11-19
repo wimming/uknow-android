@@ -31,7 +31,7 @@ public class QuestionDetailActivity extends AppCompatActivity {
 
 //        setSupportActionBar(toolbar);
 //        getSupportActionBar().setTitle("");
-        toolbar.setNavigationIcon(android.R.drawable.star_on);
+        toolbar.setNavigationIcon(R.drawable.back);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
