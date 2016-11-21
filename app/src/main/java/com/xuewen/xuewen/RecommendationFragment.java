@@ -8,12 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
-import com.google.gson.Gson;
 import com.xuewen.bean.Question;
-import com.xuewen.networkservice.Contributor;
-import com.xuewen.networkservice.GitHubService;
-import com.xuewen.networkservice.NetworkResult;
+import com.xuewen.networkservice.ApiService;
+import com.xuewen.networkservice.QQidResult;
+import com.xuewen.networkservice.QRResult;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +47,6 @@ public class RecommendationFragment extends Fragment {
             questionList.add(q);
         }
 
-
         QuestionListAdapter questionListAdapter = new QuestionListAdapter(questionList, getActivity());
 
         questionListView.setAdapter(questionListAdapter);
@@ -57,55 +56,52 @@ public class RecommendationFragment extends Fragment {
 //                Intent intent = new Intent(getActivity(), QuestionDetailActivity.class);
 //                startActivity(intent);
 
+                ApiService apiService = ApiService.retrofit.create(ApiService.class);
+                final Call<QRResult> call =
+                        apiService.requestQR();
 
-
-                GitHubService gitHubService = GitHubService.retrofit.create(GitHubService.class);
-                final Call<List<Contributor>> call =
-                        gitHubService.repoContributors("square", "retrofit");
-
-                call.enqueue(new Callback<List<Contributor>>() {
+                call.enqueue(new Callback<QRResult>() {
                     @Override
-                    public void onResponse(Call<List<Contributor>> call, Response<List<Contributor>> response) {
-                        Log.e("MyRequest when success", response.body().toString());
-
-                        String str = "{\n" +
-                                "  'status': 200,\n" +
-                                "  'result': [ \n" +
-                                "    {\n" +
-                                "      'que__id': 1,\n" +
-                                "      'que__description': '问题描述',\n" +
-                                "      'ans_id': 11,\n" +
-                                "      'ans_status': '回答者身份',\n" +
-                                "      'ans_description': '回答者描述',\n" +
-                                "      'ans_headimgurl': '回答者头像路径',\n" +
-                                "      'heard': 12,\n" +
-                                "      'liked': 14\n" +
-                                "    },\n" +
-                                "    {\n" +
-                                "      'que__id': 1,\n" +
-                                "      'que__description': '问题描述',\n" +
-                                "      'ans_id': 11,\n" +
-                                "      'ans_status': '回答者身份',\n" +
-                                "      'ans_description': '回答者描述',\n" +
-                                "      'ans_headimgurl': '回答者头像路径',\n" +
-                                "      'heard': 12,\n" +
-                                "      'liked': 14\n" +
-                                "    }\n" +
-                                "  ]\n" +
-                                "}";
-                        Gson gson = new Gson();
-                        NetworkResult networkResult = gson.fromJson(str, NetworkResult.class);
+                    public void onResponse(Call<QRResult> call, Response<QRResult> response) {
+                        Log.e("MyRequest when success ", response.body().data.get(1).listeningNum+"");
+                        Toast.makeText(getActivity(), "MyRequest when success "+response.body().data.get(1).listeningNum+"", Toast.LENGTH_LONG).show();
+//
+//                        String str = "{\n" +
+//                                "  'status': 200,\n" +
+//                                "  'result': [ \n" +
+//                                "    {\n" +
+//                                "      'que__id': 1,\n" +
+//                                "      'que__description': '问题描述',\n" +
+//                                "      'ans_id': 11,\n" +
+//                                "      'ans_status': '回答者身份',\n" +
+//                                "      'ans_description': '回答者描述',\n" +
+//                                "      'ans_headimgurl': '回答者头像路径',\n" +
+//                                "      'heard': 12,\n" +
+//                                "      'liked': 14\n" +
+//                                "    },\n" +
+//                                "    {\n" +
+//                                "      'que__id': 1,\n" +
+//                                "      'que__description': '问题描述',\n" +
+//                                "      'ans_id': 11,\n" +
+//                                "      'ans_status': '回答者身份',\n" +
+//                                "      'ans_description': '回答者描述',\n" +
+//                                "      'ans_headimgurl': '回答者头像路径',\n" +
+//                                "      'heard': 12,\n" +
+//                                "      'liked': 14\n" +
+//                                "    }\n" +
+//                                "  ]\n" +
+//                                "}";
+//                        Gson gson = new Gson();
+//                        NetworkResult networkResult = gson.fromJson(str, NetworkResult.class);
                     }
                     @Override
-                    public void onFailure(Call<List<Contributor>> call, Throwable t) {
+                    public void onFailure(Call<QRResult> call, Throwable t) {
                         Log.e("MyRequest when failure", "Something went wrong: " + t.getMessage());
+                        Toast.makeText(getActivity(), "MyRequest when success "+t.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
             }
         });
-
-
-
 
         return rootView;
     }

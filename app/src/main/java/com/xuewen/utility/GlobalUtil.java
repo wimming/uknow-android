@@ -19,6 +19,7 @@ public class GlobalUtil {
     }
 
     public DisplayImageOptions circleBitmapOptions;
+    public String baseUrl = "http://192.168.199.165:5000/";
 
     private GlobalUtil() {
         circleBitmapOptions = new DisplayImageOptions.Builder()
