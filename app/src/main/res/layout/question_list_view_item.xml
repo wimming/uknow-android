@@ -47,6 +47,7 @@
         <ImageButton
             android:id="@+id/listen"
             android:layout_marginRight="40dp"
+            android:layout_marginLeft="5dp"
             android:scaleType="centerCrop"
             android:background="@drawable/listen_view"
             android:layout_width="match_parent"
