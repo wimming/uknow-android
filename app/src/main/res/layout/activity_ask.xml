@@ -65,7 +65,7 @@
             <Button
                 android:text="经关注"
                 android:layout_alignParentRight="true"
-                android:background="@color/main_color"
+                android:background="@drawable/radius_button_shape"
                 android:textColor="@color/white_color"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/base_icon"/>
@@ -85,8 +85,11 @@
             android:layout_height="wrap_content" />
 
         <EditText
+            android:background="@drawable/edit_text_border"
             android:hint="在这里写下你的问题，等待TA回答"
             android:gravity="top"
+            android:paddingTop="@dimen/base_margin"
+            android:paddingLeft="@dimen/base_margin"
             android:layout_marginBottom="@dimen/base_margin"
             android:layout_width="match_parent"
             android:layout_height="100dp" />
