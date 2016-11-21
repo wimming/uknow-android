@@ -117,6 +117,10 @@ public class MainActivity extends AppCompatActivity {
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
+        private Fragment recommendationFragment;
+        private Fragment searchingFragment;
+        private Fragment profileFragment;
+
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
@@ -124,13 +128,22 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public Fragment getItem(int position) {
             if (position == 0) {
-                return new RecommendationFragment();
+                if (recommendationFragment == null) {
+                    recommendationFragment = new RecommendationFragment();
+                }
+                return recommendationFragment;
             }
             else if (position == 1) {
-                return new SearchingFragment();
+                if (searchingFragment == null) {
+                    searchingFragment = new SearchingFragment();
+                }
+                return searchingFragment;
             }
             else if (position == 2) {
-                return new ProfileFragment();
+                if (profileFragment == null) {
+                    profileFragment = new ProfileFragment();
+                }
+                return profileFragment;
             }
             else {
                 return null;
