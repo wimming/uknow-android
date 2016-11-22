@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="20dp"
+    android:paddingBottom="10dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:descendantFocusability="blocksDescendants">
+
+    <TextView
+        android:text="哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/description"
+        android:textColor="#000000"
+        android:textSize="@dimen/base_medium_font"
+        android:layout_marginBottom="@dimen/base_small_margin"
+        android:layout_gravity="center_vertical" />
+
+    <TextView
+        android:text="哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈"
+        android:ellipsize="end"
+        android:lines="1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/answerer_description"
+        android:textColor="#999999"
+        android:layout_gravity="center_vertical" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/answerer_avatarUrl"
+            android:src="@drawable/user_full"
+            android:layout_width="40dp"
+            android:layout_height="40dp" />
+
+        <Button
+            android:id="@+id/listen"
+            android:text='97"'
+            android:background="@drawable/listen_view"
+            android:layout_marginRight="40dp"
+            android:layout_marginLeft="5dp"
+            android:gravity="right|center"
+            android:paddingRight="10dp"
+            android:layout_width="match_parent"
+            android:textColor="@color/white_color"
+            android:textSize="@dimen/base_medium_font"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+    <TextView
+        android:text="哈哈哈哈哈哈哈哈哈哈哈哈"
+        android:gravity="end"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/review"
+        android:textColor="@color/light_main_color"
+        android:paddingLeft="20dp"
+        android:layout_gravity="center_vertical" />
+
+</LinearLayout>
