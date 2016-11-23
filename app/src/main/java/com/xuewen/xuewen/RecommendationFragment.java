@@ -56,8 +56,8 @@ public class RecommendationFragment extends Fragment {
         questionListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Intent intent = new Intent(getActivity(), QuestionDetailActivity.class);
-//                startActivity(intent);
+                Intent intent = new Intent(getActivity(), QuestionDetailActivity.class);
+                startActivity(intent);
 
             }
         });

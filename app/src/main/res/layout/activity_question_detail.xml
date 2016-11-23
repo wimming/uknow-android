@@ -73,9 +73,10 @@
                 android:text="师兄你好，以你的视角，软件工程的毕业生都有哪些出路呢"/>
 
             <ImageView
-                android:src="@mipmap/avatar"
-                android:layout_width="@dimen/base_big_avatar"
-                android:layout_height="@dimen/base_big_avatar"
+                android:id="@+id/avatar"
+                android:src="@drawable/avatar"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
                 android:layout_marginBottom="10dp"
                 android:layout_gravity="center"/>
             <TextView
@@ -96,11 +97,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="25dp"
                 android:text="爱好产品策划, 曾在腾讯实习，略懂开发"/>
 
-            <ImageButton
+            <Button
                 android:id="@+id/listen"
+                android:text='97"'
+                android:textColor="@color/white_color"
+                android:gravity="right|center"
+                android:padding="@dimen/base_margin"
                 android:scaleType="centerCrop"
                 android:background="@drawable/listen_view"
                 android:layout_gravity="center"
@@ -113,6 +118,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:textColor="@color/light_main_color"
                 android:text="218人听过 60都说好"
                 android:layout_marginBottom="20dp"/>
 
@@ -124,6 +130,7 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:orientation="vertical"
                     android:layout_marginRight="10dp">
                     <ImageView
@@ -141,6 +148,7 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:orientation="vertical">
                     <ImageView
                         android:layout_width="50dp"

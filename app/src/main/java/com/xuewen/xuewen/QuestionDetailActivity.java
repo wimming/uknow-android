@@ -23,11 +23,11 @@ public class QuestionDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_question_detail);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        avatar2 = (ImageView) findViewById(R.id.avatar2);
-//        header_avatar = (ImageView) findViewById(R.id.header_avatar);
+        avatar = (ImageView) findViewById(R.id.avatar);
+        header_avatar = (ImageView) findViewById(R.id.header_avatar);
 
-//        ImageLoader.getInstance().displayImage("drawable://" +  R.drawable.avatar2, avatar2, GlobalUtil.getInstance().circleBitmapOptions);
-//        ImageLoader.getInstance().displayImage("drawable://" +  R.drawable.avatar2, header_avatar, GlobalUtil.getInstance().circleBitmapOptions);
+        ImageLoader.getInstance().displayImage("drawable://" +  R.drawable.avatar, avatar, GlobalUtil.getInstance().circleBitmapOptions);
+        ImageLoader.getInstance().displayImage("drawable://" +  R.drawable.avatar, header_avatar, GlobalUtil.getInstance().circleBitmapOptions);
 
 //        setSupportActionBar(toolbar);
 //        getSupportActionBar().setTitle("");
