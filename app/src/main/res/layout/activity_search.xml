@@ -28,13 +28,15 @@
         android:layout_height="1px"/>
 
     <GridView
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:id="@+id/gridView"
-        android:columnWidth="80dp"
-        android:horizontalSpacing="@dimen/base_small_avatar"
-        android:verticalSpacing="@dimen/base_small_margin"
+        android:gravity="center"
+        android:horizontalSpacing="20dp"
+        android:verticalSpacing="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:numColumns="auto_fit"
+        android:numColumns="3"
         >
 
     </GridView>

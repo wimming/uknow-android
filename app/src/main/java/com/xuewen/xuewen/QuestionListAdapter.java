@@ -70,6 +70,7 @@ public class QuestionListAdapter extends BaseAdapter {
         else {
             view = convertView;
             viewHolder = (ViewHolder) convertView.getTag();
+//            viewHolder.ans_headimgurl.destroyDrawingCache();
         }
 
         viewHolder.que_description.setText(list.get(position).que_description);
