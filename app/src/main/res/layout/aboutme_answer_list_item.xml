@@ -21,6 +21,8 @@
             android:layout_marginRight="@dimen/base_margin"/>
         <TextView
             android:id="@+id/que_username"
+            android:layout_gravity="bottom"
+            android:textSize="@dimen/base_medium_font"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="李四的提问:"/>

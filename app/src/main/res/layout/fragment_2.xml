@@ -115,13 +115,17 @@
             android:paddingRight="5dp"
             app:tabIndicatorColor="@color/main_color"
             app:tabIndicatorHeight="4dp"
+            app:tabTextColor="@color/tab_unselected_text_color"
+            app:tabSelectedTextColor="@color/tab_selected_text_color"
             app:tabMode="fixed">
             <android.support.design.widget.TabItem
                 android:text="我答 20"
+                android:textColor="@drawable/textselector"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <android.support.design.widget.TabItem
                 android:text="我问 20"
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </android.support.design.widget.TabLayout>

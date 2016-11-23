@@ -58,9 +58,12 @@ public class MainActivity extends AppCompatActivity {
 
         tabLayout = (TabLayout)findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(mViewPager);
-        tabLayout.getTabAt(0).setIcon(R.drawable.star_selector);
-        tabLayout.getTabAt(1).setIcon(R.drawable.search_selector);
-        tabLayout.getTabAt(2).setIcon(R.drawable.user_selector);
+//        tabLayout.getTabAt(0).setIcon(R.drawable.star_selector);
+//        tabLayout.getTabAt(1).setIcon(R.drawable.search_selector);
+//        tabLayout.getTabAt(2).setIcon(R.drawable.user_selector);
+        tabLayout.getTabAt(0).setCustomView(getLayoutInflater().inflate(R.layout.activity_main_tab1, null));
+        tabLayout.getTabAt(1).setCustomView(getLayoutInflater().inflate(R.layout.activity_main_tab2, null));
+        tabLayout.getTabAt(2).setCustomView(getLayoutInflater().inflate(R.layout.activity_main_tab3, null));
 
 
 
