@@ -68,7 +68,7 @@
                 android:background="@drawable/radius_button_shape"
                 android:textColor="@color/white_color"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/base_icon"/>
+                android:layout_height="30dp"/>
         </RelativeLayout>
 
         <TextView
@@ -92,14 +92,14 @@
             android:paddingLeft="@dimen/base_margin"
             android:layout_marginBottom="@dimen/base_margin"
             android:layout_width="match_parent"
-            android:layout_height="100dp" />
+            android:layout_height="120dp" />
         <Button
             android:text="提问"
             android:background="@drawable/button_border"
             android:textColor="@color/main_color"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="35dp" />
     </LinearLayout>
 
     <View
@@ -110,6 +110,7 @@
     <TextView
         android:text="TA回答的:"
         android:paddingLeft="10dp"
+        android:paddingTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <ListView
