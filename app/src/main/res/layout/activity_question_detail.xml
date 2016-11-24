@@ -43,7 +43,7 @@
                 android:layout_marginBottom="10dp"
                 >
                 <ImageView
-                    android:id="@+id/header_avatar"
+                    android:id="@+id/asker_avatarUrl"
                     android:src="@drawable/avatar"
                     android:layout_width="@dimen/base_small_avatar"
                     android:layout_height="@dimen/base_small_avatar"
@@ -54,14 +54,15 @@
                     android:layout_height="wrap_content"
                     android:text="张三的提问"
                     android:layout_centerVertical="true"
-                    android:layout_toRightOf="@id/header_avatar"/>
+                    android:layout_toRightOf="@id/asker_avatarUrl"
+                    android:id="@+id/asker_username" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="昨天20:20"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    />
+                    android:id="@+id/askDate" />
             </RelativeLayout>
 
             <TextView
@@ -70,10 +71,11 @@
                 android:textSize="16sp"
                 android:layout_marginBottom="10dp"
                 android:textColor="@color/black_color"
-                android:text="师兄你好，以你的视角，软件工程的毕业生都有哪些出路呢"/>
+                android:text="师兄你好，以你的视角，软件工程的毕业生都有哪些出路呢"
+                android:id="@+id/description" />
 
             <ImageView
-                android:id="@+id/avatar"
+                android:id="@+id/answerer_avatarUrl"
                 android:src="@drawable/avatar"
                 android:layout_width="90dp"
                 android:layout_height="90dp"
@@ -86,19 +88,22 @@
                 android:layout_marginBottom="10dp"
                 android:textSize="@dimen/base_medium_font"
                 android:textColor="@color/black_color"
-                android:text="张三"/>
+                android:text="张三"
+                android:id="@+id/answerer_username" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/base_small_margin"
                 android:layout_gravity="center"
-                android:text="中山大学软件工程专业学生"/>
+                android:text="中山大学软件工程专业学生"
+                android:id="@+id/answerer_status" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginBottom="25dp"
-                android:text="爱好产品策划, 曾在腾讯实习，略懂开发"/>
+                android:text="爱好产品策划, 曾在腾讯实习，略懂开发"
+                android:id="@+id/answerer_description" />
 
             <Button
                 android:id="@+id/listen"
@@ -120,7 +125,8 @@
                 android:layout_gravity="center"
                 android:textColor="@color/light_main_color"
                 android:text="218人听过 60都说好"
-                android:layout_marginBottom="20dp"/>
+                android:layout_marginBottom="20dp"
+                android:id="@+id/review" />
 
             <LinearLayout
                 android:layout_width="match_parent"
