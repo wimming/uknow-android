@@ -5,11 +5,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xuewen.bean.Question;
+import com.xuewen.utility.GlobalUtil;
 
 import java.util.List;
 
@@ -55,9 +56,9 @@ public class AboutMeQuestionListAnswerAdapter extends BaseAdapter{
         if (convertView == null) {
             view = LayoutInflater.from(context).inflate(R.layout.aboutme_answer_list_item, null);
             viewHolder = new ViewHolder();
-            viewHolder.aboutMe_answerItem_iv_avator = (ImageView) view.findViewById(R.id.aboutMe_answerItem_iv_avator);
-            viewHolder.aboutMe_answerItem_tv_ask = (TextView)view.findViewById(R.id.aboutMe_answerItem_tv_ask);
-            viewHolder.aboutMe_answerItem_tv_title = (TextView) view.findViewById(R.id.aboutMe_answerItem_tv_title);
+            viewHolder.que_headimgurl = (ImageView) view.findViewById(R.id.que_headimgurl);
+            viewHolder.que_username = (TextView)view.findViewById(R.id.que_username);
+            viewHolder.que_description = (TextView) view.findViewById(R.id.que_description);
             view.setTag(viewHolder);
         }
         else {
@@ -65,14 +66,16 @@ public class AboutMeQuestionListAnswerAdapter extends BaseAdapter{
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        viewHolder.aboutMe_answerItem_tv_title.setText(list.get(position).que_description);
-        viewHolder.aboutMe_answerItem_tv_ask.setText(list.get(position).ans_description);
+        viewHolder.que_username.setText(list.get(position).que_description);
+        viewHolder.que_description.setText(list.get(position).ans_description);
+
+        ImageLoader.getInstance().displayImage("drawable://" +  R.drawable.avatar, viewHolder.que_headimgurl, GlobalUtil.getInstance().circleBitmapOptions);
         return view;
     }
 
     private class ViewHolder {
-        public ImageView aboutMe_answerItem_iv_avator;
-        public TextView aboutMe_answerItem_tv_ask;
-        public TextView aboutMe_answerItem_tv_title;
+        public ImageView que_headimgurl;
+        public TextView que_username;
+        public TextView que_description;
     }
 }

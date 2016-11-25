@@ -3,6 +3,7 @@ package com.xuewen.xuewen;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -27,6 +28,12 @@ public class AboutMeFragmentTwo extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View rootView = inflater.inflate(R.layout.fragment_about_me_fragment_two, container, false);
         ListView questionListView = (ListView) rootView.findViewById(R.id.aboutMe_ask_list);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            questionListView.setNestedScrollingEnabled(true);
+        }
+
+
         List<Question> questionList = new ArrayList<>();
 
         Question q;

@@ -14,20 +14,22 @@
         android:gravity="center_vertical"
         android:layout_marginBottom="@dimen/base_margin">
         <ImageView
-            android:id="@+id/aboutMe_answerItem_iv_avator"
+            android:id="@+id/que_headimgurl"
             android:src="@mipmap/avatar"
             android:layout_width="@dimen/base_small_avatar"
             android:layout_height="@dimen/base_small_avatar" 
             android:layout_marginRight="@dimen/base_margin"/>
         <TextView
-            android:id="@+id/aboutMe_answerItem_tv_ask"
+            android:id="@+id/que_username"
+            android:layout_gravity="bottom"
+            android:textSize="@dimen/base_medium_font"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="李四的提问:"/>
     </LinearLayout>
     
     <TextView
-        android:id="@+id/aboutMe_answerItem_tv_title"
+        android:id="@+id/que_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="@dimen/base_medium_font"

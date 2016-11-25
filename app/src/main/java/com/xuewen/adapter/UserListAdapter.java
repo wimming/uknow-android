@@ -1,7 +1,6 @@
 package com.xuewen.adapter;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,10 +8,10 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xuewen.bean.UserMe;
+import com.xuewen.utility.GlobalUtil;
 import com.xuewen.xuewen.R;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -57,6 +56,7 @@ public class UserListAdapter extends BaseAdapter{
             viewHolder.username = (TextView) view.findViewById(R.id.username);
             viewHolder.description= (TextView) view.findViewById(R.id.description);
             viewHolder.school = (TextView) view.findViewById(R.id.school);
+            viewHolder.followed = (TextView) view.findViewById(R.id.followed);
             view.setTag(viewHolder);
         } else {
             view = convertView;
@@ -66,6 +66,16 @@ public class UserListAdapter extends BaseAdapter{
         viewHolder.username.setText(list.get(position).username);
         viewHolder.description.setText(list.get(position).description);
         viewHolder.school.setText(list.get(position).school);
+        if (list.get(position).followed == 0) {
+            viewHolder.followed.setVisibility(View.INVISIBLE);
+        } else {
+            viewHolder.followed.setVisibility(View.VISIBLE);
+        }
+
+
+//        ImageLoader.getInstance().displayImage("http://www.jd.com/favicon.ico", viewHolder.headimgurl, GlobalUtil.getInstance().circleBitmapOptions);
+        ImageLoader.getInstance().displayImage("drawable://" +  R.drawable.avatar, viewHolder.headimgurl, GlobalUtil.getInstance().circleBitmapOptions);
+
 
         return view;
     }
@@ -75,5 +85,6 @@ public class UserListAdapter extends BaseAdapter{
         public TextView username;
         public TextView description;
         public TextView school;
+        public TextView followed;
     }
 }

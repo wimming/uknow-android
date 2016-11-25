@@ -58,10 +58,14 @@ public class MainActivity extends AppCompatActivity {
 
         tabLayout = (TabLayout)findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(mViewPager);
+//        tabLayout.getTabAt(0).setIcon(R.drawable.star_selector);
+//        tabLayout.getTabAt(1).setIcon(R.drawable.search_selector);
+//        tabLayout.getTabAt(2).setIcon(R.drawable.user_selector);
+        tabLayout.getTabAt(0).setCustomView(getLayoutInflater().inflate(R.layout.activity_main_tab1, null));
+        tabLayout.getTabAt(1).setCustomView(getLayoutInflater().inflate(R.layout.activity_main_tab2, null));
+        tabLayout.getTabAt(2).setCustomView(getLayoutInflater().inflate(R.layout.activity_main_tab3, null));
 
-        tabLayout.getTabAt(0).setIcon(R.drawable.star_selector);
-        tabLayout.getTabAt(1).setIcon(R.drawable.search_selector);
-        tabLayout.getTabAt(2).setIcon(R.drawable.user_selector);
+
 
 //        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 //        fab.setOnClickListener(new View.OnClickListener() {
@@ -116,6 +120,10 @@ public class MainActivity extends AppCompatActivity {
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
+        private Fragment recommendationFragment;
+        private Fragment searchingFragment;
+        private Fragment profileFragment;
+
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
@@ -123,13 +131,22 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public Fragment getItem(int position) {
             if (position == 0) {
-                return new RecommendationFragment();
+                if (recommendationFragment == null) {
+                    recommendationFragment = new RecommendationFragment();
+                }
+                return recommendationFragment;
             }
             else if (position == 1) {
-                return new SearchingFragment();
+                if (searchingFragment == null) {
+                    searchingFragment = new SearchingFragment();
+                }
+                return searchingFragment;
             }
             else if (position == 2) {
-                return new ProfileFragment();
+                if (profileFragment == null) {
+                    profileFragment = new ProfileFragment();
+                }
+                return profileFragment;
             }
             else {
                 return null;
@@ -144,14 +161,14 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public CharSequence getPageTitle(int position) {
-            switch (position) {
-                case 0:
-                    return "推荐";
-                case 1:
-                    return "找人";
-                case 2:
-                    return "我的";
-            }
+//            switch (position) {
+//                case 0:
+//                    return "推荐";
+//                case 1:
+//                    return "找人";
+//                case 2:
+//                    return "我的";
+//            }
             return null;
         }
     }

@@ -7,15 +7,15 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TabHost;
+
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.xuewen.utility.GlobalUtil;
 
 /**
  * Created by ym on 16-10-23.
@@ -24,17 +24,22 @@ import android.widget.TabHost;
 public class ProfileFragment extends Fragment {
 
     private ImageView aboutme_iv_setting;
+    private ImageView avatar;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
     {
         View rootView = inflater.inflate(R.layout.fragment_2, container, false);
         TabLayout tabLayout = (TabLayout) rootView.findViewById(R.id.aboutme_tbl);
+        aboutme_iv_setting = (ImageView) rootView.findViewById(R.id.aboutme_iv_setting);
+        avatar = (ImageView) rootView.findViewById(R.id.avatar);
 
-        NoScrollViewPager viewPager = (NoScrollViewPager) rootView.findViewById(R.id.aboutme_pager);
+        ImageLoader.getInstance().displayImage("drawable://" +  R.drawable.avatar, avatar, GlobalUtil.getInstance().circleBitmapOptions);
+
+        ViewPager viewPager = (ViewPager) rootView.findViewById(R.id.aboutme_pager);
 
         // 两个tablayout嵌套的话，子的必须使用getChildPragmentManager
-        //不然和父的 PragmentManager冲突
+        // 不然和父的 PragmentManager冲突
         viewPager.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
@@ -64,7 +69,7 @@ public class ProfileFragment extends Fragment {
         tabLayout.setupWithViewPager(viewPager);
 
 
-        aboutme_iv_setting = (ImageView) rootView.findViewById(R.id.aboutme_iv_setting);
+
         aboutme_iv_setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,24 +84,24 @@ public class ProfileFragment extends Fragment {
 }
 
 
-class NoScrollViewPager extends ViewPager{
-
-
-    public NoScrollViewPager(Context context) {
-        super(context);
-    }
-
-    public NoScrollViewPager(Context context, AttributeSet attrs) {
-        super(context, attrs);
-    }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent ev) {
-        return false;
-    }
-
-    @Override
-    public boolean onInterceptTouchEvent(MotionEvent ev) {
-        return false;
-    }
-}
+//class NoScrollViewPager extends ViewPager {
+//
+//    public NoScrollViewPager(Context context) {
+//        super(context);
+//    }
+//
+//    public NoScrollViewPager(Context context, AttributeSet attrs) {
+//        super(context, attrs);
+//    }
+//
+//    @Override
+//    public boolean onTouchEvent(MotionEvent ev) {
+//        return false;
+//    }
+//
+//    @Override
+//    public boolean onInterceptTouchEvent(MotionEvent ev) {
+//        return false;
+//    }
+//
+//}

@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.xuewen.adapter.UserListAdapter;
 import com.xuewen.bean.Question;
@@ -27,8 +28,7 @@ public class SearchingFragment extends Fragment {
                              Bundle savedInstanceState)
     {
         View rootView = inflater.inflate(R.layout.fragment_1, container, false);
-        ListView concernPerson = (ListView) rootView.findViewById(R.id.concernPerson);
-        ListView recommendedPerson = (ListView) rootView.findViewById(R.id.recommendedPerson);
+        final ListView usersListView = (ListView) rootView.findViewById(R.id.usersListView);
 
         List<UserMe> list = new ArrayList<>();
         UserMe userMe;
@@ -37,23 +37,25 @@ public class SearchingFragment extends Fragment {
             userMe.username = "张三";
             userMe.school = "中山大学软学院学生";
             userMe.description = "爱好产品，曾在腾讯实习，略懂开发";
+            if (i < 5) {
+                userMe.followed = 1;   //假数据
+            } else {
+                userMe.followed = 0;
+            }
             list.add(userMe);
         }
 
-        List<UserMe> list2 = new ArrayList<>();
-        UserMe userMe2;
-        for (int i = 0; i < 10; i++) {
-            userMe2 = new UserMe();
-            userMe2.username = "张三";
-            userMe2.school = "中山大学软学院学生";
-            userMe2.description = "爱好产品，曾在腾讯实习，略懂开发";
-            list2.add(userMe2);
-        }
-
         UserListAdapter userListAdapter = new UserListAdapter(list, getActivity());
-        UserListAdapter userListAdapter2 = new UserListAdapter(list2, getActivity());
-        concernPerson.setAdapter(userListAdapter);
-        recommendedPerson.setAdapter(userListAdapter2);
+        usersListView.setAdapter(userListAdapter);
+
+        usersListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getActivity(), AskActivity.class);
+                startActivity(intent);
+            }
+        });
+
         return rootView;
     }
 }

@@ -8,7 +8,9 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xuewen.bean.Question;
+import com.xuewen.utility.GlobalUtil;
 import com.xuewen.xuewen.R;
 
 import java.util.List;
@@ -68,6 +70,8 @@ public class AboutMeQuestionListAskAdapter extends BaseAdapter{
 
         viewHolder.que_username.setText(list.get(position).que_username);
         viewHolder.que_description.setText(list.get(position).que_description);
+
+        ImageLoader.getInstance().displayImage("drawable://" +  R.drawable.avatar, viewHolder.que_headimgurl, GlobalUtil.getInstance().circleBitmapOptions);
 
         return view;
     }

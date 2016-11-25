@@ -7,6 +7,7 @@ import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
+import com.xuewen.bean.QRBean;
 import com.xuewen.bean.Question;
 import com.xuewen.bean.UserMe;
 import com.xuewen.bean.UserOther;
@@ -29,8 +30,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase, ConnectionSource connectionSource) {
         try {
-            TableUtils.createTable(connectionSource, Question.class);
-            TableUtils.createTable(connectionSource, UserMe.class);
+            TableUtils.createTable(connectionSource, QRBean.class);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -39,8 +39,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, ConnectionSource connectionSource, int i, int i1) {
         try {
-            TableUtils.dropTable(connectionSource, Question.class, true);
-            TableUtils.dropTable(connectionSource, UserMe.class, true);
+            TableUtils.dropTable(connectionSource, QRBean.class, true);
             onCreate(sqLiteDatabase, connectionSource);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -69,38 +68,20 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         return instance;
     }
 
-    private Dao<Question, Integer> questionDao;
-    private Dao<UserMe, Integer> userMeDao;
-    private Dao<UserOther, Integer> userOtherDao;
+    private Dao<QRBean, Integer> QRBeanDao;
     /**
      * 获得Dao
      *
      * @return
      * @throws SQLException
      */
-    public Dao<Question, Integer> getQuestionDao() throws SQLException
+    public Dao<QRBean, Integer> getQRBeanDao() throws SQLException
     {
-        if (questionDao == null)
+        if (QRBeanDao == null)
         {
-            questionDao = getDao(Question.class);
+            QRBeanDao = getDao(QRBean.class);
         }
-        return questionDao;
-    }
-    public Dao<UserMe, Integer> getUserMeDao() throws SQLException
-    {
-        if (userMeDao == null)
-        {
-            userMeDao = getDao(UserMe.class);
-        }
-        return userMeDao;
-    }
-    public Dao<UserOther, Integer> getUserOtherDao() throws SQLException
-    {
-        if (userOtherDao == null)
-        {
-            userOtherDao = getDao(UserOther.class);
-        }
-        return userOtherDao;
+        return QRBeanDao;
     }
 
     /**
@@ -110,7 +91,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     public void close()
     {
         super.close();
-        questionDao = null;
+        QRBeanDao = null;
     }
 
 }
