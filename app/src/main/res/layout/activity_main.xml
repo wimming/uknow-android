@@ -13,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
         <android.support.design.widget.AppBarLayout
             android:id="@+id/appbar"
             android:layout_width="match_parent"
@@ -25,6 +26,7 @@
                 android:layout_height="@dimen/base_toolbar_height"
                 app:layout_scrollFlags="scroll|enterAlways"
                 app:popupTheme="@style/AppTheme.PopupOverlay">
+
                 <android.support.v7.widget.SearchView
                     android:id="@+id/search_view"
                     android:layout_marginLeft="10dp"
@@ -38,6 +40,7 @@
                     android:layout_height="wrap_content" />
             </android.support.v7.widget.Toolbar>
         </android.support.design.widget.AppBarLayout>
+
         <View
             android:background="#FFCCCCCC"
             android:layout_width="match_parent"

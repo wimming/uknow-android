@@ -1,17 +1,22 @@
 package com.xuewen.xuewen;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.util.ArrayMap;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.text.Layout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,6 +34,19 @@ public class SearchActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.setContentView(R.layout.activity_search);
+
+        //搜索框的字体颜色 大小的改变 ????
+//        SearchView searchView = (SearchView) findViewById(R.id.search_view_title);
+//        SearchView.SearchAutoComplete textView = ( SearchView.SearchAutoComplete) searchView.findViewById(R.id.search_src_text);
+
+//        EditText textView = (EditText) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
+//        final int editViewId = searchView.getContext().getResources().getIdentifier("android:id/search_src_text", null, null);
+//        SearchView.SearchAutoComplete textView = (SearchView.SearchAutoComplete) searchView.findViewById(editViewId);
+
+//        textView.setTextColor(Color.RED);
+//        textView.setHintTextColor(Color.RED);
+
 
         //多行多列网格 九宫格布局 gridview
         setContentView(R.layout.activity_search);

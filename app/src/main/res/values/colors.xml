@@ -10,4 +10,5 @@
     <color name="gray_color">#FFE1E1E6</color>
     <color name="black_color">#000000</color>
     <color name="white_color">#ffffff</color>
+    <color name="app_background">#00ff00ff</color>
 </resources>

@@ -1,5 +1,6 @@
 package com.xuewen.xuewen;
 
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -25,6 +26,11 @@ public class AskActivity extends AppCompatActivity {
         ImageLoader.getInstance().displayImage("drawable://" +  R.drawable.avatar,headimgurl, GlobalUtil.getInstance().circleBitmapOptions);
 
         ListView questionListView = (ListView) findViewById(R.id.question_list_view);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            questionListView.setNestedScrollingEnabled(true);
+        }
+
         List<Question> questionList = new ArrayList<>();
 
         Question q;
