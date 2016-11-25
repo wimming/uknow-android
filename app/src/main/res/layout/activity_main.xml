@@ -28,16 +28,17 @@
                 app:popupTheme="@style/AppTheme.PopupOverlay">
 
                 <android.support.v7.widget.SearchView
-                    android:id="@+id/search_view"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
+                    android:id="@+id/searchView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:iconifiedByDefault="false"
                     android:background="@drawable/search_background"
-                    app:searchIcon="@android:drawable/ic_menu_search"
-                    android:queryHint="搜索感兴趣的问题"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:queryHint="请输入搜索内容" />
+
             </android.support.v7.widget.Toolbar>
         </android.support.design.widget.AppBarLayout>
 

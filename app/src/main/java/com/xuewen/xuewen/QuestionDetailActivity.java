@@ -71,6 +71,7 @@ public class QuestionDetailActivity extends AppCompatActivity {
         if (id == -1) {
             Toast.makeText(QuestionDetailActivity.this, ToastMsg.APPLICATION_ERROR, Toast.LENGTH_LONG).show();
             finish();
+            return;
         }
 
         ApiService apiService = ApiService.retrofit.create(ApiService.class);

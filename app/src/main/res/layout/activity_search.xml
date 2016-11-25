@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:paddingBottom="10dp"
-    android:paddingLeft="10dp"
-    android:paddingRight="10dp"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -12,7 +9,7 @@
         android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/app_background"
+        android:background="#FFCCCCCC"
         android:theme="@style/AppTheme.AppBarOverlay">
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
@@ -22,18 +19,18 @@
             app:popupTheme="@style/AppTheme.PopupOverlay">
 
             <android.support.v7.widget.SearchView
-                android:id="@+id/search_view_title"
-                app:closeIcon="@android:drawable/ic_menu_close_clear_cancel"
-                app:iconifiedByDefault="false"
+                android:id="@+id/searchView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:layout_marginTop="3dp"
-                android:layout_marginBottom="3dp"
+                android:iconifiedByDefault="false"
+
                 android:background="@drawable/search_background"
-                app:searchIcon="@android:drawable/ic_menu_search"
-                android:queryHint="搜索感兴趣的问题"
-                android:layout_width="match_parent"
-                android:layout_height="33dp" />
+                android:queryHint="请输入搜索内容" />
+
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 
@@ -66,9 +63,8 @@
         android:verticalSpacing="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:numColumns="3"
-        >
 
-    </GridView>
+        android:numColumns="3" />
+
 
 </LinearLayout>
