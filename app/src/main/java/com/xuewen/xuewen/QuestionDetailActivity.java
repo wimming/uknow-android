@@ -15,6 +15,8 @@ import com.xuewen.networkservice.QQidResult;
 import com.xuewen.utility.GlobalUtil;
 import com.xuewen.utility.ToastMsg;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -27,15 +29,15 @@ public class QuestionDetailActivity extends AppCompatActivity {
 
     private int id;
 
-    private ImageView asker_avatarUrl;
-    private TextView asker_username;
-    private TextView askDate;
-    private TextView description;
-    private ImageView answerer_avatarUrl;
-    private TextView answerer_username;
-    private TextView answerer_status;
-    private TextView answerer_description;
-    private TextView review;
+    @BindView(R.id.asker_avatarUrl) ImageView asker_avatarUrl;
+    @BindView(R.id.asker_username) TextView asker_username;
+    @BindView(R.id.askDate) TextView askDate;
+    @BindView(R.id.description) TextView description;
+    @BindView(R.id.answerer_avatarUrl) ImageView answerer_avatarUrl;
+    @BindView(R.id.answerer_username) TextView answerer_username;
+    @BindView(R.id.answerer_status) TextView answerer_status;
+    @BindView(R.id.answerer_description) TextView answerer_description;
+    @BindView(R.id.review) TextView review;
 
 //    private ImageView header_avatar;
 //    private ImageView avatar;
@@ -45,19 +47,9 @@ public class QuestionDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question_detail);
 
+        ButterKnife.bind(this);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-
-
-        asker_avatarUrl = (ImageView) findViewById(R.id.asker_avatarUrl);
-        asker_username = (TextView) findViewById(R.id.asker_username);
-        askDate = (TextView) findViewById(R.id.askDate);
-        description = (TextView) findViewById(R.id.description);
-        answerer_avatarUrl = (ImageView) findViewById(R.id.answerer_avatarUrl);
-        answerer_username = (TextView) findViewById(R.id.answerer_username);
-        answerer_status = (TextView) findViewById(R.id.answerer_status);
-        answerer_description = (TextView) findViewById(R.id.answerer_description);
-        review = (TextView) findViewById(R.id.review);
-
 
 //        setSupportActionBar(toolbar);
 //        getSupportActionBar().setTitle("");

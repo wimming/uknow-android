@@ -17,6 +17,9 @@ import android.widget.ImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xuewen.utility.GlobalUtil;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by ym on 16-10-23.
  */
@@ -24,15 +27,19 @@ import com.xuewen.utility.GlobalUtil;
 public class ProfileFragment extends Fragment {
 
     private ImageView aboutme_iv_setting;
-    private ImageView avatar;
+    @BindView(R.id.avatar) ImageView avatar;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
     {
         View rootView = inflater.inflate(R.layout.fragment_2, container, false);
+
+        ButterKnife.bind(this, rootView);
+
         TabLayout tabLayout = (TabLayout) rootView.findViewById(R.id.aboutme_tbl);
         aboutme_iv_setting = (ImageView) rootView.findViewById(R.id.aboutme_iv_setting);
-        avatar = (ImageView) rootView.findViewById(R.id.avatar);
+//        avatar = (ImageView) rootView.findViewById(R.id.avatar);
 
         ImageLoader.getInstance().displayImage("drawable://" +  R.drawable.avatar, avatar, GlobalUtil.getInstance().circleBitmapOptions);
 
