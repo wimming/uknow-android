@@ -65,9 +65,9 @@ public class ProfileFragment extends Fragment {
             @Override
             public CharSequence getPageTitle(int position) {
                if (position == 1) {
-                   return "我提问";
+                   return "我问 20";
                } else if (position == 0){
-                   return "我回答";
+                   return "我答 20";
                } else {
                    return null;
                }
