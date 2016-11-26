@@ -102,32 +102,7 @@ public class QuestionDetailActivity extends AppCompatActivity {
                 }
                 renderView(response.body().data);
 
-                listen.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        FileService fileService = FileService.retrofit.create(FileService.class);
-                        Call<ResponseBody> fileCall = fileService.downloadFile("file/20141027/11284670_094822707000_2.jpg");
-
-                        fileCall.enqueue(new Callback<ResponseBody>() {
-                            @Override
-                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                                if (response.isSuccessful()) {
-                                    Log.e("111111", "server contacted and has file");
-
-                                    boolean writtenToDisk = FileWriter.getInstance().writeResponseBodyToDisk(response.body(), getExternalFilesDir(null)+"", "test.png");
-
-                                } else {
-                                    Log.e("222222", "server contact failed");
-                                }
-                            }
-
-                            @Override
-                            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                                Toast.makeText(QuestionDetailActivity.this, "下载失败 : "+t.getMessage(), Toast.LENGTH_LONG).show();
-                            }
-                        });
-                    }
-                });
+                listen.setOnClickListener(listenClickListener);
             }
 
             @Override
@@ -152,4 +127,26 @@ public class QuestionDetailActivity extends AppCompatActivity {
 
     }
 
+    private View.OnClickListener listenClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            FileService fileService = FileService.retrofit.create(FileService.class);
+            Call<ResponseBody> fileCall = fileService.downloadFile("file/20141027/11284670_094822707000_2.jpg");
+
+            fileCall.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    boolean writtenToDisk = FileWriter.getInstance().writeResponseBodyToDisk(response.body(), getExternalFilesDir(null)+"", "test.png");
+                    if (!writtenToDisk) {
+                        Toast.makeText(QuestionDetailActivity.this, ToastMsg.FILE_OPERATION_ERROR, Toast.LENGTH_LONG).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    Toast.makeText(QuestionDetailActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            });
+        }
+    };
 }
