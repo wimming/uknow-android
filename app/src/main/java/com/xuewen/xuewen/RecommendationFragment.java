@@ -83,6 +83,10 @@ public class RecommendationFragment extends Fragment {
         call.enqueue(new Callback<QRResult>() {
             @Override
             public void onResponse(Call<QRResult> call, Response<QRResult> response) {
+                if (!response.isSuccessful()) {
+                    Toast.makeText(getActivity(), ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
+                    return;
+                }
                 if (response.body().status != 200) {
                     Toast.makeText(getActivity(), response.body().errmsg, Toast.LENGTH_LONG).show();
                     return;
