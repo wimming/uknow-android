@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_login_info"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/base_margin"
+    android:paddingRight="@dimen/base_margin"
+    tools:context="com.xuewen.xuewen.LoginInfoActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:text="大学"
+            android:layout_marginRight="@dimen/base_margin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <AutoCompleteTextView
+            android:id="@+id/school_auto_complete"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:text="专业"
+            android:layout_marginRight="@dimen/base_margin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <AutoCompleteTextView
+            android:id="@+id/major_auto_complete"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_weight="1"
+           android:layout_width="0dp"
+            android:layout_height="wrap_content">
+            <!--<TextView-->
+                <!--android:id="@+id/years_text"-->
+                <!--android:text="入学年份"-->
+                <!--android:layout_weight="1"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content" />-->
+            <Spinner
+                android:id="@+id/years"
+                android:textAlignment="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></Spinner>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content">
+                <!--<TextView-->
+                    <!--android:id="@+id/education_text"-->
+                    <!--android:text="本科生"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content" />-->
+                <Spinner
+                    android:id="@+id/education"
+                    android:textAlignment="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"></Spinner>
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+    
+
+
+</LinearLayout>

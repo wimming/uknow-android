@@ -1,15 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp"
+    android:paddingRight="10dp"
+    android:paddingLeft="10dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <TextView
+        android:id="@+id/textview"
         android:text="使用帮助"
         android:textSize="@dimen/base_medium_font"
+        android:layout_centerInParent="true"
+        android:layout_alignParentLeft="true"
         android:textColor="@color/black_color"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <ImageView
-        android:src="@drawable/back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:id="@+id/imageview"
+        android:src="@drawable/back_reverse"
+        android:layout_centerInParent="true"
+        android:layout_alignParentRight="true"
+        android:layout_width="30dp"
+        android:layout_height="30dp" />
 </RelativeLayout>
