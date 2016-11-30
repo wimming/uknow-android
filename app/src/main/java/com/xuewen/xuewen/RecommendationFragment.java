@@ -78,8 +78,7 @@ public class RecommendationFragment extends Fragment {
         });
 
         ApiService apiService = ApiService.retrofit.create(ApiService.class);
-        Call<QRResult> call =
-                apiService.requestQR();
+        Call<QRResult> call = apiService.requestQR();
 
         call.enqueue(new Callback<QRResult>() {
             @Override

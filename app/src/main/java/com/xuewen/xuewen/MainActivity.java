@@ -20,6 +20,7 @@ import android.view.View;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.xuewen.utility.CurrentUser;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -89,6 +90,8 @@ public class MainActivity extends AppCompatActivity {
 //                        .setAction("Action", null).show();
 //            }
 //        });
+
+        CurrentUser.userId = 4;
 
     }
 

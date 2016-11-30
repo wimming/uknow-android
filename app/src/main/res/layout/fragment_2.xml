@@ -48,7 +48,8 @@
                         android:layout_toRightOf="@+id/aboutme_iv_eye"
                         android:layout_centerVertical="true"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:id="@+id/followedNum" />
                     <ImageView
                         android:id="@+id/aboutme_iv_setting"
                         android:src="@drawable/setting"
@@ -67,7 +68,7 @@
                 </RelativeLayout>
 
                 <ImageView
-                    android:id="@+id/avatar"
+                    android:id="@+id/avatarUrl"
                     android:src="@mipmap/avatar"
                     android:layout_width="70dp"
                     android:layout_height="70dp"
@@ -78,16 +79,19 @@
                     android:textSize="@dimen/base_big_font"
                     android:layout_marginBottom="@dimen/base_small_margin"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:id="@+id/username" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="中山大学软件学院大三学生"
-                    android:layout_marginBottom="@dimen/base_small_margin"/>
+                    android:layout_marginBottom="@dimen/base_small_margin"
+                    android:id="@+id/status" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="爱好产品，曾在腾讯工作，略懂开发"/>
+                    android:text="爱好产品，曾在腾讯工作，略懂开发"
+                    android:id="@+id/description" />
 
             </LinearLayout>
 

@@ -90,8 +90,7 @@ public class QuestionDetailActivity extends AppCompatActivity {
         }
 
         ApiService apiService = ApiService.retrofit.create(ApiService.class);
-        Call<QQidResult> call =
-                apiService.requestQQid(id);
+        Call<QQidResult> call = apiService.requestQQid(id);
 
         call.enqueue(new Callback<QQidResult>() {
             @Override
@@ -113,7 +112,7 @@ public class QuestionDetailActivity extends AppCompatActivity {
 
     }
 
-    void renderView(QQidBean data) {
+    private void renderView(QQidBean data) {
 
         ImageLoader.getInstance().displayImage("drawable://" +  R.drawable.avatar, asker_avatarUrl, GlobalUtil.getInstance().circleBitmapOptions);
         asker_username.setText(data.asker_username);
