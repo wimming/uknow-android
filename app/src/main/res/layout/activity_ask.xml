@@ -92,16 +92,33 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
-                <EditText
+                <LinearLayout
+                    android:orientation="vertical"
                     android:background="@drawable/edit_text_border"
-                    android:hint="在这里写下你的问题，等待TA回答"
-                    android:textSize="@dimen/base_medium_font"
-                    android:gravity="top"
-                    android:paddingTop="@dimen/base_margin"
-                    android:paddingLeft="@dimen/base_margin"
                     android:layout_marginBottom="20dp"
                     android:layout_width="match_parent"
-                    android:layout_height="120dp" />
+                    android:layout_height="wrap_content">
+                    <EditText
+                        android:id="@+id/editText"
+                        android:maxLength="60"
+                        android:hint="在这里写下你的问题，等待TA回答"
+                        android:background="@null"
+                        android:textSize="@dimen/base_medium_font"
+                        android:gravity="top"
+                        android:paddingTop="@dimen/base_margin"
+                        android:paddingLeft="@dimen/base_margin"
+                        android:layout_width="match_parent"
+                        android:layout_height="120dp" />
+                    <TextView
+                        android:id="@+id/textView"
+                        android:text="0/60"
+                        android:layout_gravity="end"
+                        android:layout_marginRight="@dimen/base_margin"
+                        android:layout_marginBottom="2dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
                 <Button
                     android:text="提问"
                     android:textSize="@dimen/base_medium_font"
