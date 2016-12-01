@@ -14,6 +14,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -106,6 +107,10 @@ public class ProfileFragment extends Fragment {
         call.enqueue(new Callback<UUidResult>() {
             @Override
             public void onResponse(Call<UUidResult> call, Response<UUidResult> response) {
+                if (!response.isSuccessful()) {
+                    Toast.makeText(getActivity(), ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
+                    return;
+                }
                 if (response.body().status != 200) {
                     Toast.makeText(getActivity(), response.body().errmsg, Toast.LENGTH_LONG).show();
                     return;

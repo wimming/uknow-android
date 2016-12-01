@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xuewen.bean.QQidBean;
+import com.xuewen.bean.Question;
 import com.xuewen.networkservice.ApiService;
 import com.xuewen.networkservice.FileService;
 import com.xuewen.networkservice.QQidResult;
@@ -95,6 +96,10 @@ public class QuestionDetailActivity extends AppCompatActivity {
         call.enqueue(new Callback<QQidResult>() {
             @Override
             public void onResponse(Call<QQidResult> call, Response<QQidResult> response) {
+                if (!response.isSuccessful()) {
+                    Toast.makeText(QuestionDetailActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
+                    return;
+                }
                 if (response.body().status != 200) {
                     Toast.makeText(QuestionDetailActivity.this, response.body().errmsg, Toast.LENGTH_LONG).show();
                     return;
@@ -135,6 +140,11 @@ public class QuestionDetailActivity extends AppCompatActivity {
             fileCall.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    if (!response.isSuccessful()) {
+                        Toast.makeText(QuestionDetailActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
+                        return;
+                    }
+
                     boolean writtenToDisk = FileWriter.getInstance().writeResponseBodyToDisk(response.body(), getExternalFilesDir(null)+"", "test.png");
                     if (!writtenToDisk) {
                         Toast.makeText(QuestionDetailActivity.this, ToastMsg.FILE_OPERATION_ERROR, Toast.LENGTH_LONG).show();
