@@ -139,7 +139,7 @@ public class ProfileFragment extends Fragment {
 
     private void renderView(UUidBean data) {
 
-        ImageLoader.getInstance().displayImage("drawable://" +  R.drawable.avatar, avatarUrl, GlobalUtil.getInstance().circleBitmapOptions);
+        ImageLoader.getInstance().displayImage(data.avatarUrl, avatarUrl, GlobalUtil.getInstance().circleBitmapOptions);
         username.setText(data.username);
         description.setText(data.description);
         status.setText(data.status);

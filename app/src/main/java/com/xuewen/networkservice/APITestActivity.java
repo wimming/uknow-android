@@ -27,7 +27,7 @@ import retrofit2.Response;
 
 public class APITestActivity extends Activity {
 
-    @BindViews({ R.id.QR, R.id.QQid, R.id.UUidI, R.id.QQidL, R.id.QQidC, R.id.QF, R.id.UUidF, R.id.UUidR, R.id.UF, R.id.Q, R.id.UUid, R.id.UUidPATCH, R.id.QQidA })
+    @BindViews({ R.id.QR, R.id.QQid, R.id.UUidI, R.id.QQidL, R.id.QQidC, R.id.QF, R.id.UUidF, R.id.UUidR, R.id.UF, R.id.Q, R.id.UUid, R.id.UUidPATCH, R.id.QQidA, R.id.UUidFPOST })
     List<Button> buttons;
 
     private ApiService apiService;
@@ -77,7 +77,7 @@ public class APITestActivity extends Activity {
                 });
             }
             else if (id == buttons.get(1).getId()) {
-                Call<QQidResult> call = apiService.requestQQid(qid);
+                Call<QQidResult> call = apiService.requestQQid(qid, uid);
                 call.enqueue(new Callback<QQidResult>() {
                     @Override
                     public void onResponse(Call<QQidResult> call, Response<QQidResult> response) {
@@ -340,6 +340,28 @@ public class APITestActivity extends Activity {
                     }
                     @Override
                     public void onFailure(Call<QQidAResult> call, Throwable t) {
+                        Toast.makeText(APITestActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+            else if (id == buttons.get(13).getId()) {
+
+                Call<UUidFResult> call = apiService.requestUUidF(uid, 5);
+                call.enqueue(new Callback<UUidFResult>() {
+                    @Override
+                    public void onResponse(Call<UUidFResult> call, Response<UUidFResult> response) {
+                        if (!response.isSuccessful()) {
+                            Toast.makeText(APITestActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
+                            return;
+                        }
+                        if (response.body().status != 200) {
+                            Toast.makeText(APITestActivity.this, response.body().errmsg, Toast.LENGTH_LONG).show();
+                            return;
+                        }
+                        Toast.makeText(APITestActivity.this, response.body().toString(), Toast.LENGTH_SHORT).show();
+                    }
+                    @Override
+                    public void onFailure(Call<UUidFResult> call, Throwable t) {
                         Toast.makeText(APITestActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });

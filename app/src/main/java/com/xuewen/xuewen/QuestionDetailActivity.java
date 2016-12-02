@@ -17,6 +17,7 @@ import com.xuewen.bean.Question;
 import com.xuewen.networkservice.ApiService;
 import com.xuewen.networkservice.FileService;
 import com.xuewen.networkservice.QQidResult;
+import com.xuewen.utility.CurrentUser;
 import com.xuewen.utility.FileWriter;
 import com.xuewen.utility.GlobalUtil;
 import com.xuewen.utility.ToastMsg;
@@ -91,7 +92,7 @@ public class QuestionDetailActivity extends AppCompatActivity {
         }
 
         ApiService apiService = ApiService.retrofit.create(ApiService.class);
-        Call<QQidResult> call = apiService.requestQQid(id);
+        Call<QQidResult> call = apiService.requestQQid(id, CurrentUser.userId);
 
         call.enqueue(new Callback<QQidResult>() {
             @Override

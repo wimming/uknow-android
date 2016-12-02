@@ -8,17 +8,31 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.iflytek.cloud.SpeechRecognizer;
+import com.xuewen.networkservice.APITestActivity;
+import com.xuewen.networkservice.ApiService;
+import com.xuewen.networkservice.QQidAResult;
+import com.xuewen.utility.CurrentUser;
 import com.xuewen.utility.ListenHelper;
 import com.xuewen.utility.MediaHelper;
+import com.xuewen.utility.ToastMsg;
 
 import org.w3c.dom.Text;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class AnswerQuestionActivity extends AppCompatActivity {
 
@@ -38,6 +52,42 @@ public class AnswerQuestionActivity extends AppCompatActivity {
     TextView re_recorded;
     @BindView(R.id.send_recorded)
     TextView send_recorded;
+    @OnClick(R.id.send_recorded)
+    void onClick() {
+        if (filePath == null) {
+            Toast.makeText(AnswerQuestionActivity.this, "ni ha mei you lu yin", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        ApiService apiService = ApiService.retrofit.create(ApiService.class);
+
+        File file = new File(filePath);
+
+        RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+        MultipartBody.Part fileBody = MultipartBody.Part.createFormData("audio", file.getName(), requestBody);
+
+        Call<QQidAResult> call = apiService.requestQQidA(3,
+                fileBody,
+                RequestBody.create(MediaType.parse("multipart/form-data"), CurrentUser.userId+""));
+        call.enqueue(new Callback<QQidAResult>() {
+            @Override
+            public void onResponse(Call<QQidAResult> call, Response<QQidAResult> response) {
+                if (!response.isSuccessful()) {
+                    Toast.makeText(AnswerQuestionActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
+                    return;
+                }
+                if (response.body().status != 200) {
+                    Toast.makeText(AnswerQuestionActivity.this, response.body().errmsg, Toast.LENGTH_LONG).show();
+                    return;
+                }
+                Toast.makeText(AnswerQuestionActivity.this, response.body().toString(), Toast.LENGTH_SHORT).show();
+            }
+            @Override
+            public void onFailure(Call<QQidAResult> call, Throwable t) {
+                Toast.makeText(AnswerQuestionActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
 
     String filePath = null;
     private SimpleDateFormat time = new SimpleDateFormat("mm:ss");
@@ -203,6 +253,8 @@ public class AnswerQuestionActivity extends AppCompatActivity {
                 transToStatus0();
             }
         });
+
+
 
     }
 

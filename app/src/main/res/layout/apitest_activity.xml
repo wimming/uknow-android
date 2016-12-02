@@ -88,6 +88,12 @@
             android:layout_height="wrap_content"
             android:id="@+id/QQidA" />
 
+        <Button
+            android:text="api/users/{user_id}/follows"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/UUidFPOST" />
+
     </LinearLayout>
     </ScrollView>
 

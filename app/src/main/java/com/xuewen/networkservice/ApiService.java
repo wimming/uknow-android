@@ -30,7 +30,8 @@ public interface ApiService {
     Call<QRResult> requestQR();
 
     @GET("api/questions/{question_id}")
-    Call<QQidResult> requestQQid(@Path("question_id") int qid);
+    Call<QQidResult> requestQQid(@Path("question_id") int qid,
+                                 @Nullable @Query("user_id") int uid);
 
     @POST("api/questions/{question_id}/listenings")
     Call<QQidLResult> requestQQidL(@Path("question_id") int qid);
@@ -44,7 +45,8 @@ public interface ApiService {
     @FormUrlEncoded
     Call<QQidCResult> requestQQidC(@Path("question_id") int qid,
                                    @Field("praise") int praise,
-                                   @Field("user_id") int uid);
+                                   @Nullable @Field("user_id") int uid);
+
     @GET("api/questions/find")
     Call<QFResult> requestQF(@Query("query_string") String query_string);
 
@@ -52,13 +54,12 @@ public interface ApiService {
     @FormUrlEncoded
     Call<QResult> requestQ(@Field("asker_id") int asker_id,
                            @Field("description") String description,
-//                           @Field("askDate") String askDate,
                            @Field("answerer_id") int answerer_id);
 
     @PATCH("api/questions/{question_id}/answer")
     @Multipart
     Call<QQidAResult> requestQQidA(@Path("question_id") int qid,
-                                   @Nullable @Part("audio") RequestBody audioUrl,
+                                   @Nullable @Part MultipartBody.Part audio,
                                    @Part("answerer_id") RequestBody answerer_id);
 
 
@@ -80,6 +81,10 @@ public interface ApiService {
 
     @GET("api/users/{user_id}/follows")
     Call<UUidFResult> requestUUidF(@Path("user_id") int uid);
+    @POST("api/users/{user_id}/follows")
+    @FormUrlEncoded
+    Call<UUidFResult> requestUUidF(@Path("user_id") int uid,
+                                   @Field("followed_uid") int followed_uid);
 
     @GET("api/users/{user_id}/recommendations")
     Call<UUidRResult> requestUUidR(@Path("user_id") int uid);
