@@ -11,22 +11,22 @@ public class MediaHelper {
     public interface OnResultListener {
         public void onResult();
     }
-    private OnResultListener onResultListener;
-    public void setOnResultListener(OnResultListener onResultListener) {
-        this.onResultListener = onResultListener;
-    }
+//    private OnResultListener onResultListener;
+//    public void setOnResultListener(OnResultListener onResultListener) {
+//        this.onResultListener = onResultListener;
+//    }
 
     private MediaPlayer mediaPlayer = new MediaPlayer();
 
     public MediaHelper() {
-        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mp) {
-                if (onResultListener != null) {
-                    onResultListener.onResult();
-                }
-            }
-        });
+//        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+//            @Override
+//            public void onCompletion(MediaPlayer mp) {
+//                if (onResultListener != null) {
+//                    onResultListener.onResult();
+//                }
+//            }
+//        });
     }
 
     public  boolean isPlaying() {
@@ -41,11 +41,28 @@ public class MediaHelper {
         return mediaPlayer.getDuration();
     }
 
-    public void play(String filePath) {
+    public void play(String filePath, final OnResultListener onResultListener ) {
         try {
+
+            if (mediaPlayer != null) {
+                mediaPlayer.stop();
+                mediaPlayer.release();
+            }
+
+            mediaPlayer = new MediaPlayer();
+
             mediaPlayer.setDataSource(filePath);
             mediaPlayer.prepare();
             mediaPlayer.start();
+
+            mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    onResultListener.onResult();
+                }
+            });
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -58,7 +75,12 @@ public class MediaHelper {
         mediaPlayer.start();
     }
     public void stop() {
+
         mediaPlayer.stop();
         mediaPlayer.reset();
     }
+    public  void seekToStart() {
+        mediaPlayer.seekTo(0);
+    }
+
 }

@@ -115,6 +115,14 @@ public class AnswerQuestionActivity extends AppCompatActivity {
         PAUSE
     }
 
+    enum PAGE_STATE {
+        STATE0,
+        STATE1,
+        STATE2
+    }
+
+    private PAGE_STATE page_state = PAGE_STATE.STATE0;
+
     private MediaHelper mediaHelper;
     private Handler playHandler = new Handler();
     private STATE state = STATE.IDLE;
@@ -122,11 +130,21 @@ public class AnswerQuestionActivity extends AppCompatActivity {
         @Override
         public void run() {
             if (state == STATE.PLAYING) {
-                voice_length_show.setText((time.format(mediaHelper.maxMillis() - mediaHelper.currentMillis())));
+
+                int remaining_time = mediaHelper.maxMillis() - mediaHelper.currentMillis();
+                voice_length_show.setText((time.format(remaining_time)));
+
+                if (remaining_time <= 0) {
+                    speak.setImageResource(R.drawable.stop);
+                }
+
             }
             playHandler.postDelayed(playRunnable, 200);
         }
     };
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,47 +156,98 @@ public class AnswerQuestionActivity extends AppCompatActivity {
         transToStatus0();
 
         mediaHelper = new MediaHelper();
-        mediaHelper.setOnResultListener(new MediaHelper.OnResultListener() {
-            @Override
-            public void onResult() {
-                state = STATE.IDLE;
-                speak.setImageResource(R.drawable.playing);
-            }
-        });
+
+        //mediaHelper设置为动态生成的  应该对没个新生成的对象监听才有效果
+//        mediaHelper.setOnResultListener(new MediaHelper.OnResultListener() {
+//            @Override
+//            public void onResult() {
+//                state = STATE.IDLE;
+//                speak.setImageResource(R.drawable.playing);
+//            }
+//        });
 
         speak.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                //tag状态
-                // 当前为 status2
-                if (speak.getTag().equals("2")) {
+                if (page_state == PAGE_STATE.STATE0) {
+
+                    ListenHelper.showTip(AnswerQuestionActivity.this, "aaa");
+                    page_state = PAGE_STATE.STATE1;
+
+                    transToStatus1();
+                    handler_countdown.post(r);
+
+                    mIat =  ListenHelper.setOnResultListenerWithNoDialog(AnswerQuestionActivity.this, new ListenHelper.OnResultListener() {
+
+                        //成功后回调
+                        @Override
+                        public void onResult(String fileId, String result) {
+//                        ListenHelper.showTip(AnswerQuestionActivity.this, result);
+//                        ListenHelper.showTip(AnswerQuestionActivity.this, ListenHelper.getListenerPath(fileId));
+//                        voice_length_show.setText(result);
+                            filePath = ListenHelper.getListenerPath(fileId);
+                            //进入 状态2
+                            page_state = PAGE_STATE.STATE2;
+                            transToStatus2();
+                        }
+
+                        //失败后回调
+                        @Override
+                        public void onError(String errorMsg) {
+                            ListenHelper.showTip(AnswerQuestionActivity.this, errorMsg + "哈哈哈 出错啦");
+                            speak.setImageResource(R.drawable.microphone);
+
+                            page_state = PAGE_STATE.STATE0;
+                            transToStatus0();
+                            voice_status_show.setText("输入有错误 请重新输入");
+                        }
+                    });
+
+
+                } else if (page_state == PAGE_STATE.STATE1) {
+
+                    if (mIat != null) {
+                        mIat.stopListening();
+                        handler_countdown.removeCallbacks(r);
+                    }
+                    return;
+
+                } else if (page_state == PAGE_STATE.STATE2){
+
+                    ListenHelper.showTip(AnswerQuestionActivity.this, "bbb");
                     if (filePath != null) {
 
-//                        if (ListenHelper.isPlaying()) {
-//                            speak.setImageResource(R.drawable.star_full);
-//                            ListenHelper.stopPlay();
-//
-//                        } else {
-//                            ListenHelper.playListener(filePath);
-//                            speak.setImageResource(R.drawable.playing);
-//                        }
 
+                        // 状态机为  idle -> play -> pause(这个一可能为自己点击的  一方面可能系统自动完成的) -play
+                        // 系统自动完成播放的 需要我们在回调中设置等待状态  这里之前有个bug
+                        // 注意 系统自动完成的无需设置为idle 因为无需重复加载同一个资源 让media play重新播放即可
 
-
+                        //目前 利用 星号 表示正在播放 正方形表示中途停止 三角形表示音频从头开始播放
                         if (state == STATE.IDLE) {
+
                             state = STATE.PLAYING;
-                            mediaHelper.play(filePath);
+
+                            mediaHelper.play(filePath, new MediaHelper.OnResultListener() {
+                                @Override
+                                public void onResult() {
+                                    //当自然播放完成以后 必须直接设置为等待状态 这样的话 点击时就可以直接播放了
+                                    state = STATE.PAUSE;
+                                    speak.setImageResource(R.drawable.stop);
+                                }
+                            });
                             speak.setImageResource(R.drawable.star_full);
 
                             playHandler.post(playRunnable);
                         }
                         else if (state == STATE.PLAYING) {
+
                             state = STATE.PAUSE;
                             mediaHelper.pause();
-                            speak.setImageResource(R.drawable.stop);
+                            speak.setImageResource(R.drawable.playing);
                         }
                         else if (state == STATE.PAUSE) {
+
                             state = STATE.PLAYING;
                             mediaHelper.resume();
                             speak.setImageResource(R.drawable.star_full);
@@ -187,62 +256,12 @@ public class AnswerQuestionActivity extends AppCompatActivity {
                             //
                         }
 
-//                        if (MediaHelper.isPlaying()) {
-//                            speak.setImageResource(R.drawable.playing);
-//                            MediaHelper.stop();
-//                            return;
-//                        } else {
-//                            speak.setImageResource(R.drawable.star_full);
-//                            MediaHelper.play(filePath, new MediaHelper.OnResultListener() {
-//                                @Override
-//                                public void onResult() {
-//                                    speak.setImageResource(R.drawable.playing);
-//                                }
-//                            });
-//                        }
-
                         return;
                     }
+
+                } else {
+
                 }
-
-                //当前为status1
-                if (speak.getTag().equals("1")) {
-
-                    if (mIat != null) {
-                        mIat.stopListening();
-                        handler_countdown.removeCallbacks(r);
-                        speak.setImageResource(R.drawable.stop);
-                        voice_status_show.setText(voice_status_show_text2);
-                        buttonsShowORHide(1);
-                        speak.setTag("2");
-                    }
-                    return;
-                }
-
-                speak.setImageResource(R.drawable.playing);
-                voice_status_show.setText(voice_status_show_text1);
-                handler_countdown.postDelayed(r, 0);
-                speak.setTag("1");
-
-
-                mIat =  ListenHelper.setOnResultListenerWithNoDialog(AnswerQuestionActivity.this, new ListenHelper.OnResultListener() {
-
-                    //成功后回调
-                    @Override
-                    public void onResult(String fileId, String result) {
-                        ListenHelper.showTip(AnswerQuestionActivity.this, result);
-                        ListenHelper.showTip(AnswerQuestionActivity.this, ListenHelper.getListenerPath(fileId));
-//                        voice_length_show.setText(result);
-                        filePath = ListenHelper.getListenerPath(fileId);
-                    }
-
-                    //失败后回调
-                    @Override
-                    public void onError(String errorMsg) {
-                        ListenHelper.showTip(AnswerQuestionActivity.this, errorMsg + "哈哈哈 出错啦");
-                        speak.setImageResource(R.drawable.microphone);
-                    }
-                });
 
             }
         });
@@ -251,6 +270,7 @@ public class AnswerQuestionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 transToStatus0();
+                page_state = PAGE_STATE.STATE0;
             }
         });
 
@@ -273,7 +293,12 @@ public class AnswerQuestionActivity extends AppCompatActivity {
     private void transToStatus0 () {
 
 //        ListenHelper.clearPlay();
-//        MediaHelper.stop();
+//        mediaHelper.stop();
+
+        if (state == STATE.PLAYING){
+            mediaHelper.pause();
+        }
+
         state = STATE.IDLE;
         speak.setTag("0");
         speak.setImageResource(R.drawable.microphone);
@@ -281,6 +306,18 @@ public class AnswerQuestionActivity extends AppCompatActivity {
         voice_length_show.setText(voice_length_show_text0);
         voice_status_show.setText(voice_status_show_text0);
         buttonsShowORHide(0);
+    }
+
+    private void transToStatus1() {
+        speak.setImageResource(R.drawable.playing);
+        voice_status_show.setText(voice_status_show_text1);
+        buttonsShowORHide(0);
+    }
+
+    private void transToStatus2 () {
+        speak.setImageResource(R.drawable.stop);
+        voice_status_show.setText(voice_status_show_text2);
+        buttonsShowORHide(1);
     }
 
 }
