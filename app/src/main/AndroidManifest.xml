@@ -46,6 +46,7 @@
         </activity>
         <activity android:name=".LoginInfoActivity">
         </activity>
+        <activity android:name="com.xuewen.networkservice.APITestActivity"/>
     </application>
 
 </manifest>

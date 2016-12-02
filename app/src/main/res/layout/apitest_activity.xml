@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <LinearLayout
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:text="/api/questions/recommend"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/QR" />
+
+        <Button
+            android:text="/api/questions/:question_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/QQid" />
+
+        <Button
+            android:text="/api/users/:user_id/introduction"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/UUidI" />
+
+        <Button
+            android:text="/api/questions/:question_id/listenings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/QQidL" />
+
+        <Button
+            android:text="/api/questions/:question_id/comments"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/QQidC" />
+
+        <Button
+            android:text="/api/questions/find"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/QF" />
+
+        <Button
+            android:text="/api/users/:user_id/follows"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/UUidF" />
+
+        <Button
+            android:text="/api/users/:user_id/recommendations"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/UUidR" />
+
+        <Button
+            android:text="/api/users/find"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/UF" />
+
+        <Button
+            android:text="/api/questions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/Q" />
+
+        <Button
+            android:text="/api/users/:user_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/UUid" />
+
+        <Button
+            android:text="/api/users/:user_id(PATCH)"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/UUidPATCH" />
+
+        <Button
+            android:text="/api/questions/:question_id/answer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/QQidA" />
+
+    </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
