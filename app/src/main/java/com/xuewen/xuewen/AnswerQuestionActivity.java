@@ -172,7 +172,6 @@ public class AnswerQuestionActivity extends AppCompatActivity {
 
                 if (page_state == PAGE_STATE.STATE0) {
 
-                    ListenHelper.showTip(AnswerQuestionActivity.this, "aaa");
                     page_state = PAGE_STATE.STATE1;
 
                     transToStatus1();
@@ -215,7 +214,6 @@ public class AnswerQuestionActivity extends AppCompatActivity {
 
                 } else if (page_state == PAGE_STATE.STATE2){
 
-                    ListenHelper.showTip(AnswerQuestionActivity.this, "bbb");
                     if (filePath != null) {
 
 
