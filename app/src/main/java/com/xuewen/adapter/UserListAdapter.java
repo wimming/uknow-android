@@ -1,6 +1,7 @@
 package com.xuewen.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,10 +67,21 @@ public class UserListAdapter extends BaseAdapter{
         viewHolder.username.setText(list.get(position).username);
         viewHolder.description.setText(list.get(position).description);
         viewHolder.school.setText(list.get(position).school);
+
+        // 渲染层已经做了渲染判断 点击只需更改数据即可 无需再次渲染
         if (list.get(position).followed == 0) {
-            viewHolder.followed.setVisibility(View.INVISIBLE);
+            //viewHolder.followed.setVisibility(View.INVISIBLE);
+            viewHolder.followed.setBackgroundResource(R.drawable.unfollow_button);
+            viewHolder.followed.setText("+关注");
+
+            viewHolder.followed.setTextColor(context.getResources().getColor(R.color.main_color));
+
+
         } else {
-            viewHolder.followed.setVisibility(View.VISIBLE);
+//            viewHolder.followed.setVisibility(View.VISIBLE);
+            viewHolder.followed.setBackgroundResource(R.drawable.follow_button);
+            viewHolder.followed.setText("已关注");
+            viewHolder.followed.setTextColor(Color.GRAY);
         }
 
 

@@ -39,13 +39,15 @@ import retrofit2.Response;
 
 public class ProfileFragment extends Fragment {
 
-    private ImageView aboutme_iv_setting;
+//    private ImageView aboutme_iv_setting;
 
     @BindView(R.id.avatarUrl) ImageView avatarUrl;
     @BindView(R.id.followedNum) TextView followedNum;
     @BindView(R.id.username) TextView username;
     @BindView(R.id.status) TextView status;
     @BindView(R.id.description) TextView description;
+    @BindView(R.id.aboutme_iv_edit) ImageView aboutme_iv_edit;
+    @BindView(R.id.aboutme_iv_setting) ImageView aboutme_iv_setting;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,7 +58,7 @@ public class ProfileFragment extends Fragment {
         ButterKnife.bind(this, rootView);
 
         TabLayout tabLayout = (TabLayout) rootView.findViewById(R.id.aboutme_tbl);
-        aboutme_iv_setting = (ImageView) rootView.findViewById(R.id.aboutme_iv_setting);
+//        aboutme_iv_setting = (ImageView) rootView.findViewById(R.id.aboutme_iv_setting);
 //        avatar = (ImageView) rootView.findViewById(R.id.avatar);
 
 //        ImageLoader.getInstance().displayImage("drawable://" +  R.drawable.avatar, avatar, GlobalUtil.getInstance().circleBitmapOptions);
@@ -93,10 +95,18 @@ public class ProfileFragment extends Fragment {
         });
         tabLayout.setupWithViewPager(viewPager);
 
-        aboutme_iv_setting.setOnClickListener(new View.OnClickListener() {
+        aboutme_iv_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), ModifyInfoActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        aboutme_iv_setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), SettingActivity.class);
                 startActivity(intent);
             }
         });

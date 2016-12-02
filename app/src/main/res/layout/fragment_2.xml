@@ -60,6 +60,7 @@
                         android:layout_centerVertical="true" />
 
                     <ImageView
+                        android:id="@+id/aboutme_iv_edit"
                         android:src="@drawable/edit"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
