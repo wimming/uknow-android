@@ -21,6 +21,7 @@ import android.view.View;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.xuewen.utility.CurrentUser;
+import com.xuewen.utility.ListenHelper;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -49,6 +50,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //科大讯飞整体初始化
+        ListenHelper.Init(this);
 
         ButterKnife.bind(this);
 

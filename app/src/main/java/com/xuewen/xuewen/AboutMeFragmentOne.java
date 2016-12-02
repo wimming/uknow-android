@@ -48,8 +48,12 @@ public class AboutMeFragmentOne extends Fragment {
         questionListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getActivity(), APITestActivity.class);
+//                Intent intent = new Intent(getActivity(), APITestActivity.class);
+//                startActivity(intent);
+
+                Intent intent = new Intent(getActivity(), AnswerQuestionActivity.class);
                 startActivity(intent);
+
             }
         });
 
