@@ -34,12 +34,17 @@ public interface ApiService {
 
     @POST("api/questions/{question_id}/listenings")
     Call<QQidLResult> requestQQidL(@Path("question_id") int qid);
+//
+//    @POST("api/questions/{question_id}/comments")
+//    @FormUrlEncoded
+//    Call<QQidCResult> requestQQidC(@Path("question_id") int qid,
+//                                   @Field("praise") int praise);
 
     @POST("api/questions/{question_id}/comments")
     @FormUrlEncoded
     Call<QQidCResult> requestQQidC(@Path("question_id") int qid,
-                                   @Field("praise") int praise);
-
+                                   @Field("praise") int praise,
+                                   @Field("user_id") int uid);
     @GET("api/questions/find")
     Call<QFResult> requestQF(@Query("query_string") String query_string);
 
@@ -47,14 +52,14 @@ public interface ApiService {
     @FormUrlEncoded
     Call<QResult> requestQ(@Field("asker_id") int asker_id,
                            @Field("description") String description,
-                           @Field("askDate") String askDate,
+//                           @Field("askDate") String askDate,
                            @Field("answerer_id") int answerer_id);
 
     @PATCH("api/questions/{question_id}/answer")
-    @FormUrlEncoded
+    @Multipart
     Call<QQidAResult> requestQQidA(@Path("question_id") int qid,
-                                   @Field("audioUrl") String audioUrl,
-                                   @Field("answerer_id") int answerer_id);
+                                   @Nullable @Part("audio") RequestBody audioUrl,
+                                   @Part("answerer_id") RequestBody answerer_id);
 
 
     @GET("api/users/{user_id}")

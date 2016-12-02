@@ -8,9 +8,6 @@ import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import com.xuewen.bean.QRBean;
-import com.xuewen.bean.Question;
-import com.xuewen.bean.UserMe;
-import com.xuewen.bean.UserOther;
 
 import java.sql.SQLException;
 

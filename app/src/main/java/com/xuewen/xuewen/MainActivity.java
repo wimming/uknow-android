@@ -20,6 +20,7 @@ import android.view.View;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.xuewen.networkservice.APITestActivity;
 import com.xuewen.utility.CurrentUser;
 import com.xuewen.utility.ListenHelper;
 
@@ -82,7 +83,8 @@ public class MainActivity extends AppCompatActivity {
         searchView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, SearchActivity.class));
+//                startActivity(new Intent(MainActivity.this, SearchActivity.class));
+                startActivity(new Intent(MainActivity.this, APITestActivity.class));
             }
         });
 

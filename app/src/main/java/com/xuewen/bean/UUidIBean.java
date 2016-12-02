@@ -36,5 +36,17 @@ public class UUidIBean {
     @DatabaseField(columnName = "ansNum")
     public int ansNum;
 
-    public List<QRBean> answers;
+    public List<Answer> answers;
+
+    public class Answer {
+        public int id;
+        public String description;
+        public String answerer_username;
+        public String answerer_status;
+        public String answerer_description;
+        public String answerer_avatarUrl;
+        public int listeningNum;
+        public int praiseNum;
+    }
+
 }
