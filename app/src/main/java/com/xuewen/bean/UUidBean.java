@@ -51,27 +51,21 @@ public class UUidBean {
     public List<Asked> asked;
 
     class Answered {
-
         public int id;
         public String description;
-
         public String asker_username;
         public String asker_avatarUrl;
-
     }
 
     class Asked {
-
         public int id;
         public String description;
         public boolean finished;
-
         public int answerer_id;
         public String answerer_username;
         public String answerer_status;
         public String answerer_description;
         public String answerer_avatarUrl;
-
     }
 
 }

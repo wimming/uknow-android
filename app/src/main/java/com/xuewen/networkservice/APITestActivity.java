@@ -140,7 +140,7 @@ public class APITestActivity extends Activity {
                 });
             }
             else if (id == buttons.get(4).getId()) {
-                Call<QQidCResult> call = apiService.requestQQidC(qid, 1);
+                Call<QQidCResult> call = apiService.requestQQidC(qid, 1, uid);
                 call.enqueue(new Callback<QQidCResult>() {
                     @Override
                     public void onResponse(Call<QQidCResult> call, Response<QQidCResult> response) {
@@ -248,7 +248,7 @@ public class APITestActivity extends Activity {
             }
             else if (id == buttons.get(9).getId()) {
 
-                Call<QResult> call = apiService.requestQ(uid, "xxxx", "today", 7);
+                Call<QResult> call = apiService.requestQ(uid, "xxxx", 7);
                 call.enqueue(new Callback<QResult>() {
                     @Override
                     public void onResponse(Call<QResult> call, Response<QResult> response) {
@@ -292,10 +292,8 @@ public class APITestActivity extends Activity {
             }
             else if (id == buttons.get(11).getId()) {
 
-
-
                 Call<UUidResult> call = apiService.requestUUid(uid,
-                        RequestBody.create(MediaType.parse("multipart/form-data"), "mone"),
+                        RequestBody.create(MediaType.parse("multipart/form-data"), "mine"),
                         RequestBody.create(MediaType.parse("multipart/form-data"), "mime"),
                         RequestBody.create(MediaType.parse("multipart/form-data"), "mime"),
                         RequestBody.create(MediaType.parse("multipart/form-data"), "mime"),
@@ -323,7 +321,10 @@ public class APITestActivity extends Activity {
             }
             else if (id == buttons.get(12).getId()) {
 
-                Call<QQidAResult> call = apiService.requestQQidA(qid, "/home", 8);
+                Call<QQidAResult> call = apiService.requestQQidA(qid,
+//                        RequestBody.create(MediaType.parse("multipart/form-data"), "/somewhere"),
+                        null,
+                        RequestBody.create(MediaType.parse("multipart/form-data"), "8"));
                 call.enqueue(new Callback<QQidAResult>() {
                     @Override
                     public void onResponse(Call<QQidAResult> call, Response<QQidAResult> response) {
