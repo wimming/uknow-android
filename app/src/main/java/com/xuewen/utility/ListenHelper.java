@@ -143,9 +143,15 @@ public class ListenHelper {
         return getListenersDirectory() + filenameId + ".wav";
     }
 
-    public static void playListener(String filePath) {
+    //设置为类对象 共享
+    final static MediaPlayer mediaPlay =  new MediaPlayer();
 
-        MediaPlayer mediaPlay = new MediaPlayer();
+    public static boolean isPlaying() {
+        return mediaPlay.isPlaying();
+    }
+
+    //当前处于停止 直接就播放 当前处于空闲 就加载播放
+    public static void playListener(String filePath) {
 
         try {
             mediaPlay.setDataSource(filePath);
@@ -155,6 +161,19 @@ public class ListenHelper {
 
         }
     }
+
+    public  static void stopPlay() {
+        mediaPlay.pause();
+    }
+    public static  void clearPlay() {
+        mediaPlay.stop();
+        mediaPlay.reset();
+    }
+
+
+
+
+
 
 
     //没有系统对话框的录音

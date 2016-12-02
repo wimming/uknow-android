@@ -98,16 +98,21 @@
             android:textSize="@dimen/base_big_font"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+
         <ImageView
             android:id="@+id/speak"
             android:src="@drawable/microphone"
             android:layout_marginBottom="15dp"
             android:layout_width="@dimen/base_mediun_avatar"
             android:layout_height="@dimen/base_mediun_avatar" />
+
         <LinearLayout
+            android:id="@+id/buttons_layout"
             android:orientation="horizontal"
+            android:layout_marginBottom="30dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
+
             <TextView
                 android:id="@+id/re_recorded"
                 android:text="重新录制"
@@ -120,6 +125,7 @@
                 android:background="@drawable/follow_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
+
             <TextView
                 android:id="@+id/send_recorded"
                 android:text="确认发送"
