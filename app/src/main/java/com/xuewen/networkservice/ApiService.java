@@ -16,8 +16,10 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.PATCH;
+import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 /**
  * Created by ym on 16-11-4.
@@ -29,6 +31,31 @@ public interface ApiService {
 
     @GET("api/questions/{question_id}")
     Call<QQidResult> requestQQid(@Path("question_id") int qid);
+
+    @POST("api/questions/{question_id}/listenings")
+    Call<QQidLResult> requestQQidL(@Path("question_id") int qid);
+
+    @POST("api/questions/{question_id}/comments")
+    @FormUrlEncoded
+    Call<QQidCResult> requestQQidC(@Path("question_id") int qid,
+                                   @Field("praise") int praise);
+
+    @GET("api/questions/find")
+    Call<QFResult> requestQF(@Query("query_string") String query_string);
+
+    @POST("api/questions")
+    @FormUrlEncoded
+    Call<QResult> requestQ(@Field("asker_id") int asker_id,
+                           @Field("description") String description,
+                           @Field("askDate") String askDate,
+                           @Field("answerer_id") int answerer_id);
+
+    @PATCH("api/questions/{question_id}/answer")
+    @FormUrlEncoded
+    Call<QQidAResult> requestQQidA(@Path("question_id") int qid,
+                                   @Field("audioUrl") String audioUrl,
+                                   @Field("answerer_id") int answerer_id);
+
 
     @GET("api/users/{user_id}")
     Call<UUidResult> requestUUid(@Path("user_id") int uid);
@@ -51,6 +78,9 @@ public interface ApiService {
 
     @GET("api/users/{user_id}/recommendations")
     Call<UUidRResult> requestUUidR(@Path("user_id") int uid);
+
+    @GET("api/users/find")
+    Call<UFResult> requestUF(@Query("query_string") String query_string);
 
 //    Call<QRResult> repoContributors(
 //            @Path("owner") String owner,
