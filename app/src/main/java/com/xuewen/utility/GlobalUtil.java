@@ -24,6 +24,9 @@ public class GlobalUtil {
 //    public String baseUrl = "http://192.168.1.100:5000/";
 //    public String baseUrl = "http://172.22.192.65:5000/";
 
+    public String avatarUrl = baseUrl+"static/avatar/";
+    public String audioUrl = baseUrl+"static/audio/";
+
     private GlobalUtil() {
         circleBitmapOptions = new DisplayImageOptions.Builder()
                 .displayer(new CircleBitmapDisplayer())  // rounded corner bitmap

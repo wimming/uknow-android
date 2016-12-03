@@ -19,13 +19,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.xuewen.bean.QRBean;
 import com.xuewen.bean.UUidBean;
+import com.xuewen.bean.UUidFANDUUidRBean;
+import com.xuewen.databaseservice.DatabaseHelper;
 import com.xuewen.networkservice.ApiService;
 import com.xuewen.networkservice.QQidResult;
 import com.xuewen.networkservice.UUidResult;
 import com.xuewen.utility.CurrentUser;
 import com.xuewen.utility.GlobalUtil;
 import com.xuewen.utility.ToastMsg;
+
+import java.sql.SQLException;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,7 +45,9 @@ import retrofit2.Response;
 
 public class ProfileFragment extends Fragment {
 
-//    private ImageView aboutme_iv_setting;
+    private UUidBean uUidBean;
+    private DatabaseHelper databaseHelper;
+    private boolean networkLock = false;
 
     @BindView(R.id.avatarUrl) ImageView avatarUrl;
     @BindView(R.id.followedNum) TextView followedNum;
@@ -111,35 +119,72 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        ApiService apiService = ApiService.retrofit.create(ApiService.class);
-        Call<UUidResult> call = apiService.requestUUid(CurrentUser.userId);
+        if (!networkLock) {
 
-        call.enqueue(new Callback<UUidResult>() {
-            @Override
-            public void onResponse(Call<UUidResult> call, Response<UUidResult> response) {
-                if (!response.isSuccessful()) {
-                    Toast.makeText(getActivity(), ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
-                    return;
+            // database service
+            databaseHelper = DatabaseHelper.getHelper(getActivity());
+            try {
+                List<UUidBean> records = databaseHelper.getUUidBeanDao().queryForEq("id", CurrentUser.userId);
+                if (records.size() > 1) {
+                    Toast.makeText(getActivity(), ToastMsg.APPLICATION_ERROR, Toast.LENGTH_SHORT).show();
                 }
-                if (response.body().status != 200) {
-                    Toast.makeText(getActivity(), response.body().errmsg, Toast.LENGTH_LONG).show();
-                    return;
+                if (records.size() != 0) {
+                    UUidBean record = records.get(0);
+                    renderView(record);
                 }
-                renderView(response.body().data);
+
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
 
-            @Override
-            public void onFailure(Call<UUidResult> call, Throwable t) {
-                Toast.makeText(getActivity(), ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
+            // network service
+            ApiService apiService = ApiService.retrofit.create(ApiService.class);
+            Call<UUidResult> call = apiService.requestUUid(CurrentUser.userId);
+
+            call.enqueue(new Callback<UUidResult>() {
+                @Override
+                public void onResponse(Call<UUidResult> call, Response<UUidResult> response) {
+                    if (!response.isSuccessful()) {
+                        Toast.makeText(getActivity(), ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                    if (response.body().status != 200) {
+                        Toast.makeText(getActivity(), response.body().errmsg, Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                    renderView(response.body().data);
+
+                    uUidBean = response.body().data;
+
+                    // write back to database
+                    try {
+                        databaseHelper.getUUidBeanDao().createOrUpdate(response.body().data);
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+
+                    networkLock = true;
+                }
+
+                @Override
+                public void onFailure(Call<UUidResult> call, Throwable t) {
+                    Toast.makeText(getActivity(), ToastMsg.NETWORK_ERROR + " : " + t.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            });
+
+        }
+        else {
+
+            renderView(uUidBean);
+
+        }
 
         return rootView;
     }
 
     private void renderView(UUidBean data) {
 
-        ImageLoader.getInstance().displayImage(data.avatarUrl, avatarUrl, GlobalUtil.getInstance().circleBitmapOptions);
+        ImageLoader.getInstance().displayImage(GlobalUtil.getInstance().baseUrl+"static/avatar/"+data.avatarUrl, avatarUrl, GlobalUtil.getInstance().circleBitmapOptions);
         username.setText(data.username);
         description.setText(data.description);
         status.setText(data.status);

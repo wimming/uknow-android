@@ -18,11 +18,23 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
+import com.nostra13.universalimageloader.cache.disc.naming.HashCodeFileNameGenerator;
+import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
+import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
+import com.xuewen.bean.QRBean;
+import com.xuewen.bean.UUidBean;
+import com.xuewen.bean.UUidFANDUUidRBean;
 import com.xuewen.networkservice.APITestActivity;
 import com.xuewen.utility.CurrentUser;
 import com.xuewen.utility.ListenHelper;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -57,6 +69,29 @@ public class MainActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
+        DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
+                .cacheInMemory(true).imageScaleType(ImageScaleType.EXACTLY)
+                .cacheOnDisk(true).build();
+        ImageLoaderConfiguration imageLoaderConfiguration =  new ImageLoaderConfiguration.Builder(
+                MainActivity.this)
+                .threadPoolSize(3)
+// default
+                .threadPriority(Thread.NORM_PRIORITY - 2)
+                .denyCacheImageMultipleSizesInMemory()
+                .diskCacheFileNameGenerator(new Md5FileNameGenerator())
+                .tasksProcessingOrder(QueueProcessingType.LIFO)
+                .denyCacheImageMultipleSizesInMemory()
+// .memoryCache(new LruMemoryCache((int) (6 * 1024 * 1024)))
+                .memoryCache(new WeakMemoryCache())
+                .memoryCacheSize((int) (2 * 1024 * 1024))
+                .memoryCacheSizePercentage(13)
+// default
+                .diskCache(new UnlimitedDiskCache(getExternalCacheDir()))
+// default
+                .diskCacheSize(50 * 1024 * 1024).diskCacheFileCount(100)
+                .diskCacheFileNameGenerator(new HashCodeFileNameGenerator())
+                .defaultDisplayImageOptions(defaultOptions).writeDebugLogs() // Remove
+                .build();
         ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(getApplicationContext()));
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -135,6 +170,12 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private class DataHolder {
+        public List<QRBean> qRBeanList;
+        public List<UUidFANDUUidRBean> uUidFANDUUidRBeanList;
+        public UUidBean uUidBean;
     }
 
     /**

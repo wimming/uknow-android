@@ -59,8 +59,9 @@ public interface ApiService {
     @PATCH("api/questions/{question_id}/answer")
     @Multipart
     Call<QQidAResult> requestQQidA(@Path("question_id") int qid,
-                                   @Nullable @Part MultipartBody.Part audio,
-                                   @Part("answerer_id") RequestBody answerer_id);
+                                   @Part("answerer_id") RequestBody answerer_id,
+                                   @Part("audioSeconds") RequestBody audioSeconds,
+                                   @Nullable @Part MultipartBody.Part audio);
 
 
     @GET("api/users/{user_id}")

@@ -49,4 +49,9 @@ public class QQidBean {
     @DatabaseField(columnName = "praiseNum")
     public int praiseNum;
 
+    @DatabaseField(columnName = "commented")
+    public int commented;
+
+    @DatabaseField(columnName = "liked")
+    public int liked;
 }

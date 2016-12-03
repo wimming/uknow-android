@@ -322,9 +322,9 @@ public class APITestActivity extends Activity {
             else if (id == buttons.get(12).getId()) {
 
                 Call<QQidAResult> call = apiService.requestQQidA(qid,
-//                        RequestBody.create(MediaType.parse("multipart/form-data"), "/somewhere"),
-                        null,
-                        RequestBody.create(MediaType.parse("multipart/form-data"), "8"));
+                        RequestBody.create(MediaType.parse("multipart/form-data"), "8"),
+                        RequestBody.create(MediaType.parse("multipart/form-data"), "99"),
+                        null);
                 call.enqueue(new Callback<QQidAResult>() {
                     @Override
                     public void onResponse(Call<QQidAResult> call, Response<QQidAResult> response) {

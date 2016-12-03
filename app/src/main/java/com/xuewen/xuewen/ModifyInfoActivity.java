@@ -60,7 +60,7 @@ public class ModifyInfoActivity extends AppCompatActivity {
         File file = new File(getExternalFilesDir(null)+"/test.jpg");
 
         RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-        MultipartBody.Part body = MultipartBody.Part.createFormData("avatar", "myFile", requestBody);
+        MultipartBody.Part body = MultipartBody.Part.createFormData("avatar", file.getName(), requestBody);
 
         // 执行请求
         ApiService apiService = ApiService.retrofit.create(ApiService.class);
@@ -72,7 +72,7 @@ public class ModifyInfoActivity extends AppCompatActivity {
                 school,
                 major,
                 grade,
-                null
+                body
         );
         call.enqueue(new Callback<UUidResult>() {
             @Override

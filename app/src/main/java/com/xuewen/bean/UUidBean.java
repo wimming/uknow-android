@@ -17,6 +17,9 @@ public class UUidBean {
 //    @DatabaseField(generatedId = true)
 //    private int id;
 
+    @DatabaseField(id = true)
+    public int id;
+
     @DatabaseField(columnName = "username")
     public String username;
 
