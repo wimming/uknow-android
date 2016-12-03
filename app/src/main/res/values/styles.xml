@@ -19,4 +19,8 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="TablayoutTextStyle">
+        <item name="android:textSize">@dimen/base_big_font</item>
+    </style>
+
 </resources>

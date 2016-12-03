@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.xuewen.bean.Question;
+import com.xuewen.networkservice.APITestActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,8 +48,12 @@ public class AboutMeFragmentOne extends Fragment {
         questionListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getActivity(), QuestionDetailActivity.class);
+//                Intent intent = new Intent(getActivity(), APITestActivity.class);
+//                startActivity(intent);
+
+                Intent intent = new Intent(getActivity(), AnswerQuestionActivity.class);
                 startActivity(intent);
+
             }
         });
 
