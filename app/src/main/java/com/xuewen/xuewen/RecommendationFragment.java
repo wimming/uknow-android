@@ -3,6 +3,7 @@ package com.xuewen.xuewen;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,6 +38,28 @@ public class RecommendationFragment extends Fragment {
                              Bundle savedInstanceState)
     {
         View rootView = inflater.inflate(R.layout.fragment_0, container, false);
+
+
+         final  SwipeRefreshLayout refresh = (SwipeRefreshLayout) rootView.findViewById(R.id.refresh);
+         refresh.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light, android.R.color.holo_orange_light);
+
+        refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                Toast.makeText(getActivity(), "刷新一下", Toast.LENGTH_SHORT);
+                refresh.setRefreshing(false);
+                //handler -> update message
+            }
+        });
+
+
+
+
+
+
+
 
 //        ListView questionListView = (ListView)rootView.findViewById(R.id.listView);
 //        List<Question> questionList = new ArrayList<>();

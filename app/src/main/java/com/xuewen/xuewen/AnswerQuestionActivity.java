@@ -209,6 +209,12 @@ public class AnswerQuestionActivity extends AppCompatActivity {
                     if (mIat != null) {
                         mIat.stopListening();
                         handler_countdown.removeCallbacks(r);
+                        //这里的话 不设置进入 STATE2 是否进入由 讯飞的回调函数决定
+                        //讯飞回调函数 OnError有个延迟 所以需要给用户提示一下
+                        speak.setImageResource(R.drawable.microphone);
+                        Toast.makeText(AnswerQuestionActivity.this, "分析中", Toast.LENGTH_SHORT).show();
+//                        ListenHelper.showTip(AnswerQuestionActivity.this, "分析中");
+
                     }
                     return;
 
