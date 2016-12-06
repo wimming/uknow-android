@@ -5,9 +5,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-
     <!-- 连接网络权限，用于执行云端语音能力 -->
-    <!--<uses-permission android:name="android.permission.INTERNET" />-->
+    <!-- <uses-permission android:name="android.permission.INTERNET" /> -->
     <!-- 获取手机录音机使用权限，听写、识别、语义理解需要用到此权限 -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <!-- 读取网络信息状态 -->
@@ -20,15 +19,9 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <!-- 读取联系人权限，上传联系人需要用到此权限 -->
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+
     <!-- 外存储写入权限，构建语法需要用到此权限 -->
-    <!--<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />-->
-
-
-
-
-
-
-
+    <!-- <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> -->
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -62,11 +55,12 @@
         </activity>
         <activity android:name=".ModifyInfoActivity" />
         <activity android:name=".AskActivity" />
-        <activity android:name=".SettingActivity"></activity>
-        <activity android:name=".LoginActivity"></activity>
-        <activity android:name=".LoginInfoActivity"></activity>
+        <activity android:name=".SettingActivity" />
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".LoginInfoActivity" />
         <activity android:name="com.xuewen.networkservice.APITestActivity" />
-        <activity android:name=".AnswerQuestionActivity"></activity>
+        <activity android:name=".AnswerQuestionActivity" />
+        <activity android:name=".AskedSuccessActivity"></activity>
     </application>
 
 </manifest>

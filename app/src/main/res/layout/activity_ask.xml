@@ -120,6 +120,7 @@
                 </LinearLayout>
 
                 <Button
+                    android:id="@+id/sendAskedRequest"
                     android:text="提问"
                     android:textSize="@dimen/base_medium_font"
                     android:background="@drawable/button_border"
