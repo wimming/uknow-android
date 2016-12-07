@@ -25,7 +25,6 @@ public class AboutMeFragmentTwo extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        super.onCreateView(inflater, container, savedInstanceState);
         View rootView = inflater.inflate(R.layout.fragment_about_me_fragment_two, container, false);
         ListView questionListView = (ListView) rootView.findViewById(R.id.aboutMe_ask_list);
 

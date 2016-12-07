@@ -8,7 +8,7 @@
     android:paddingRight="10dp"
     android:paddingBottom="15dp">
     <ImageView
-        android:id="@+id/headimgurl"
+        android:id="@+id/avatarUrl"
         android:src="@mipmap/avatar"
         android:layout_marginRight="@dimen/base_margin"
         android:layout_width="@dimen/base_small_avatar"
@@ -28,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
-            android:id="@+id/school"
+            android:id="@+id/status"
             android:textSize="@dimen/base_medium_font"
             android:text="中山大学软件学院大三学生"
             android:layout_marginBottom="@dimen/base_margin"

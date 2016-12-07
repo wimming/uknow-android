@@ -96,6 +96,7 @@
 
             </LinearLayout>
 
+
             <!--<android.support.v7.widget.Toolbar-->
                 <!--android:id="@+id/anim_toolbar"-->
                 <!--android:layout_width="match_parent"-->

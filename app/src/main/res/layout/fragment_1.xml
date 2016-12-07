@@ -49,11 +49,15 @@
         <!--android:layout_width="match_parent"-->
         <!--android:layout_height="1px"/>-->
 
-    <ListView
-        android:id="@+id/usersListView"
-        android:layout_weight="1"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/refresh"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-    </ListView>
+        <ListView
+            android:id="@+id/listView"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </LinearLayout>

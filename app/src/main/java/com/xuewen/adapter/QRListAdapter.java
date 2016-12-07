@@ -78,9 +78,9 @@ public class QRListAdapter extends BaseAdapter {
 
         viewHolder.description.setText(list.get(position).description);
         viewHolder.answerer_description.setText(list.get(position).answerer_description);
-        ImageLoader.getInstance().displayImage("drawable://" +  R.drawable.avatar, viewHolder.answerer_avatarUrl, GlobalUtil.getInstance().circleBitmapOptions);
+        ImageLoader.getInstance().displayImage(GlobalUtil.getInstance().avatarUrl+list.get(position).answerer_avatarUrl, viewHolder.answerer_avatarUrl, GlobalUtil.getInstance().circleBitmapOptions);
 
-//        viewHolder.listen
+        viewHolder.listen.setText(list.get(position).audioSeconds+"''");
         viewHolder.review.setText(list.get(position).listeningNum+"人听过，"+list.get(position).praiseNum+"人觉得好");
 
         return view;
