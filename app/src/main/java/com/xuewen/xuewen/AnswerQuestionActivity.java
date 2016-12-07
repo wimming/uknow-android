@@ -132,10 +132,12 @@ public class AnswerQuestionActivity extends AppCompatActivity {
         public void run() {
             if (state == STATE.PLAYING) {
 
-                int remaining_time = mediaHelper.maxMillis() - mediaHelper.currentMillis();
-                voice_length_show.setText((time.format(remaining_time)));
+                //int remaining_time = mediaHelper.maxMillis() - mediaHelper.currentMillis();
+                int currentMillis = mediaHelper.currentMillis();
+                int maxMillis = mediaHelper.maxMillis();
+                voice_length_show.setText(time.format(currentMillis) + "/" + time.format(maxMillis));
 
-                if (remaining_time <= 0) {
+                if (currentMillis >= maxMillis) {
                     speak.setImageResource(R.drawable.stop);
                 }
 
@@ -249,7 +251,7 @@ public class AnswerQuestionActivity extends AppCompatActivity {
 
                             state = STATE.PAUSE;
                             mediaHelper.pause();
-                            speak.setImageResource(R.drawable.playing);
+                            speak.setImageResource(R.drawable.stop);
                         }
                         else if (state == STATE.PAUSE) {
 
