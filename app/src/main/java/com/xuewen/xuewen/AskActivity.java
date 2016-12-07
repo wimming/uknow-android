@@ -17,14 +17,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.xuewen.adapter.QRListAdapter;
+import com.xuewen.bean.QRBean;
 import com.xuewen.bean.Question;
+import com.xuewen.bean.UUidIBean;
 import com.xuewen.networkservice.APITestActivity;
 import com.xuewen.networkservice.ApiService;
 import com.xuewen.networkservice.QRResult;
 import com.xuewen.networkservice.QResult;
+import com.xuewen.networkservice.UUidIResult;
 import com.xuewen.utility.GlobalUtil;
 import com.xuewen.utility.MyTextWatch;
 import com.xuewen.utility.ToastMsg;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +50,21 @@ public class AskActivity extends AppCompatActivity {
     @BindView(R.id.sendAskedRequest)
     Button sendAskedRequest;
 
+    @BindView(R.id.avatarUrl)
+    ImageView avatarUrl;
+    @BindView(R.id.username)
+    TextView username;
+    @BindView(R.id.followed)
+    TextView followed;
+    @BindView(R.id.status)
+    TextView status;
+    @BindView(R.id.description)
+    TextView description;
+    @BindView(R.id.question_list_view)
+    ListView questionListView;
+
+            ;
+
     private ApiService apiService;
 
     @Override
@@ -54,29 +75,28 @@ public class AskActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         apiService = ApiService.retrofit.create(ApiService.class);
 
-        ImageView headimgurl = (ImageView) findViewById(R.id.headimgurl);
-        ImageLoader.getInstance().displayImage("drawable://" +  R.drawable.avatar,headimgurl, GlobalUtil.getInstance().circleBitmapOptions);
+        ImageLoader.getInstance().displayImage("drawable://" +  R.drawable.avatar,avatarUrl, GlobalUtil.getInstance().circleBitmapOptions);
 
-        ListView questionListView = (ListView) findViewById(R.id.question_list_view);
+
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             questionListView.setNestedScrollingEnabled(true);
         }
 
-        List<Question> questionList = new ArrayList<>();
-
-        Question q;
-        for (int i = 0; i < 10; ++i) {
-            q = new Question("师兄好，软件学院的学生毕业后有哪些出路呢？");
-            q.ans_description = "张三 | 清华大学计算机系，ACM校队队长，喜欢钻研算法，喜欢钻研算法";
-            q.heard = 100;
-            q.liked = 10;
-            q.ans_headimgurl = "http://www.jd.com/favicon.ico";
-            questionList.add(q);
-        }
-
-        QuestionListAdapter questionListAdapter = new QuestionListAdapter(questionList, this);
-        questionListView.setAdapter(questionListAdapter);
+//        List<Question> questionList = new ArrayList<>();
+//
+//        Question q;
+//        for (int i = 0; i < 10; ++i) {
+//            q = new Question("师兄好，软件学院的学生毕业后有哪些出路呢？");
+//            q.ans_description = "张三 | 清华大学计算机系，ACM校队队长，喜欢钻研算法，喜欢钻研算法";
+//            q.heard = 100;
+//            q.liked = 10;
+//            q.ans_headimgurl = "http://www.jd.com/favicon.ico";
+//            questionList.add(q);
+//        }
+//
+//        QuestionListAdapter questionListAdapter = new QuestionListAdapter(questionList, this);
+//        questionListView.setAdapter(questionListAdapter);
 
         editText.addTextChangedListener(new MyTextWatch(this, 60, textView));
 
@@ -88,6 +108,8 @@ public class AskActivity extends AppCompatActivity {
                 Toast.makeText(AskActivity.this, "提问成功", Toast.LENGTH_SHORT);
             }
         });
+
+        renderView(2);
     }
 
 
@@ -116,7 +138,48 @@ public class AskActivity extends AppCompatActivity {
         });
     }
 
-//    private getTARelevantAnswer() {
+    private void renderView(int uid) {
 
-//    }
+        Call<UUidIResult> call = apiService.requestUUidI(uid);
+        call.enqueue(new Callback<UUidIResult>() {
+            @Override
+            public void onResponse(Call<UUidIResult> call, Response<UUidIResult> response) {
+                if (!response.isSuccessful()) {
+                    Toast.makeText(AskActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
+                    return;
+                }
+                if (response.body().status != 200) {
+                    Toast.makeText(AskActivity.this, response.body().errmsg, Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                UUidIBean bean = response.body().data;
+                username.setText(bean.username);
+                status.setText(bean.status);
+                description.setText(bean.description);
+                if (bean.followed == 0) {
+                    followed.setText("+关注");
+                    followed.setBackgroundResource(R.drawable.unfollow_button);
+                    //viewHolder.followed.setTextColor(context.getResources().getColor(R.color.main_color));
+                }
+
+                final QRListAdapter adapter = new QRListAdapter(bean.answers, AskActivity.this);
+                questionListView.setAdapter(adapter);
+                questionListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Intent intent = new Intent(AskActivity.this, QuestionDetailActivity.class);
+                        intent.putExtra("id", ((QRBean) parent.getAdapter().getItem(position)).id);
+                        startActivity(intent);
+                    }
+                });
+
+                Toast.makeText(AskActivity.this, response.body().toString(), Toast.LENGTH_SHORT).show();
+            }
+            @Override
+            public void onFailure(Call<UUidIResult> call, Throwable t) {
+                Toast.makeText(AskActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
 }

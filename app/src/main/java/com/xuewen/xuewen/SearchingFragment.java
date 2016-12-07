@@ -67,6 +67,15 @@ public class SearchingFragment extends Fragment {
         final UserListAdapter adapter = new UserListAdapter(dataList, getActivity());
         listView.setAdapter(adapter);
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getActivity(), AskActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
         // database service -> network service(开始刷新 -> 加载成功 -> 结束刷新) -> write back to database
         if (!networkLock) {
 
