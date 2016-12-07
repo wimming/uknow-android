@@ -69,7 +69,7 @@ public class AnswerQuestionActivity extends AppCompatActivity {
         MultipartBody.Part fileBody = MultipartBody.Part.createFormData("audio", file.getName(), requestBody);
 
         Call<QQidAResult> call = apiService.requestQQidA(id,
-                RequestBody.create(MediaType.parse("multipart/form-data"), "8"),
+                RequestBody.create(MediaType.parse("multipart/form-data"), CurrentUser.userId+""),
                 RequestBody.create(MediaType.parse("multipart/form-data"), mediaHelper.maxMillis()/1000+""),
                 fileBody);
         call.enqueue(new Callback<QQidAResult>() {

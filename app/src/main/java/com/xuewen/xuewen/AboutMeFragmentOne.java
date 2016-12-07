@@ -34,15 +34,6 @@ public class AboutMeFragmentOne extends Fragment {
         }
 
 
-//        List<Question> questionList = new ArrayList<>();
-//
-//        Question q;
-//        for (int i = 0; i < 10; ++i) {
-//            q = new Question("张三的回答");
-//            q.ans_description = "师兄好，软件学院的学生毕业后有哪些出路呢？";
-//            questionList.add(q);
-//        }
-
         AboutMeQuestionListAnswerAdapter questionListAdapter = new AboutMeQuestionListAnswerAdapter(dataList, getActivity());
 
         questionListView.setAdapter(questionListAdapter);

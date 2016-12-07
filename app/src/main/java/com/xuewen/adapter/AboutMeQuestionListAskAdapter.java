@@ -9,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.xuewen.bean.Question;
 import com.xuewen.bean.UUidBean;
 import com.xuewen.bean.UUidFARBean;
 import com.xuewen.utility.GlobalUtil;

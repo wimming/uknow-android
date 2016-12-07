@@ -6,15 +6,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xuewen.bean.QRBean;
-import com.xuewen.bean.Question;
 import com.xuewen.utility.GlobalUtil;
-import com.xuewen.xuewen.QuestionListAdapter;
 import com.xuewen.xuewen.R;
 
 import java.util.List;

@@ -71,21 +71,21 @@ public class UserListAdapter extends BaseAdapter{
         viewHolder.description.setText(list.get(position).description);
         ImageLoader.getInstance().displayImage(GlobalUtil.getInstance().avatarUrl+list.get(position).avatarUrl, viewHolder.avatarUrl, GlobalUtil.getInstance().circleBitmapOptions);
 
-//        // 渲染层已经做了渲染判断 点击只需更改数据即可 无需再次渲染
-//        if (list.get(position).followed == 0) {
-//            //viewHolder.followed.setVisibility(View.INVISIBLE);
-//            viewHolder.followed.setBackgroundResource(R.drawable.unfollow_button);
-//            viewHolder.followed.setText("+关注");
-//
-//            viewHolder.followed.setTextColor(context.getResources().getColor(R.color.main_color));
-//
-//
-//        } else {
-////            viewHolder.followed.setVisibility(View.VISIBLE);
-//            viewHolder.followed.setBackgroundResource(R.drawable.follow_button);
-//            viewHolder.followed.setText("已关注");
-//            viewHolder.followed.setTextColor(Color.GRAY);
-//        }
+        // 渲染层已经做了渲染判断 点击只需更改数据即可 无需再次渲染
+        if (list.get(position).followed == 0) {
+            //viewHolder.followed.setVisibility(View.INVISIBLE);
+            viewHolder.followed.setBackgroundResource(R.drawable.unfollow_button);
+            viewHolder.followed.setText("+关注");
+
+            viewHolder.followed.setTextColor(context.getResources().getColor(R.color.main_color));
+
+
+        } else {
+//            viewHolder.followed.setVisibility(View.VISIBLE);
+            viewHolder.followed.setBackgroundResource(R.drawable.follow_button);
+            viewHolder.followed.setText("已关注");
+            viewHolder.followed.setTextColor(Color.GRAY);
+        }
 
         return view;
     }
