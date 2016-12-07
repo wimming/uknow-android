@@ -15,12 +15,15 @@ import android.widget.ListView;
 
 import com.xuewen.adapter.AboutMeQuestionListAskAdapter;
 import com.xuewen.bean.Question;
+import com.xuewen.bean.UUidBean;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class AboutMeFragmentTwo extends Fragment {
+
+    public List<UUidBean.Asked> dataList = new ArrayList<>();
 
     @Nullable
     @Override
@@ -33,16 +36,17 @@ public class AboutMeFragmentTwo extends Fragment {
         }
 
 
-        List<Question> questionList = new ArrayList<>();
+//        List<Question> questionList = new ArrayList<>();
+//
+//        Question q;
+//        for (int i = 0; i < 10; ++i) {
+//            q = new Question();
+//            q.que_description = "师兄好，软件学院的学生毕业后有哪些出路呢？";
+//            q.que_username = "张三的回答";
+//            questionList.add(q);
+//        }
 
-        Question q;
-        for (int i = 0; i < 10; ++i) {
-            q = new Question();
-            q.que_description = "师兄好，软件学院的学生毕业后有哪些出路呢？";
-            q.que_username = "张三的回答";
-            questionList.add(q);
-        }
-        AboutMeQuestionListAskAdapter questionListAdapter = new AboutMeQuestionListAskAdapter(questionList, getActivity());
+        AboutMeQuestionListAskAdapter questionListAdapter = new AboutMeQuestionListAskAdapter(dataList, getActivity());
 
         questionListView.setAdapter(questionListAdapter);
         questionListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

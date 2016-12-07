@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -62,6 +63,7 @@ public class ProfileFragment extends Fragment {
     @BindView(R.id.appbar) AppBarLayout appbar;
 //    @BindView(R.id.refresh) SwipeRefreshLayout refresh;
 
+    private ViewPager viewPager;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -72,51 +74,11 @@ public class ProfileFragment extends Fragment {
 
         TabLayout tabLayout = (TabLayout) rootView.findViewById(R.id.aboutme_tbl);
 
-        final ViewPager viewPager = (ViewPager) rootView.findViewById(R.id.aboutme_pager);
+        viewPager = (ViewPager) rootView.findViewById(R.id.aboutme_pager);
 
         // 两个tablayout嵌套的话，子的必须使用getChildPragmentManager
         // 不然和父的 PragmentManager冲突
-        viewPager.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
-
-            private Fragment aboutMeFragmentTwo;
-            private Fragment aboutMeFragmentOne;
-
-            @Override
-            public Fragment getItem(int position) {
-
-                if (position == 0) {
-                    if (aboutMeFragmentOne == null) {
-                        aboutMeFragmentOne = new AboutMeFragmentOne();
-                    }
-                    return aboutMeFragmentOne;
-                }
-                else if (position == 1) {
-                    if (aboutMeFragmentTwo == null) {
-                        aboutMeFragmentTwo = new AboutMeFragmentTwo();
-                    }
-                    return aboutMeFragmentTwo;
-                }
-                else {
-                    return null;
-                }
-            }
-
-            @Override
-            public int getCount() {
-                return 2;
-            }
-
-            @Override
-            public CharSequence getPageTitle(int position) {
-               if (position == 1) {
-                   return "我问 20";
-               } else if (position == 0){
-                   return "我答 20";
-               } else {
-                   return null;
-               }
-            }
-        });
+        viewPager.setAdapter(new AskAndAnswerAdapter(getChildFragmentManager()));
         tabLayout.setupWithViewPager(viewPager);
 
         aboutme_iv_edit.setOnClickListener(new View.OnClickListener() {
@@ -212,6 +174,64 @@ public class ProfileFragment extends Fragment {
         status.setText(data.status);
         followedNum.setText(data.followedNum+"人关注");
 
+        List<UUidBean.Answer> answerList = ((AboutMeFragmentOne)((AskAndAnswerAdapter)viewPager.getAdapter()).aboutMeFragmentOne).dataList;
+        List<UUidBean.Asked> askedList = ((AboutMeFragmentTwo)((AskAndAnswerAdapter)viewPager.getAdapter()).aboutMeFragmentTwo).dataList;
+
+        if (data.answer != null && data.asked != null) {
+            answerList.clear();
+            answerList.addAll(data.answer);
+            askedList.clear();
+            askedList.addAll(data.asked);
+        }
+
+    }
+
+    class AskAndAnswerAdapter extends FragmentPagerAdapter {
+
+        public Fragment aboutMeFragmentTwo;
+        public Fragment aboutMeFragmentOne;
+
+        public AskAndAnswerAdapter(FragmentManager fm) {
+            super(fm);
+            aboutMeFragmentOne = new AboutMeFragmentOne();
+            aboutMeFragmentTwo = new AboutMeFragmentTwo();
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+
+            if (position == 0) {
+                if (aboutMeFragmentOne == null) {
+                    aboutMeFragmentOne = new AboutMeFragmentOne();
+                }
+                return aboutMeFragmentOne;
+            }
+            else if (position == 1) {
+                if (aboutMeFragmentTwo == null) {
+                    aboutMeFragmentTwo = new AboutMeFragmentTwo();
+                }
+                return aboutMeFragmentTwo;
+            }
+            else {
+                return null;
+            }
+        }
+
+        @Override
+        public int getCount() {
+            return 2;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            if (position == 1) {
+                return "我问 20";
+            } else if (position == 0){
+                return "我答 20";
+            } else {
+                return null;
+            }
+        }
     }
 }
 

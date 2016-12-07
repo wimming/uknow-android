@@ -80,6 +80,9 @@ public interface ApiService {
     @GET("api/users/{user_id}/introduction")
     Call<UUidIResult> requestUUidI(@Path("user_id") int uid);
 
+    @GET("api/users/{user_id}/followsAndRecommendations")
+    Call<UUidFARResult> requestUUidFAR(@Path("user_id") int uid);
+
     @GET("api/users/{user_id}/follows")
     Call<UUidFResult> requestUUidF(@Path("user_id") int uid);
     @POST("api/users/{user_id}/follows")

@@ -1,4 +1,4 @@
-package com.xuewen.xuewen;
+package com.xuewen.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,7 +10,10 @@ import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xuewen.bean.Question;
+import com.xuewen.bean.UUidBean;
+import com.xuewen.bean.UUidFARBean;
 import com.xuewen.utility.GlobalUtil;
+import com.xuewen.xuewen.R;
 
 import java.util.List;
 
@@ -19,10 +22,10 @@ import java.util.List;
  */
 public class AboutMeQuestionListAnswerAdapter extends BaseAdapter{
 
-    private List<Question> list;
+    private List<UUidBean.Answer> list;
     private Context context;
 
-    public AboutMeQuestionListAnswerAdapter(List<Question> list, Context context) {
+    public AboutMeQuestionListAnswerAdapter(List<UUidBean.Answer> list, Context context) {
         this.list = list;
         this.context = context;
     }
@@ -56,9 +59,9 @@ public class AboutMeQuestionListAnswerAdapter extends BaseAdapter{
         if (convertView == null) {
             view = LayoutInflater.from(context).inflate(R.layout.aboutme_answer_list_item, null);
             viewHolder = new ViewHolder();
-            viewHolder.que_headimgurl = (ImageView) view.findViewById(R.id.que_headimgurl);
-            viewHolder.que_username = (TextView)view.findViewById(R.id.que_username);
-            viewHolder.que_description = (TextView) view.findViewById(R.id.que_description);
+            viewHolder.asker_avatarUrl = (ImageView) view.findViewById(R.id.asker_avatarUrl);
+            viewHolder.asker_username = (TextView)view.findViewById(R.id.asker_username);
+            viewHolder.description = (TextView) view.findViewById(R.id.description);
             view.setTag(viewHolder);
         }
         else {
@@ -66,16 +69,17 @@ public class AboutMeQuestionListAnswerAdapter extends BaseAdapter{
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        viewHolder.que_username.setText(list.get(position).que_description);
-        viewHolder.que_description.setText(list.get(position).ans_description);
+        viewHolder.asker_username.setText(list.get(position).asker_username);
+        viewHolder.description.setText(list.get(position).description);
 
-        ImageLoader.getInstance().displayImage("drawable://" +  R.drawable.avatar, viewHolder.que_headimgurl, GlobalUtil.getInstance().circleBitmapOptions);
+        ImageLoader.getInstance().displayImage(GlobalUtil.getInstance().avatarUrl+list.get(position).asker_avatarUrl, viewHolder.asker_avatarUrl, GlobalUtil.getInstance().circleBitmapOptions);
+
         return view;
     }
 
     private class ViewHolder {
-        public ImageView que_headimgurl;
-        public TextView que_username;
-        public TextView que_description;
+        public ImageView asker_avatarUrl;
+        public TextView asker_username;
+        public TextView description;
     }
 }
