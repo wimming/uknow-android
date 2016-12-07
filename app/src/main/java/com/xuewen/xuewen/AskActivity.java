@@ -3,7 +3,9 @@ package com.xuewen.xuewen;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.ShareCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -74,6 +76,12 @@ public class AskActivity extends AppCompatActivity {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
+    @BindView(R.id.refresh)
+    SwipeRefreshLayout refresh;
+    @BindView(R.id.main_content)
+    CoordinatorLayout main_content;
+
+
 
     private ApiService apiService;
 
@@ -92,6 +100,24 @@ public class AskActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             questionListView.setNestedScrollingEnabled(true);
         }
+
+        //两个滚动 有冲突 不做刷新
+//        refresh.setColorSchemeResources(android.R.color.holo_blue_bright, android.R.color.holo_green_light, android.R.color.holo_orange_light);
+//        refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//                //Toast.makeText(getActivity(), "刷新一下", Toast.LENGTH_SHORT).show();
+//                refresh.setRefreshing(false);
+//                requestData(id);
+//
+//            }
+//        });
+
+
+        refresh.setEnabled(false); //不做刷新
+        refresh.setRefreshing(true);
+        main_content.setVisibility(View.GONE);
+
 
 
         editText.addTextChangedListener(new MyTextWatch(this, 60, textView));
@@ -120,7 +146,6 @@ public class AskActivity extends AppCompatActivity {
             finish();
             return;
         }
-
 
         requestData(id);
     }
@@ -163,18 +188,27 @@ public class AskActivity extends AppCompatActivity {
             public void onResponse(Call<UUidIResult> call, Response<UUidIResult> response) {
                 if (!response.isSuccessful()) {
                     Toast.makeText(AskActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
+                    refresh.setRefreshing(false);
+                    main_content.setVisibility(View.VISIBLE);
                     return;
                 }
                 if (response.body().status != 200) {
                     Toast.makeText(AskActivity.this, response.body().errmsg, Toast.LENGTH_LONG).show();
+                    refresh.setRefreshing(false);
+                    main_content.setVisibility(View.VISIBLE);
                     return;
                 }
 
                 renderView(response.body().data);
+                refresh.setRefreshing(false);
+                main_content.setVisibility(View.VISIBLE);
+
             }
             @Override
             public void onFailure(Call<UUidIResult> call, Throwable t) {
                 Toast.makeText(AskActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_LONG).show();
+                refresh.setRefreshing(false);
+                main_content.setVisibility(View.VISIBLE);
             }
         });
     }
