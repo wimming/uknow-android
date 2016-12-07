@@ -73,6 +73,7 @@ public class SearchingFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(), AskActivity.class);
+                intent.putExtra("id", ((UUidFARBean) parent.getAdapter().getItem(position)).id);
                 startActivity(intent);
             }
         });

@@ -60,6 +60,9 @@ public class UserListAdapter extends BaseAdapter{
             viewHolder.status = (TextView) view.findViewById(R.id.status);
             viewHolder.description= (TextView) view.findViewById(R.id.description);
             viewHolder.followed = (TextView) view.findViewById(R.id.followed);
+
+            viewHolder.followed.setOnClickListener(onFollowedClickListener);
+
             view.setTag(viewHolder);
         } else {
             view = convertView;
@@ -87,6 +90,8 @@ public class UserListAdapter extends BaseAdapter{
             viewHolder.followed.setTextColor(Color.GRAY);
         }
 
+        viewHolder.followed.setTag(position);
+
         return view;
     }
 
@@ -97,4 +102,11 @@ public class UserListAdapter extends BaseAdapter{
         public TextView description;
         public TextView followed;
     }
+
+    private View.OnClickListener onFollowedClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+
+        }
+    };
 }

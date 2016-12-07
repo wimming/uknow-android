@@ -46,6 +46,8 @@ import retrofit2.Response;
 
 public class AskActivity extends AppCompatActivity {
 
+    private int id;
+
     @BindView(R.id.editText)
     EditText editText;
     @BindView((R.id.textView))
@@ -71,7 +73,7 @@ public class AskActivity extends AppCompatActivity {
     TextView title;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-            ;
+
 
     private ApiService apiService;
 
@@ -98,7 +100,7 @@ public class AskActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                sendSendAskedRequestService(CurrentUser.userId, editText.getText().toString(),7);
+                sendSendAskedRequestService(CurrentUser.userId, editText.getText().toString(), id);
                 Toast.makeText(AskActivity.this, "提问成功", Toast.LENGTH_SHORT).show();
             }
         });
@@ -111,7 +113,16 @@ public class AskActivity extends AppCompatActivity {
             }
         });
 
-        renderView(CurrentUser.userId);
+
+        id = getIntent().getIntExtra("id", -1);
+        if (id == -1) {
+            Toast.makeText(AskActivity.this, ToastMsg.APPLICATION_ERROR, Toast.LENGTH_LONG).show();
+            finish();
+            return;
+        }
+
+
+        requestData(id);
     }
 
 
@@ -145,8 +156,7 @@ public class AskActivity extends AppCompatActivity {
         });
     }
 
-    private void renderView(int uid) {
-
+    private void requestData(int uid) {
         Call<UUidIResult> call = apiService.requestUUidI(uid);
         call.enqueue(new Callback<UUidIResult>() {
             @Override
@@ -160,39 +170,41 @@ public class AskActivity extends AppCompatActivity {
                     return;
                 }
 
-                UUidIBean bean = response.body().data;
-                title.setText("向" + bean.username + "提问");
-                username.setText(bean.username);
-                status.setText(bean.status);
-                description.setText(bean.description);
-                if (bean.followed == 0) {
-                    followed.setText("+关注");
-                    followed.setBackgroundResource(R.drawable.follow_button);
-                    followed.setTextColor(Color.GRAY);
-                    //viewHolder.followed.setTextColor(context.getResources().getColor(R.color.main_color));
-                }
-
-                ImageLoader.getInstance().displayImage(GlobalUtil.getInstance().avatarUrl+ bean.avatarUrl, avatarUrl, GlobalUtil.getInstance().circleBitmapOptions);
-
-                followedAndAnswerSituation.setText(bean.followedNum + "人关注, 回答了" + bean.ansNum + "个问题");
-
-                final QRListAdapter adapter = new QRListAdapter(bean.answers, AskActivity.this);
-                questionListView.setAdapter(adapter);
-                questionListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Intent intent = new Intent(AskActivity.this, QuestionDetailActivity.class);
-                        intent.putExtra("id", ((QRBean) parent.getAdapter().getItem(position)).id);
-                        startActivity(intent);
-                    }
-                });
-
-                Toast.makeText(AskActivity.this, response.body().toString(), Toast.LENGTH_SHORT).show();
+                renderView(response.body().data);
             }
             @Override
             public void onFailure(Call<UUidIResult> call, Throwable t) {
                 Toast.makeText(AskActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    private void renderView(UUidIBean data) {
+        title.setText("向" + data.username + "提问");
+        username.setText(data.username);
+        status.setText(data.status);
+        description.setText(data.description);
+        if (data.followed == 0) {
+            followed.setText("+关注");
+            followed.setBackgroundResource(R.drawable.follow_button);
+            followed.setTextColor(Color.GRAY);
+            //viewHolder.followed.setTextColor(context.getResources().getColor(R.color.main_color));
+        }
+
+        ImageLoader.getInstance().displayImage(GlobalUtil.getInstance().avatarUrl+ data.avatarUrl, avatarUrl, GlobalUtil.getInstance().circleBitmapOptions);
+
+        followedAndAnswerSituation.setText(data.followedNum + "人关注, 回答了" + data.ansNum + "个问题");
+
+        final QRListAdapter adapter = new QRListAdapter(data.answers, AskActivity.this);
+        questionListView.setAdapter(adapter);
+        questionListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(AskActivity.this, QuestionDetailActivity.class);
+                intent.putExtra("id", ((QRBean) parent.getAdapter().getItem(position)).id);
+                startActivity(intent);
+            }
+        });
+
     }
 }

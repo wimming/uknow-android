@@ -20,7 +20,7 @@ public class QRBean {
     public String description;
 
     @DatabaseField(columnName = "answerer_id")
-    public String answerer_id;
+    public int answerer_id;
 
     @DatabaseField(columnName = "answerer_username")
     public String answerer_username;
