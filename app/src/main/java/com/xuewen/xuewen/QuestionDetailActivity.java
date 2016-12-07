@@ -176,9 +176,10 @@ public class QuestionDetailActivity extends AppCompatActivity {
             if (downloadedFilePath == null || downloadedFilePath.equals("")) {
 
                 // 显示progress -> 下载完成 -> 收起progress
-                final ProgressDialog.Builder builder = new ProgressDialog.Builder(QuestionDetailActivity.this);
-                final AlertDialog dialog = builder.create();
-                dialog.show();
+                final ProgressDialog dialog = ProgressDialog.show(QuestionDetailActivity.this, "", "语音文件下载中...");
+//                final ProgressDialog.Builder builder = new ProgressDialog.Builder(QuestionDetailActivity.this);
+//                final AlertDialog dialog = builder.create();
+//                dialog.show();
 
                 final String filePath = GlobalUtil.getInstance().audioUrl + data.audioUrl;
 
@@ -188,6 +189,7 @@ public class QuestionDetailActivity extends AppCompatActivity {
                 fileCall.enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        dialog.dismiss();
                         if (!response.isSuccessful()) {
                             Toast.makeText(QuestionDetailActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
                             return;
@@ -200,7 +202,6 @@ public class QuestionDetailActivity extends AppCompatActivity {
                         }
 
                         downloadedFilePath = filePath;
-                        dialog.dismiss();
 
                         if (!mediaPlayer.isPlaying()) {
                             try {
@@ -218,6 +219,7 @@ public class QuestionDetailActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable t) {
                         Toast.makeText(QuestionDetailActivity.this, ToastMsg.NETWORK_ERROR + " : " + t.getMessage(), Toast.LENGTH_LONG).show();
+                        dialog.dismiss();
                     }
                 });
 
