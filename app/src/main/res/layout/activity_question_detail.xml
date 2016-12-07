@@ -47,11 +47,10 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                >
+                android:layout_marginBottom="10dp">
                 <ImageView
                     android:id="@+id/asker_avatarUrl"
-                    android:src="@drawable/avatar"
+
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_marginRight="@dimen/base_margin"
@@ -85,7 +84,7 @@
 
             <ImageView
                 android:id="@+id/answerer_avatarUrl"
-                android:src="@drawable/avatar"
+
                 android:layout_width="90dp"
                 android:layout_height="90dp"
                 android:layout_marginBottom="10dp"
