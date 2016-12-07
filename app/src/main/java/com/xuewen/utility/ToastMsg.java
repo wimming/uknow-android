@@ -15,7 +15,7 @@ public class ToastMsg {
     public static final  String VALIDE_EMPTY_ERROR = "输入字段不能为空";
     public static  final  String MODIFY_SUCCESS = "修改成功";
 
-    public static final void showTips(Context context, String message) {
+    public static void showTips(Context context, String message) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
     }
 }

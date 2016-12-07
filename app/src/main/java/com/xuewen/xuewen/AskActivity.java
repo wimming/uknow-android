@@ -1,10 +1,12 @@
 package com.xuewen.xuewen;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.support.v4.app.ShareCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -26,6 +28,7 @@ import com.xuewen.networkservice.ApiService;
 import com.xuewen.networkservice.QRResult;
 import com.xuewen.networkservice.QResult;
 import com.xuewen.networkservice.UUidIResult;
+import com.xuewen.utility.CurrentUser;
 import com.xuewen.utility.GlobalUtil;
 import com.xuewen.utility.MyTextWatch;
 import com.xuewen.utility.ToastMsg;
@@ -56,13 +59,18 @@ public class AskActivity extends AppCompatActivity {
     TextView username;
     @BindView(R.id.followed)
     TextView followed;
+    @BindView(R.id.followedAndAnswerSituation)
+    TextView followedAndAnswerSituation;
     @BindView(R.id.status)
     TextView status;
     @BindView(R.id.description)
     TextView description;
     @BindView(R.id.question_list_view)
     ListView questionListView;
-
+    @BindView(R.id.title)
+    TextView title;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
             ;
 
     private ApiService apiService;
@@ -83,20 +91,6 @@ public class AskActivity extends AppCompatActivity {
             questionListView.setNestedScrollingEnabled(true);
         }
 
-//        List<Question> questionList = new ArrayList<>();
-//
-//        Question q;
-//        for (int i = 0; i < 10; ++i) {
-//            q = new Question("师兄好，软件学院的学生毕业后有哪些出路呢？");
-//            q.ans_description = "张三 | 清华大学计算机系，ACM校队队长，喜欢钻研算法，喜欢钻研算法";
-//            q.heard = 100;
-//            q.liked = 10;
-//            q.ans_headimgurl = "http://www.jd.com/favicon.ico";
-//            questionList.add(q);
-//        }
-//
-//        QuestionListAdapter questionListAdapter = new QuestionListAdapter(questionList, this);
-//        questionListView.setAdapter(questionListAdapter);
 
         editText.addTextChangedListener(new MyTextWatch(this, 60, textView));
 
@@ -104,12 +98,20 @@ public class AskActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                sendSendAskedRequestService(2, editText.getText().toString(),7);
-                Toast.makeText(AskActivity.this, "提问成功", Toast.LENGTH_SHORT);
+                sendSendAskedRequestService(CurrentUser.userId, editText.getText().toString(),7);
+                Toast.makeText(AskActivity.this, "提问成功", Toast.LENGTH_SHORT).show();
             }
         });
 
-        renderView(2);
+        toolbar.setNavigationIcon(R.drawable.back);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        renderView(CurrentUser.userId);
     }
 
 
@@ -154,14 +156,20 @@ public class AskActivity extends AppCompatActivity {
                 }
 
                 UUidIBean bean = response.body().data;
+                title.setText("向" + bean.username + "提问");
                 username.setText(bean.username);
                 status.setText(bean.status);
                 description.setText(bean.description);
                 if (bean.followed == 0) {
                     followed.setText("+关注");
-                    followed.setBackgroundResource(R.drawable.unfollow_button);
+                    followed.setBackgroundResource(R.drawable.follow_button);
+                    followed.setTextColor(Color.GRAY);
                     //viewHolder.followed.setTextColor(context.getResources().getColor(R.color.main_color));
                 }
+
+                ImageLoader.getInstance().displayImage(GlobalUtil.getInstance().avatarUrl+ bean.avatarUrl, avatarUrl, GlobalUtil.getInstance().circleBitmapOptions);
+
+                followedAndAnswerSituation.setText(bean.followedNum + "人关注, 回答了" + bean.ansNum + "个问题");
 
                 final QRListAdapter adapter = new QRListAdapter(bean.answers, AskActivity.this);
                 questionListView.setAdapter(adapter);
