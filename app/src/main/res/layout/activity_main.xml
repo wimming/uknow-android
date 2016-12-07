@@ -61,6 +61,7 @@
             android:layout_height="1dp" />
         <android.support.design.widget.TabLayout
             android:id="@+id/tab_layout"
+            android:background="@android:color/white"
             app:tabMode="fixed"
             app:tabIndicatorHeight="0dp"
             app:tabTextColor="@color/tab_unselected_text_color"
