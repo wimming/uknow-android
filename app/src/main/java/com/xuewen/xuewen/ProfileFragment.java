@@ -4,10 +4,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -45,7 +47,7 @@ import retrofit2.Response;
 
 public class ProfileFragment extends Fragment {
 
-    private UUidBean uUidBean;
+    private UUidBean data;
     private DatabaseHelper databaseHelper;
     private boolean networkLock = false;
 
@@ -57,32 +59,46 @@ public class ProfileFragment extends Fragment {
     @BindView(R.id.aboutme_iv_edit) ImageView aboutme_iv_edit;
     @BindView(R.id.aboutme_iv_setting) ImageView aboutme_iv_setting;
 
+    @BindView(R.id.appbar) AppBarLayout appbar;
+//    @BindView(R.id.refresh) SwipeRefreshLayout refresh;
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
     {
         View rootView = inflater.inflate(R.layout.fragment_2, container, false);
-
         ButterKnife.bind(this, rootView);
 
         TabLayout tabLayout = (TabLayout) rootView.findViewById(R.id.aboutme_tbl);
-//        aboutme_iv_setting = (ImageView) rootView.findViewById(R.id.aboutme_iv_setting);
-//        avatar = (ImageView) rootView.findViewById(R.id.avatar);
 
-//        ImageLoader.getInstance().displayImage("drawable://" +  R.drawable.avatar, avatar, GlobalUtil.getInstance().circleBitmapOptions);
-
-        ViewPager viewPager = (ViewPager) rootView.findViewById(R.id.aboutme_pager);
+        final ViewPager viewPager = (ViewPager) rootView.findViewById(R.id.aboutme_pager);
 
         // 两个tablayout嵌套的话，子的必须使用getChildPragmentManager
         // 不然和父的 PragmentManager冲突
         viewPager.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
+
+            private Fragment aboutMeFragmentTwo;
+            private Fragment aboutMeFragmentOne;
+
             @Override
             public Fragment getItem(int position) {
 
-                if (position == 1) {
-                    return new AboutMeFragmentTwo();
+                if (position == 0) {
+                    if (aboutMeFragmentOne == null) {
+                        aboutMeFragmentOne = new AboutMeFragmentOne();
+                    }
+                    return aboutMeFragmentOne;
                 }
-                return new AboutMeFragmentOne();
+                else if (position == 1) {
+                    if (aboutMeFragmentTwo == null) {
+                        aboutMeFragmentTwo = new AboutMeFragmentTwo();
+                    }
+                    return aboutMeFragmentTwo;
+                }
+                else {
+                    return null;
+                }
             }
 
             @Override
@@ -119,6 +135,7 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+        // database service -> network service(不可见、开始刷新 -> 加载成功 -> 可见、结束刷新) -> write back to database
         if (!networkLock) {
 
             // database service
@@ -138,6 +155,10 @@ public class ProfileFragment extends Fragment {
             }
 
             // network service
+            // 不可见、开始刷新 -> 加载成功 -> 可见、结束刷新
+            appbar.setVisibility(View.GONE);
+//            refresh.setRefreshing(true);
+
             ApiService apiService = ApiService.retrofit.create(ApiService.class);
             Call<UUidResult> call = apiService.requestUUid(CurrentUser.userId);
 
@@ -154,7 +175,11 @@ public class ProfileFragment extends Fragment {
                     }
                     renderView(response.body().data);
 
-                    uUidBean = response.body().data;
+                    appbar.setVisibility(View.VISIBLE);
+//                    refresh.setRefreshing(false);
+
+                    data = response.body().data;
+                    networkLock = true;
 
                     // write back to database
                     try {
@@ -163,7 +188,6 @@ public class ProfileFragment extends Fragment {
                         e.printStackTrace();
                     }
 
-                    networkLock = true;
                 }
 
                 @Override
@@ -174,9 +198,7 @@ public class ProfileFragment extends Fragment {
 
         }
         else {
-
-            renderView(uUidBean);
-
+            renderView(data);
         }
 
         return rootView;
@@ -188,7 +210,7 @@ public class ProfileFragment extends Fragment {
         username.setText(data.username);
         description.setText(data.description);
         status.setText(data.status);
-        followedNum.setText(data.followedNum+"");
+        followedNum.setText(data.followedNum+"人关注");
 
     }
 }

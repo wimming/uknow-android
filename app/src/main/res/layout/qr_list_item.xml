@@ -46,7 +46,7 @@
 
         <Button
             android:id="@+id/listen"
-            android:text='97"'
+            android:text="97''"
             android:background="@drawable/listen_view"
             android:layout_marginRight="40dp"
             android:layout_marginLeft="5dp"

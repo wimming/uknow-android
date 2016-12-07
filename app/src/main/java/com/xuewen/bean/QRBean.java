@@ -37,4 +37,7 @@ public class QRBean {
     @DatabaseField(columnName = "praiseNum")
     public int praiseNum;
 
+    @DatabaseField(columnName = "audioSeconds")
+    public int audioSeconds;
+
 }

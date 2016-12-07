@@ -3,19 +3,34 @@ package com.xuewen.xuewen;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.Toast;
 
+import com.xuewen.adapter.QRListAdapter;
 import com.xuewen.adapter.UserListAdapter;
-import com.xuewen.bean.Question;
-import com.xuewen.bean.UserMe;
+import com.xuewen.bean.QRBean;
+import com.xuewen.bean.UUidFANDUUidRBean;
+import com.xuewen.databaseservice.DatabaseHelper;
+import com.xuewen.networkservice.ApiService;
+import com.xuewen.networkservice.QRResult;
+import com.xuewen.networkservice.UUidRResult;
+import com.xuewen.utility.CurrentUser;
+import com.xuewen.utility.ToastMsg;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by ym on 16-10-23.
@@ -23,38 +38,92 @@ import java.util.List;
 
 public class SearchingFragment extends Fragment {
 
+    private List<UUidFANDUUidRBean> dataList = new ArrayList<>();
+    private DatabaseHelper databaseHelper;
+    private boolean networkLock = false;
+
+    @BindView(R.id.refresh) SwipeRefreshLayout refresh;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
     {
         View rootView = inflater.inflate(R.layout.fragment_1, container, false);
-        final ListView usersListView = (ListView) rootView.findViewById(R.id.usersListView);
+        ButterKnife.bind(this, rootView);
 
-        List<UserMe> list = new ArrayList<>();
-        UserMe userMe;
-        for (int i = 0; i < 10; i++) {
-            userMe = new UserMe();
-            userMe.username = "张三";
-            userMe.school = "中山大学软学院学生";
-            userMe.description = "爱好产品，曾在腾讯实习，略懂开发";
-            if (i < 5) {
-                userMe.followed = 1;   //假数据
-            } else {
-                userMe.followed = 0;
-            }
-            list.add(userMe);
-        }
+        refresh.setColorSchemeResources(android.R.color.holo_blue_bright, android.R.color.holo_green_light, android.R.color.holo_orange_light);
 
-        UserListAdapter userListAdapter = new UserListAdapter(list, getActivity());
-        usersListView.setAdapter(userListAdapter);
-
-        usersListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getActivity(), AskActivity.class);
-                startActivity(intent);
+            public void onRefresh() {
+
+                Toast.makeText(getActivity(), "刷新一下", Toast.LENGTH_SHORT).show();
+                refresh.setRefreshing(false);
+                //handler -> update message
             }
         });
+
+        final ListView listView = (ListView) rootView.findViewById(R.id.listView);
+        final UserListAdapter adapter = new UserListAdapter(dataList, getActivity());
+        listView.setAdapter(adapter);
+
+        // database service -> network service(开始刷新 -> 加载成功 -> 结束刷新) -> write back to database
+        if (!networkLock) {
+
+            // database service
+            databaseHelper = DatabaseHelper.getHelper(getActivity());
+            try {
+                List<UUidFANDUUidRBean> records = databaseHelper.getUUidFANDUUidRBeanDao().queryForAll();
+                dataList.clear();
+                dataList.addAll(records);
+                adapter.notifyDataSetChanged();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            // network service
+            // 开始刷新 -> 加载成功 -> 结束刷新
+            refresh.setRefreshing(true);
+
+            ApiService apiService = ApiService.retrofit.create(ApiService.class);
+            Call<UUidRResult> call = apiService.requestUUidR(CurrentUser.userId);
+
+            call.enqueue(new Callback<UUidRResult>() {
+                @Override
+                public void onResponse(Call<UUidRResult> call, Response<UUidRResult> response) {
+                    if (!response.isSuccessful()) {
+                        Toast.makeText(getActivity(), ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                    if (response.body().status != 200) {
+                        Toast.makeText(getActivity(), response.body().errmsg, Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                    dataList.clear();
+                    dataList.addAll(response.body().data);
+                    adapter.notifyDataSetChanged();
+
+                    refresh.setRefreshing(false);
+
+                    networkLock = true;
+
+                    // write back to database
+                    try {
+                        databaseHelper.getUUidFANDUUidRBeanDao().executeRaw("delete from tb_UUidFANDUUidR");
+                        databaseHelper.getUUidFANDUUidRBeanDao().create(response.body().data);
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+
+                @Override
+                public void onFailure(Call<UUidRResult> call, Throwable t) {
+                    Toast.makeText(getActivity(), ToastMsg.NETWORK_ERROR + " : " + t.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            });
+
+        }
 
         return rootView;
     }

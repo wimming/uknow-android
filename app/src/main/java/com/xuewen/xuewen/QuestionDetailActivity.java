@@ -1,13 +1,18 @@
 package com.xuewen.xuewen;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,6 +48,7 @@ import retrofit2.Retrofit;
 public class QuestionDetailActivity extends AppCompatActivity {
 
     private int id;
+    private QQidBean data;
 
     @BindView(R.id.asker_avatarUrl) ImageView asker_avatarUrl;
     @BindView(R.id.asker_username) TextView asker_username;
@@ -56,8 +62,8 @@ public class QuestionDetailActivity extends AppCompatActivity {
 
     @BindView(R.id.listen) Button listen;
 
-//    private ImageView header_avatar;
-//    private ImageView avatar;
+    @BindView(R.id.refresh) SwipeRefreshLayout refresh;
+    @BindView(R.id.visibilityController) LinearLayout visibilityController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,8 +74,6 @@ public class QuestionDetailActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
-//        setSupportActionBar(toolbar);
-//        getSupportActionBar().setTitle("");
         toolbar.setNavigationIcon(R.drawable.back);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,11 +82,7 @@ public class QuestionDetailActivity extends AppCompatActivity {
             }
         });
 
-//        avatar = (ImageView) findViewById(R.id.avatar);
-//        header_avatar = (ImageView) findViewById(R.id.header_avatar);
-//
-//        ImageLoader.getInstance().displayImage("drawable://" +  R.drawable.avatar, avatar, GlobalUtil.getInstance().circleBitmapOptions);
-//        ImageLoader.getInstance().displayImage("drawable://" +  R.drawable.avatar, header_avatar, GlobalUtil.getInstance().circleBitmapOptions);
+        refresh.setColorSchemeResources(android.R.color.holo_blue_bright, android.R.color.holo_green_light, android.R.color.holo_orange_light);
 
         id = getIntent().getIntExtra("id", -1);
         if (id == -1) {
@@ -90,6 +90,10 @@ public class QuestionDetailActivity extends AppCompatActivity {
             finish();
             return;
         }
+
+        // 不可见、开始刷新 -> 加载成功 -> 可见、结束刷新
+        visibilityController.setVisibility(View.GONE);
+        refresh.setRefreshing(true);
 
         ApiService apiService = ApiService.retrofit.create(ApiService.class);
         Call<QQidResult> call = apiService.requestQQid(id, CurrentUser.userId);
@@ -106,8 +110,12 @@ public class QuestionDetailActivity extends AppCompatActivity {
                     return;
                 }
                 renderView(response.body().data);
+                data = response.body().data;
 
                 listen.setOnClickListener(listenClickListener);
+
+                visibilityController.setVisibility(View.VISIBLE);
+                refresh.setRefreshing(false);
             }
 
             @Override
@@ -120,11 +128,11 @@ public class QuestionDetailActivity extends AppCompatActivity {
 
     private void renderView(QQidBean data) {
 
-        ImageLoader.getInstance().displayImage("drawable://" +  R.drawable.avatar, asker_avatarUrl, GlobalUtil.getInstance().circleBitmapOptions);
+        ImageLoader.getInstance().displayImage(GlobalUtil.getInstance().avatarUrl+data.asker_avatarUrl, asker_avatarUrl, GlobalUtil.getInstance().circleBitmapOptions);
         asker_username.setText(data.asker_username);
         askDate.setText(data.askDate);
         description.setText(data.description);
-        ImageLoader.getInstance().displayImage("drawable://" +  R.drawable.avatar, answerer_avatarUrl, GlobalUtil.getInstance().circleBitmapOptions);
+        ImageLoader.getInstance().displayImage(GlobalUtil.getInstance().avatarUrl+data.answerer_avatarUrl, answerer_avatarUrl, GlobalUtil.getInstance().circleBitmapOptions);
         answerer_username.setText(data.answerer_username);
         answerer_status.setText(data.answerer_status);
         answerer_description.setText(data.answerer_description);
@@ -135,8 +143,16 @@ public class QuestionDetailActivity extends AppCompatActivity {
     private View.OnClickListener listenClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+
+            // 显示progress -> 下载完成 -> 收起progress
+            final ProgressDialog.Builder builder = new ProgressDialog.Builder(QuestionDetailActivity.this);
+            final AlertDialog dialog =  builder.create();
+            dialog.show();
+
+            final String filePath = GlobalUtil.getInstance().audioUrl+data.audioUrl;
+
             FileService fileService = FileService.retrofit.create(FileService.class);
-            Call<ResponseBody> fileCall = fileService.downloadFile("file/20141027/11284670_094822707000_2.jpg");
+            Call<ResponseBody> fileCall = fileService.downloadFile(filePath);
 
             fileCall.enqueue(new Callback<ResponseBody>() {
                 @Override
@@ -146,10 +162,24 @@ public class QuestionDetailActivity extends AppCompatActivity {
                         return;
                     }
 
-                    boolean writtenToDisk = FileWriter.getInstance().writeResponseBodyToDisk(response.body(), getExternalFilesDir(null)+"", "test.png");
+                    boolean writtenToDisk = FileWriter.getInstance().writeResponseBodyToDisk(response.body(), getExternalFilesDir(null)+"", data.id+".wav");
                     if (!writtenToDisk) {
                         Toast.makeText(QuestionDetailActivity.this, ToastMsg.FILE_OPERATION_ERROR, Toast.LENGTH_LONG).show();
+                        return;
                     }
+
+                    dialog.dismiss();
+
+                    MediaPlayer mediaPlayer = new MediaPlayer();
+                    try {
+                        mediaPlayer.setDataSource(filePath);
+                        mediaPlayer.prepare();
+                        mediaPlayer.start();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        Toast.makeText(QuestionDetailActivity.this, ToastMsg.FILE_OPERATION_ERROR, Toast.LENGTH_LONG).show();
+                    }
+
                 }
 
                 @Override

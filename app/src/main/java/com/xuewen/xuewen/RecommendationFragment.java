@@ -25,6 +25,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -39,13 +41,15 @@ public class RecommendationFragment extends Fragment {
     private DatabaseHelper databaseHelper;
     private boolean networkLock = false;
 
+    @BindView(R.id.refresh) SwipeRefreshLayout refresh;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
     {
         View rootView = inflater.inflate(R.layout.fragment_0, container, false);
+        ButterKnife.bind(this, rootView);
 
-        final  SwipeRefreshLayout refresh = (SwipeRefreshLayout) rootView.findViewById(R.id.refresh);
         refresh.setColorSchemeResources(android.R.color.holo_blue_bright, android.R.color.holo_green_light, android.R.color.holo_orange_light);
 
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -71,6 +75,7 @@ public class RecommendationFragment extends Fragment {
             }
         });
 
+        // database service -> network service(开始刷新 -> 加载成功 -> 结束刷新) -> write back to database
         if (!networkLock) {
 
             // database service
@@ -85,6 +90,9 @@ public class RecommendationFragment extends Fragment {
             }
 
             // network service
+            // 开始刷新 -> 加载成功 -> 结束刷新
+            refresh.setRefreshing(true);
+
             ApiService apiService = ApiService.retrofit.create(ApiService.class);
             Call<QRResult> call = apiService.requestQR();
 
@@ -103,6 +111,10 @@ public class RecommendationFragment extends Fragment {
                     list.addAll(response.body().data);
                     adapter.notifyDataSetChanged();
 
+                    refresh.setRefreshing(false);
+
+                    networkLock = true;
+
                     // write back to database
                     try {
                         databaseHelper.getQRBeanDao().executeRaw("delete from tb_QR");
@@ -111,7 +123,6 @@ public class RecommendationFragment extends Fragment {
                         e.printStackTrace();
                     }
 
-                    networkLock = true;
                 }
 
                 @Override
