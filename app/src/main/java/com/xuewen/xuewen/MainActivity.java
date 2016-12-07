@@ -132,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        });
 
-        CurrentUser.userId = 4;
+        CurrentUser.userId = 7;
 
     }
 

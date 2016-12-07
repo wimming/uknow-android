@@ -42,6 +42,8 @@ public class AnswerQuestionActivity extends AppCompatActivity {
     final  static  String voice_status_show_text2 = "点击按钮试听";
     final  static  int RECOND_LENGTH = 120000;
 
+    private int id;
+
     @BindView(R.id.speak)
     ImageView speak;
     @BindView(R.id.voice_length_show)
@@ -66,7 +68,7 @@ public class AnswerQuestionActivity extends AppCompatActivity {
         RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
         MultipartBody.Part fileBody = MultipartBody.Part.createFormData("audio", file.getName(), requestBody);
 
-        Call<QQidAResult> call = apiService.requestQQidA(3,
+        Call<QQidAResult> call = apiService.requestQQidA(id,
                 RequestBody.create(MediaType.parse("multipart/form-data"), "8"),
                 RequestBody.create(MediaType.parse("multipart/form-data"), mediaHelper.maxMillis()/1000+""),
                 fileBody);
@@ -154,6 +156,13 @@ public class AnswerQuestionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_answer_question);
         ButterKnife.bind(this);
+
+        id = getIntent().getIntExtra("id", -1);
+        if (id == -1) {
+            Toast.makeText(AnswerQuestionActivity.this, ToastMsg.APPLICATION_ERROR, Toast.LENGTH_LONG).show();
+            finish();
+            return;
+        }
 
         //初始为0
         transToStatus0();

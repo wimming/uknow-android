@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -62,6 +63,8 @@ public class AboutMeQuestionListAnswerAdapter extends BaseAdapter{
             viewHolder.asker_avatarUrl = (ImageView) view.findViewById(R.id.asker_avatarUrl);
             viewHolder.asker_username = (TextView)view.findViewById(R.id.asker_username);
             viewHolder.description = (TextView) view.findViewById(R.id.description);
+            viewHolder.finishedText = (TextView)view.findViewById(R.id.finishedText);
+            viewHolder.answerButton = (ImageView) view.findViewById(R.id.answerButton);
             view.setTag(viewHolder);
         }
         else {
@@ -69,10 +72,17 @@ public class AboutMeQuestionListAnswerAdapter extends BaseAdapter{
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        viewHolder.asker_username.setText(list.get(position).asker_username);
+        viewHolder.asker_username.setText(list.get(position).asker_username+"的提问");
         viewHolder.description.setText(list.get(position).description);
 
         ImageLoader.getInstance().displayImage(GlobalUtil.getInstance().avatarUrl+list.get(position).asker_avatarUrl, viewHolder.asker_avatarUrl, GlobalUtil.getInstance().circleBitmapOptions);
+
+        if (list.get(position).finished) {
+            viewHolder.answerButton.setVisibility(View.GONE);
+        }
+        else {
+            viewHolder.finishedText.setVisibility(View.GONE);
+        }
 
         return view;
     }
@@ -81,5 +91,8 @@ public class AboutMeQuestionListAnswerAdapter extends BaseAdapter{
         public ImageView asker_avatarUrl;
         public TextView asker_username;
         public TextView description;
+
+        public TextView finishedText;
+        public ImageView answerButton;
     }
 }

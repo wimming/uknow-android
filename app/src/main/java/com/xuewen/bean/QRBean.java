@@ -19,6 +19,9 @@ public class QRBean {
     @DatabaseField(columnName = "description")
     public String description;
 
+    @DatabaseField(columnName = "answerer_id")
+    public String answerer_id;
+
     @DatabaseField(columnName = "answerer_username")
     public String answerer_username;
 

@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.xuewen.adapter.AboutMeQuestionListAnswerAdapter;
+import com.xuewen.bean.QRBean;
 import com.xuewen.bean.UUidBean;
 
 import java.util.ArrayList;
@@ -49,6 +50,7 @@ public class AboutMeFragmentOne extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(), AnswerQuestionActivity.class);
+                intent.putExtra("id", ((UUidBean.Answer) parent.getAdapter().getItem(position)).id);
                 startActivity(intent);
             }
         });
