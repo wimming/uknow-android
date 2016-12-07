@@ -18,7 +18,6 @@ import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xuewen.bean.QQidBean;
-import com.xuewen.bean.Question;
 import com.xuewen.networkservice.ApiService;
 import com.xuewen.networkservice.FileService;
 import com.xuewen.networkservice.QQidCResult;

@@ -14,7 +14,6 @@ import android.widget.Toast;
 
 import com.xuewen.adapter.QRListAdapter;
 import com.xuewen.bean.QRBean;
-import com.xuewen.bean.Question;
 import com.xuewen.databaseservice.DatabaseHelper;
 import com.xuewen.networkservice.ApiService;
 import com.xuewen.networkservice.QQidResult;

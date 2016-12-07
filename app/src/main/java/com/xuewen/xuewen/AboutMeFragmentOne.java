@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.xuewen.adapter.AboutMeQuestionListAnswerAdapter;
+import com.xuewen.bean.QRBean;
 import com.xuewen.bean.UUidBean;
 
 import java.util.ArrayList;
@@ -33,15 +34,6 @@ public class AboutMeFragmentOne extends Fragment {
         }
 
 
-//        List<Question> questionList = new ArrayList<>();
-//
-//        Question q;
-//        for (int i = 0; i < 10; ++i) {
-//            q = new Question("张三的回答");
-//            q.ans_description = "师兄好，软件学院的学生毕业后有哪些出路呢？";
-//            questionList.add(q);
-//        }
-
         AboutMeQuestionListAnswerAdapter questionListAdapter = new AboutMeQuestionListAnswerAdapter(dataList, getActivity());
 
         questionListView.setAdapter(questionListAdapter);
@@ -49,6 +41,7 @@ public class AboutMeFragmentOne extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(), AnswerQuestionActivity.class);
+                intent.putExtra("id", ((UUidBean.Answer) parent.getAdapter().getItem(position)).id);
                 startActivity(intent);
             }
         });

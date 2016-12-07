@@ -21,7 +21,6 @@ import android.widget.Toast;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xuewen.adapter.QRListAdapter;
 import com.xuewen.bean.QRBean;
-import com.xuewen.bean.Question;
 import com.xuewen.bean.UUidIBean;
 import com.xuewen.networkservice.APITestActivity;
 import com.xuewen.networkservice.ApiService;

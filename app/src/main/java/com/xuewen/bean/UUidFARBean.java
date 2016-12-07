@@ -28,4 +28,7 @@ public class UUidFARBean {
     @DatabaseField(columnName = "description")
     public String description;
 
+    @DatabaseField(columnName = "followed")
+    public int followed;
+
 }
