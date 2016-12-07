@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xuewen.bean.UUidFANDUUidRBean;
+import com.xuewen.bean.UUidFARBean;
 import com.xuewen.bean.UserMe;
 import com.xuewen.utility.GlobalUtil;
 import com.xuewen.xuewen.R;
@@ -22,10 +23,10 @@ import java.util.List;
  */
 public class UserListAdapter extends BaseAdapter{
 
-    private List<UUidFANDUUidRBean> list;
+    private List<UUidFARBean> list;
     private Context context;
 
-    public UserListAdapter(List<UUidFANDUUidRBean> list, Context context) {
+    public UserListAdapter(List<UUidFARBean> list, Context context) {
         this.list = list;
         this.context = context;
     }

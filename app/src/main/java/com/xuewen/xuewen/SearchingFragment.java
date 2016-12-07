@@ -15,9 +15,11 @@ import com.xuewen.adapter.QRListAdapter;
 import com.xuewen.adapter.UserListAdapter;
 import com.xuewen.bean.QRBean;
 import com.xuewen.bean.UUidFANDUUidRBean;
+import com.xuewen.bean.UUidFARBean;
 import com.xuewen.databaseservice.DatabaseHelper;
 import com.xuewen.networkservice.ApiService;
 import com.xuewen.networkservice.QRResult;
+import com.xuewen.networkservice.UUidFARResult;
 import com.xuewen.networkservice.UUidRResult;
 import com.xuewen.utility.CurrentUser;
 import com.xuewen.utility.ToastMsg;
@@ -38,7 +40,7 @@ import retrofit2.Response;
 
 public class SearchingFragment extends Fragment {
 
-    private List<UUidFANDUUidRBean> dataList = new ArrayList<>();
+    private List<UUidFARBean> dataList = new ArrayList<>();
     private DatabaseHelper databaseHelper;
     private boolean networkLock = false;
 
@@ -82,7 +84,7 @@ public class SearchingFragment extends Fragment {
             // database service
             databaseHelper = DatabaseHelper.getHelper(getActivity());
             try {
-                List<UUidFANDUUidRBean> records = databaseHelper.getUUidFANDUUidRBeanDao().queryForAll();
+                List<UUidFARBean> records = databaseHelper.getUUidFARBeanDao().queryForAll();
                 dataList.clear();
                 dataList.addAll(records);
                 adapter.notifyDataSetChanged();
@@ -95,11 +97,11 @@ public class SearchingFragment extends Fragment {
             refresh.setRefreshing(true);
 
             ApiService apiService = ApiService.retrofit.create(ApiService.class);
-            Call<UUidRResult> call = apiService.requestUUidR(CurrentUser.userId);
+            Call<UUidFARResult> call = apiService.requestUUidFAR(CurrentUser.userId);
 
-            call.enqueue(new Callback<UUidRResult>() {
+            call.enqueue(new Callback<UUidFARResult>() {
                 @Override
-                public void onResponse(Call<UUidRResult> call, Response<UUidRResult> response) {
+                public void onResponse(Call<UUidFARResult> call, Response<UUidFARResult> response) {
                     if (!response.isSuccessful()) {
                         Toast.makeText(getActivity(), ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
                         return;
@@ -118,8 +120,8 @@ public class SearchingFragment extends Fragment {
 
                     // write back to database
                     try {
-                        databaseHelper.getUUidFANDUUidRBeanDao().executeRaw("delete from tb_UUidFANDUUidR");
-                        databaseHelper.getUUidFANDUUidRBeanDao().create(response.body().data);
+                        databaseHelper.getUUidFARBeanDao().executeRaw("delete from tb_UUidFAR");
+                        databaseHelper.getUUidFARBeanDao().create(response.body().data);
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
@@ -127,7 +129,7 @@ public class SearchingFragment extends Fragment {
                 }
 
                 @Override
-                public void onFailure(Call<UUidRResult> call, Throwable t) {
+                public void onFailure(Call<UUidFARResult> call, Throwable t) {
                     Toast.makeText(getActivity(), ToastMsg.NETWORK_ERROR + " : " + t.getMessage(), Toast.LENGTH_LONG).show();
                 }
             });

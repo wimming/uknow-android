@@ -14,13 +14,13 @@
         android:gravity="center_vertical"
         android:layout_marginBottom="8dp">
         <ImageView
-            android:id="@+id/que_headimgurl"
+            android:id="@+id/asker_avatarUrl"
             android:src="@mipmap/avatar"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginRight="@dimen/base_margin"/>
         <TextView
-            android:id="@+id/que_username"
+            android:id="@+id/asker_username"
             android:layout_gravity="bottom"
             android:layout_marginBottom="3dp"
             android:textSize="@dimen/base_medium_font"
@@ -30,7 +30,7 @@
     </LinearLayout>
     
     <TextView
-        android:id="@+id/que_description"
+        android:id="@+id/description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="@dimen/base_big_font"

@@ -1,8 +1,6 @@
 package com.xuewen.xuewen;
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,14 +11,16 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.xuewen.bean.Question;
-import com.xuewen.networkservice.APITestActivity;
+import com.xuewen.adapter.AboutMeQuestionListAnswerAdapter;
+import com.xuewen.bean.UUidBean;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class AboutMeFragmentOne extends Fragment {
+
+    public List<UUidBean.Answer> dataList = new ArrayList<>();
 
     @Nullable
     @Override
@@ -33,16 +33,16 @@ public class AboutMeFragmentOne extends Fragment {
         }
 
 
-        List<Question> questionList = new ArrayList<>();
+//        List<Question> questionList = new ArrayList<>();
+//
+//        Question q;
+//        for (int i = 0; i < 10; ++i) {
+//            q = new Question("张三的回答");
+//            q.ans_description = "师兄好，软件学院的学生毕业后有哪些出路呢？";
+//            questionList.add(q);
+//        }
 
-        Question q;
-        for (int i = 0; i < 10; ++i) {
-            q = new Question("张三的回答");
-            q.ans_description = "师兄好，软件学院的学生毕业后有哪些出路呢？";
-            questionList.add(q);
-        }
-
-        AboutMeQuestionListAnswerAdapter questionListAdapter = new AboutMeQuestionListAnswerAdapter(questionList, getActivity());
+        AboutMeQuestionListAnswerAdapter questionListAdapter = new AboutMeQuestionListAnswerAdapter(dataList, getActivity());
 
         questionListView.setAdapter(questionListAdapter);
         questionListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

@@ -9,7 +9,7 @@ import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import com.xuewen.bean.QRBean;
 import com.xuewen.bean.UUidBean;
-import com.xuewen.bean.UUidFANDUUidRBean;
+import com.xuewen.bean.UUidFARBean;
 
 import java.sql.SQLException;
 
@@ -30,7 +30,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     public void onCreate(SQLiteDatabase sqLiteDatabase, ConnectionSource connectionSource) {
         try {
             TableUtils.createTable(connectionSource, QRBean.class);
-            TableUtils.createTable(connectionSource, UUidFANDUUidRBean.class);
+            TableUtils.createTable(connectionSource, UUidFARBean.class);
             TableUtils.createTable(connectionSource, UUidBean.class);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -41,7 +41,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, ConnectionSource connectionSource, int i, int i1) {
         try {
             TableUtils.dropTable(connectionSource, QRBean.class, true);
-            TableUtils.dropTable(connectionSource, UUidFANDUUidRBean.class, true);
+            TableUtils.dropTable(connectionSource, UUidFARBean.class, true);
             TableUtils.dropTable(connectionSource, UUidBean.class, true);
             onCreate(sqLiteDatabase, connectionSource);
         } catch (SQLException e) {
@@ -72,7 +72,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     }
 
     private Dao<QRBean, Integer> QRBeanDao;
-    private Dao<UUidFANDUUidRBean, Integer> UUidFANDUUidRBeanDao;
+    private Dao<UUidFARBean, Integer> UUidFARBeanDao;
     private Dao<UUidBean, Integer> UUidBeanDao;
     /**
      * 获得Dao
@@ -88,13 +88,13 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         }
         return QRBeanDao;
     }
-    public Dao<UUidFANDUUidRBean, Integer> getUUidFANDUUidRBeanDao() throws SQLException
+    public Dao<UUidFARBean, Integer> getUUidFARBeanDao() throws SQLException
     {
-        if (UUidFANDUUidRBeanDao == null)
+        if (UUidFARBeanDao == null)
         {
-            UUidFANDUUidRBeanDao = getDao(UUidFANDUUidRBean.class);
+            UUidFARBeanDao = getDao(UUidFARBean.class);
         }
-        return UUidFANDUUidRBeanDao;
+        return UUidFARBeanDao;
     }
     public Dao<UUidBean, Integer> getUUidBeanDao() throws SQLException
     {
@@ -113,7 +113,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     {
         super.close();
         QRBeanDao = null;
-        UUidFANDUUidRBeanDao = null;
+        UUidFARBeanDao = null;
         UUidBeanDao = null;
     }
 

@@ -14,13 +14,13 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/base_margin">
         <ImageView
-            android:id="@+id/que_headimgurl"
+            android:id="@+id/answerer_avatarUrl"
             android:src="@mipmap/avatar"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginRight="@dimen/base_margin"/>
         <TextView
-            android:id="@+id/que_username"
+            android:id="@+id/answerer_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
@@ -29,7 +29,7 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/que_description"
+        android:id="@+id/description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="@dimen/base_big_font"
@@ -37,7 +37,7 @@
         android:layout_marginBottom="20dp"
         android:text="师兄好，我想问问腾讯的产品经理的流程是怎么样的， 能说说么？"/>
     <TextView
-        android:id="@+id/ans_status"
+        android:id="@+id/isAnswered"
         android:text="未回答"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
