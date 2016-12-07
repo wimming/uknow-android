@@ -35,7 +35,7 @@
                 <!--android:queryHint="请输入搜索内容" />-->
 
             <ImageView
-                android:background="@drawable/searchbar_pic"
+                android:background="@drawable/searchbar"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent" />
 

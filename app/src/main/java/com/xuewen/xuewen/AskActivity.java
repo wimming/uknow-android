@@ -32,6 +32,7 @@ import com.xuewen.utility.CurrentUser;
 import com.xuewen.utility.GlobalUtil;
 import com.xuewen.utility.MyTextWatch;
 import com.xuewen.utility.ToastMsg;
+import com.xuewen.utility.Validate;
 
 import org.w3c.dom.Text;
 
@@ -116,6 +117,11 @@ public class AskActivity extends AppCompatActivity {
 
 
     private void sendSendAskedRequestService(int asker_id, String  description, int answerer_id) {
+
+        if (Validate.isExistEmpty(editText)) {
+            ToastMsg.showTips(AskActivity.this, ToastMsg.VALIDE_EMPTY_ERROR);
+            return;
+        }
 
         Call<QResult> call = apiService.requestQ(asker_id, description, answerer_id); //7
         call.enqueue(new Callback<QResult>() {
