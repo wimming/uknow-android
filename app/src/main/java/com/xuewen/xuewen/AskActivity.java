@@ -23,6 +23,7 @@ import com.xuewen.networkservice.ApiService;
 import com.xuewen.networkservice.QRResult;
 import com.xuewen.networkservice.QResult;
 import com.xuewen.utility.GlobalUtil;
+import com.xuewen.utility.MyTextWatch;
 import com.xuewen.utility.ToastMsg;
 
 import java.util.ArrayList;
@@ -77,27 +78,7 @@ public class AskActivity extends AppCompatActivity {
         QuestionListAdapter questionListAdapter = new QuestionListAdapter(questionList, this);
         questionListView.setAdapter(questionListAdapter);
 
-        editText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                //Toast.makeText(AskActivity.this, s + "", Toast.LENGTH_SHORT).show();
-                // 前面xml属性设置最大60  maxLength
-                if (s.length() == 60) {
-                    Toast.makeText(AskActivity.this, "最多编辑60个", Toast.LENGTH_LONG).show();
-                }
-                textView.setText(s.length() + "/60");
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
+        editText.addTextChangedListener(new MyTextWatch(this, 60, textView));
 
         sendAskedRequest.setOnClickListener(new View.OnClickListener() {
             @Override
