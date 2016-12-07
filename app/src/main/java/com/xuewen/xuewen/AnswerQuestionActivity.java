@@ -1,10 +1,12 @@
 package com.xuewen.xuewen;
 
 
+import android.app.ProgressDialog;
 import android.media.MediaPlayer;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -44,6 +46,8 @@ public class AnswerQuestionActivity extends AppCompatActivity {
 
     private int id;
 
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
     @BindView(R.id.speak)
     ImageView speak;
     @BindView(R.id.voice_length_show)
@@ -61,6 +65,8 @@ public class AnswerQuestionActivity extends AppCompatActivity {
             return;
         }
 
+        final ProgressDialog dialog = ProgressDialog.show(AnswerQuestionActivity.this, "", "语音文件发送中...");
+
         ApiService apiService = ApiService.retrofit.create(ApiService.class);
 
         File file = new File(filePath);
@@ -75,6 +81,7 @@ public class AnswerQuestionActivity extends AppCompatActivity {
         call.enqueue(new Callback<QQidAResult>() {
             @Override
             public void onResponse(Call<QQidAResult> call, Response<QQidAResult> response) {
+                dialog.dismiss();
                 if (!response.isSuccessful()) {
                     Toast.makeText(AnswerQuestionActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
                     return;
@@ -88,6 +95,7 @@ public class AnswerQuestionActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<QQidAResult> call, Throwable t) {
                 Toast.makeText(AnswerQuestionActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_LONG).show();
+                dialog.dismiss();
             }
         });
     }
@@ -163,6 +171,19 @@ public class AnswerQuestionActivity extends AppCompatActivity {
             finish();
             return;
         }
+
+        toolbar.setNavigationIcon(R.drawable.back);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+
+
+
+
 
         //初始为0
         transToStatus0();
@@ -252,7 +273,7 @@ public class AnswerQuestionActivity extends AppCompatActivity {
                                     speak.setImageResource(R.drawable.stop);
                                 }
                             });
-                            speak.setImageResource(R.drawable.star_full);
+                            speak.setImageResource(R.drawable.pause);
 
                             playHandler.post(playRunnable);
                         }
@@ -266,7 +287,7 @@ public class AnswerQuestionActivity extends AppCompatActivity {
 
                             state = STATE.PLAYING;
                             mediaHelper.resume();
-                            speak.setImageResource(R.drawable.star_full);
+                            speak.setImageResource(R.drawable.pause);
                         }
                         else {
                             //

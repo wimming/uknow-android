@@ -2,6 +2,8 @@ package com.xuewen.xuewen;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -31,6 +33,14 @@ public class SettingActivity extends AppCompatActivity {
             tempMap.put("textview", textData[i]);
             list_data.add(tempMap);
         }
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setNavigationIcon(R.drawable.back);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         SimpleAdapter simpleAdapter = new SimpleAdapter(this, list_data,
                 R.layout.activity_setting_item, new String[] {"textview"}, new int[] {R.id.textview});

@@ -103,8 +103,8 @@
             android:id="@+id/speak"
             android:src="@drawable/microphone"
             android:layout_marginBottom="15dp"
-            android:layout_width="@dimen/base_mediun_avatar"
-            android:layout_height="@dimen/base_mediun_avatar" />
+            android:layout_width="60dp"
+            android:layout_height="60dp" />
 
         <LinearLayout
             android:id="@+id/buttons_layout"

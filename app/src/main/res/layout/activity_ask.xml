@@ -26,7 +26,6 @@
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/coordinator_appbar"
-        android:background="@color/white_color"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -36,35 +35,12 @@
             android:layout_height="wrap_content"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:background="@color/white_color"
-                app:layout_collapseMode="pin"
-                app:contentInsetLeft="0dp"
-                app:contentInsetStart="0dp"
-                app:popupTheme="@style/AppTheme.PopupOverlay">
-                <TextView
-                    android:id="@+id/title"
-                    android:text="问题详情"
-                    android:textSize="@dimen/base_big_font"
-                    android:gravity="center"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-            </android.support.v7.widget.Toolbar>
-            <View
-                android:layout_marginTop="@dimen/base_toolbar_height"
-                android:background="#FFCCCCCC"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                app:layout_collapseMode="pin" />
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginTop="?attr/actionBarSize"
+                android:background="#FFFFFF"
+                android:layout_marginTop="45dp"
                 android:paddingBottom="53dp"
                 android:paddingRight="10dp"
                 android:paddingLeft="10dp"
@@ -164,6 +140,32 @@
                     android:layout_height="30dp" />
             </LinearLayout>
 
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:background="#FFFFFF"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                app:layout_collapseMode="pin"
+                app:contentInsetLeft="0dp"
+                app:contentInsetStart="0dp"
+                app:popupTheme="@style/AppTheme.PopupOverlay">
+                <TextView
+                    android:id="@+id/title"
+                    android:text="问题详情"
+                    android:textColor="@color/black_color"
+                    android:textSize="@dimen/base_big_font"
+                    android:gravity="center"
+                    android:layout_marginRight="70dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </android.support.v7.widget.Toolbar>
+            <View
+                android:layout_marginTop="@dimen/base_toolbar_height"
+                android:background="#FFCCCCCC"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                app:layout_collapseMode="pin" />
+
         </android.support.design.widget.CollapsingToolbarLayout>
 
 
@@ -174,10 +176,11 @@
         </View>
         <TextView
             android:text="TA回答的:"
+            android:background="#FFFFFF"
             android:paddingLeft="10dp"
             android:paddingTop="10dp"
             android:paddingBottom="5dp"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
     </android.support.design.widget.AppBarLayout>

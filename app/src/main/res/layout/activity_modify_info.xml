@@ -10,9 +10,9 @@
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
+        android:background="@color/white_color"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FFCCCCCC"
         android:theme="@style/AppTheme.AppBarOverlay">
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
@@ -22,6 +22,7 @@
             app:popupTheme="@style/AppTheme.PopupOverlay">
             <TextView
                 android:text="修改信息"
+                android:textColor="@color/black_color"
                 android:textSize="@dimen/base_big_font"
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"
@@ -35,12 +36,17 @@
                 android:layout_height="25dp" />
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
+    <View
+        android:background="#FFCCCCCC"
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <LinearLayout
+            android:background="@color/white_color"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -68,7 +74,7 @@
             </RelativeLayout>
 
             <View
-                android:background="@color/gray_color"
+                android:background="#E6E6E6"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/base_small_margin"/>
 
@@ -110,7 +116,7 @@
             </RelativeLayout>
 
             <View
-                android:background="@color/gray_color"
+                android:background="#E6E6E6"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/base_small_margin"/>
 
@@ -149,7 +155,7 @@
             </RelativeLayout>
 
             <View
-                android:background="@color/gray_color"
+                android:background="#E6E6E6"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/base_small_margin"/>
             <LinearLayout
@@ -184,7 +190,7 @@
                     android:layout_height="wrap_content" />
             </LinearLayout>
             <View
-                android:background="@color/gray_color"
+                android:background="#E6E6E6"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/base_small_margin"/>
 
