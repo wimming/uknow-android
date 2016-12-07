@@ -26,6 +26,12 @@
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
+            <ImageView
+                android:src="@drawable/choose"
+                android:layout_gravity="end"
+                android:layout_marginRight="@dimen/base_margin"
+                android:layout_width="25dp"
+                android:layout_height="25dp" />
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 
@@ -76,10 +82,11 @@
                     android:textSize="@dimen/base_medium_font"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
-                <TextView
+                <EditText
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentLeft="true"
                     android:text="张三"
+                    android:background="@null"
                     android:textSize="@dimen/base_medium_font"
                     android:textColor="@color/black_color"
                     android:layout_width="wrap_content"
@@ -111,10 +118,11 @@
                     android:textSize="@dimen/base_medium_font"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
-                <TextView
+                <EditText
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentLeft="true"
                     android:text="中山大学软件学院学生"
+                    android:background="@null"
                     android:textSize="@dimen/base_medium_font"
                     android:textColor="@color/black_color"
                     android:layout_width="wrap_content"
@@ -145,9 +153,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/base_margin"/>
-                <TextView
+                <EditText
                     android:text="爱好产品，曾在腾讯工作，对软件编写，电子有一定的了解，从事软件行业好多年"
                     android:textColor="@color/black_color"
+                    android:background="@null"
                     android:textSize="@dimen/base_medium_font"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
