@@ -9,7 +9,7 @@
     android:paddingBottom="15dp">
     <ImageView
         android:id="@+id/avatarUrl"
-        android:src="@mipmap/avatar"
+        android:src="@drawable/avatar"
         android:layout_marginRight="@dimen/base_margin"
         android:layout_width="@dimen/base_small_avatar"
         android:layout_height="@dimen/base_small_avatar" />

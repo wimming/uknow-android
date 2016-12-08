@@ -36,10 +36,6 @@
                 android:layout_height="25dp" />
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
-    <View
-        android:background="#FFCCCCCC"
-        android:layout_width="match_parent"
-        android:layout_height="1dp" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -69,7 +65,7 @@
                 <ImageView
                     android:id="@+id/avatar"
                     android:layout_alignParentRight="true"
-                    android:src="@mipmap/avatar"
+                    android:src="@drawable/avatar"
                     android:layout_width="@dimen/base_mediun_avatar"
                     android:layout_height="@dimen/base_mediun_avatar" />
             </RelativeLayout>
@@ -296,5 +292,10 @@
         </LinearLayout>
 
     </ScrollView>
+
+    <View
+        android:background="#FFCCCCCC"
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
 
 </LinearLayout>

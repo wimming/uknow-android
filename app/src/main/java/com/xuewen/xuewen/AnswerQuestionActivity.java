@@ -13,10 +13,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.iflytek.cloud.SpeechRecognizer;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.xuewen.bean.QQidBean;
 import com.xuewen.networkservice.APITestActivity;
 import com.xuewen.networkservice.ApiService;
 import com.xuewen.networkservice.QQidAResult;
+import com.xuewen.networkservice.QQidResult;
+import com.xuewen.networkservice.UUidIResult;
 import com.xuewen.utility.CurrentUser;
+import com.xuewen.utility.GlobalUtil;
 import com.xuewen.utility.ListenHelper;
 import com.xuewen.utility.MediaHelper;
 import com.xuewen.utility.ToastMsg;
@@ -45,6 +50,17 @@ public class AnswerQuestionActivity extends AppCompatActivity {
     final  static  int RECOND_LENGTH = 120000;
 
     private int id;
+
+    @BindView(R.id.asker_avatarUrl)
+    ImageView asker_avatarUrl;
+    @BindView(R.id.asker_username)
+    TextView asker_username;
+    @BindView(R.id.askDate)
+    TextView askDate;
+    @BindView(R.id.description)
+    TextView description;
+
+
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -180,7 +196,7 @@ public class AnswerQuestionActivity extends AppCompatActivity {
             }
         });
 
-
+        requestData(id);
 
 
 
@@ -357,4 +373,40 @@ public class AnswerQuestionActivity extends AppCompatActivity {
         buttonsShowORHide(1);
     }
 
+
+
+    private void renderView(QQidBean data) {
+
+        ImageLoader.getInstance().displayImage(GlobalUtil.getInstance().avatarUrl+data.asker_avatarUrl, asker_avatarUrl, GlobalUtil.getInstance().circleBitmapOptions);
+        asker_username.setText(data.asker_username);
+        askDate.setText(data.askDate);
+        description.setText(data.description);
+    }
+
+
+    private void requestData(int qid) {
+
+        ApiService apiService = ApiService.retrofit.create(ApiService.class);
+        Call<QQidResult> call = apiService.requestQQid(id, CurrentUser.userId);
+
+        call.enqueue(new Callback<QQidResult>() {
+            @Override
+            public void onResponse(Call<QQidResult> call, Response<QQidResult> response) {
+                if (!response.isSuccessful()) {
+                    Toast.makeText(AnswerQuestionActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
+                    return;
+                }
+                if (response.body().status != 200) {
+                    Toast.makeText(AnswerQuestionActivity.this, response.body().errmsg, Toast.LENGTH_LONG).show();
+                    return;
+                }
+                renderView(response.body().data);
+            }
+
+            @Override
+            public void onFailure(Call<QQidResult> call, Throwable t) {
+                Toast.makeText(AnswerQuestionActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
 }
