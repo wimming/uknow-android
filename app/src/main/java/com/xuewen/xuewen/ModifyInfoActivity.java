@@ -1,11 +1,14 @@
 package com.xuewen.xuewen;
 
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -54,7 +57,10 @@ public class ModifyInfoActivity extends AppCompatActivity {
     Toolbar toolbar;
     @BindView(R.id.confirm)
     ImageView confirm;
+    @BindView(R.id.visibilityController)
+    LinearLayout visibilityController;
 
+    private ProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +76,11 @@ public class ModifyInfoActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        visibilityController.setVisibility(View.GONE);
+        dialog = new ProgressDialog(this);
+        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        dialog.show();
 
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,12 +104,17 @@ public class ModifyInfoActivity extends AppCompatActivity {
         call.enqueue(new Callback<UUidResult>() {
             @Override
             public void onResponse(Call<UUidResult> call, Response<UUidResult> response) {
+
                 if (!response.isSuccessful()) {
                     Toast.makeText(ModifyInfoActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
+                    dialog.dismiss();
+                    visibilityController.setVisibility(View.VISIBLE);
                     return;
                 }
                 if (response.body().status != 200) {
                     Toast.makeText(ModifyInfoActivity.this, response.body().errmsg, Toast.LENGTH_LONG).show();
+                    dialog.dismiss();
+                    visibilityController.setVisibility(View.VISIBLE);
                     return;
                 }
                 //Toast.makeText(ModifyInfoActivity.this, response.body().toString(), Toast.LENGTH_SHORT).show();
@@ -106,10 +122,15 @@ public class ModifyInfoActivity extends AppCompatActivity {
                 username.setText(bean.username);
                 status.setText(bean.status);
                 description.setText(bean.description);
+                ImageLoader.getInstance().displayImage(GlobalUtil.getInstance().avatarUrl+bean.avatarUrl, avatar, GlobalUtil.getInstance().circleBitmapOptions);
+                dialog.dismiss();
+                visibilityController.setVisibility(View.VISIBLE);
 
             }
             @Override
             public void onFailure(Call<UUidResult> call, Throwable t) {
+                dialog.dismiss();
+                visibilityController.setVisibility(View.VISIBLE);
                 Toast.makeText(ModifyInfoActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });

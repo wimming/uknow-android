@@ -46,6 +46,7 @@
         android:layout_height="wrap_content">
 
         <LinearLayout
+            android:id="@+id/visibilityController"
             android:background="@color/white_color"
             android:orientation="vertical"
             android:layout_width="match_parent"
