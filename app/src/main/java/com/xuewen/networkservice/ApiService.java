@@ -78,7 +78,8 @@ public interface ApiService {
                                  @Nullable @Part MultipartBody.Part file);
 
     @GET("api/users/{user_id}/introduction")
-    Call<UUidIResult> requestUUidI(@Path("user_id") int uid);
+    Call<UUidIResult> requestUUidI(@Path("user_id") int uid,
+                                   @Nullable @Query("id") int uid);
 
     @GET("api/users/{user_id}/followsAndRecommendations")
     Call<UUidFARResult> requestUUidFAR(@Path("user_id") int uid);
