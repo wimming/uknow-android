@@ -5,11 +5,14 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Handler;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -64,6 +67,10 @@ public class AnswerQuestionActivity extends AppCompatActivity {
     @BindView(R.id.description)
     TextView description;
 
+    @BindView(R.id.refresh)
+    SwipeRefreshLayout refresh;
+    @BindView(R.id.visibilityController)
+    LinearLayout visibilityController;
 
 
     @BindView(R.id.toolbar)
@@ -207,6 +214,12 @@ public class AnswerQuestionActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        //这个的refresh只是为了缓存加载的一种方案 直接把refresh设置为 height = matchparent 就不用同时控制 内容和 refresh
+        // 注意的是 refresh里面必须有 子控件 它才有效果
+        refresh.setColorSchemeResources(android.R.color.holo_blue_bright, android.R.color.holo_green_light, android.R.color.holo_orange_light);
+        refresh.setVisibility(View.VISIBLE);
+        refresh.setRefreshing(true);
 
         requestData(id);
 
@@ -422,6 +435,8 @@ public class AnswerQuestionActivity extends AppCompatActivity {
                     return;
                 }
                 renderView(response.body().data);
+                refresh.setVisibility(View.GONE);
+                refresh.setRefreshing(false);
             }
 
             @Override
