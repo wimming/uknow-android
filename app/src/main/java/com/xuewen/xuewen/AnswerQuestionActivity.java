@@ -2,6 +2,7 @@ package com.xuewen.xuewen;
 
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 import com.iflytek.cloud.SpeechRecognizer;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xuewen.bean.QQidBean;
+import com.xuewen.bean.QRBean;
 import com.xuewen.networkservice.APITestActivity;
 import com.xuewen.networkservice.ApiService;
 import com.xuewen.networkservice.QQidAResult;
@@ -48,6 +50,8 @@ public class AnswerQuestionActivity extends AppCompatActivity {
     final  static  String voice_status_show_text1 = "点击按钮结束";
     final  static  String voice_status_show_text2 = "点击按钮试听";
     final  static  int RECOND_LENGTH = 120000;
+
+    private int ACTUAL_RECORD_LENGTH = 2; //至少1s
 
     private int id;
 
@@ -92,7 +96,7 @@ public class AnswerQuestionActivity extends AppCompatActivity {
 
         Call<QQidAResult> call = apiService.requestQQidA(id,
                 RequestBody.create(MediaType.parse("multipart/form-data"), CurrentUser.userId+""),
-                RequestBody.create(MediaType.parse("multipart/form-data"), mediaHelper.maxMillis()/1000+""),
+                RequestBody.create(MediaType.parse("multipart/form-data"), ACTUAL_RECORD_LENGTH + ""),
                 fileBody);
         call.enqueue(new Callback<QQidAResult>() {
             @Override
@@ -106,7 +110,15 @@ public class AnswerQuestionActivity extends AppCompatActivity {
                     Toast.makeText(AnswerQuestionActivity.this, response.body().errmsg, Toast.LENGTH_LONG).show();
                     return;
                 }
-                Toast.makeText(AnswerQuestionActivity.this, response.body().toString(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(AnswerQuestionActivity.this, response.body().toString(), Toast.LENGTH_SHORT).show();
+
+                //handler_countdown.removeCallbacks(r);
+                //playHandler.removeCallbacks(playRunnable);
+                Intent intent = new Intent(AnswerQuestionActivity.this, QuestionDetailActivity.class);
+                intent.putExtra("id", id);
+                startActivity(intent);
+                finish();
+
             }
             @Override
             public void onFailure(Call<QQidAResult> call, Throwable t) {
@@ -238,6 +250,15 @@ public class AnswerQuestionActivity extends AppCompatActivity {
                             //进入 状态2
                             page_state = PAGE_STATE.STATE2;
                             transToStatus2();
+                            try {
+                                MediaPlayer tempPlay = new MediaPlayer();
+                                tempPlay.setDataSource(filePath);
+                                tempPlay.prepare();
+                                ACTUAL_RECORD_LENGTH =  (int)Math.ceil(tempPlay.getDuration() / 1000.0);
+                                tempPlay.release();
+                            } catch (Exception e) {
+
+                            }
                         }
 
                         //失败后回调
