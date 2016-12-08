@@ -114,7 +114,7 @@ public class UserListAdapter extends BaseAdapter{
 
     private View.OnClickListener onFollowedClickListener = new View.OnClickListener() {
         @Override
-        public void onClick(View view) {
+        public void onClick(final View view) {
 
             final int position = (int)view.getTag();
             if (list.get(position).followed == 0) {
@@ -134,6 +134,10 @@ public class UserListAdapter extends BaseAdapter{
                         }
 
                         list.get(position).followed = 1;
+                        TextView textView = (TextView)view;
+                        textView.setBackgroundResource(R.drawable.follow_button);
+                        textView.setText("已关注");
+                        textView.setTextColor(Color.GRAY);
                     }
                     @Override
                     public void onFailure(Call<UUidFResult> call, Throwable t) {

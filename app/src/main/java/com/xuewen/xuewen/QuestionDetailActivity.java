@@ -153,6 +153,20 @@ public class QuestionDetailActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onPause() {
+        if (mediaPlayer.isPlaying()) {
+            mediaPlayer.pause();
+        }
+        super.onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        mediaPlayer.release();
+        super.onDestroy();
+    }
+
     private void renderView(QQidBean data) {
 
         ImageLoader.getInstance().displayImage(GlobalUtil.getInstance().avatarUrl+data.asker_avatarUrl, asker_avatarUrl, GlobalUtil.getInstance().circleBitmapOptions);
@@ -176,9 +190,6 @@ public class QuestionDetailActivity extends AppCompatActivity {
 
                 // 显示progress -> 下载完成 -> 收起progress
                 final ProgressDialog dialog = ProgressDialog.show(QuestionDetailActivity.this, "", "语音文件下载中...");
-//                final ProgressDialog.Builder builder = new ProgressDialog.Builder(QuestionDetailActivity.this);
-//                final AlertDialog dialog = builder.create();
-//                dialog.show();
 
                 final String filePath = GlobalUtil.getInstance().audioUrl + data.audioUrl;
 

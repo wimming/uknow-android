@@ -64,6 +64,7 @@ public class ProfileFragment extends Fragment {
 //    @BindView(R.id.refresh) SwipeRefreshLayout refresh;
 
     private ViewPager viewPager;
+    private TabLayout tabLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -72,8 +73,7 @@ public class ProfileFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_2, container, false);
         ButterKnife.bind(this, rootView);
 
-        TabLayout tabLayout = (TabLayout) rootView.findViewById(R.id.aboutme_tbl);
-
+        tabLayout = (TabLayout) rootView.findViewById(R.id.aboutme_tbl);
         viewPager = (ViewPager) rootView.findViewById(R.id.aboutme_pager);
 
         // 两个tablayout嵌套的话，子的必须使用getChildPragmentManager
@@ -182,6 +182,9 @@ public class ProfileFragment extends Fragment {
             answerList.addAll(data.answer);
             askedList.clear();
             askedList.addAll(data.asked);
+
+            tabLayout.getTabAt(0).setText("我答 "+data.answer.size());
+            tabLayout.getTabAt(1).setText("我问 "+data.asked.size());
         }
 
     }
@@ -224,10 +227,10 @@ public class ProfileFragment extends Fragment {
 
         @Override
         public CharSequence getPageTitle(int position) {
-            if (position == 1) {
-                return "我问 20";
-            } else if (position == 0){
-                return "我答 20";
+            if (position == 0) {
+                return "我答";
+            } else if (position == 1) {
+                return "我问";
             } else {
                 return null;
             }
