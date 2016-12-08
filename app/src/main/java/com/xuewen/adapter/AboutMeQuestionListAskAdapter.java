@@ -69,7 +69,7 @@ public class AboutMeQuestionListAskAdapter extends BaseAdapter{
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        viewHolder.answerer_status.setText(list.get(position).answerer_status);
+        viewHolder.answerer_status.setText(list.get(position).answerer_username+"|"+list.get(position).answerer_status);
         viewHolder.description.setText(list.get(position).description);
 
         viewHolder.isAnswered.setText(list.get(position).finished ? "已回答" : "未回答");

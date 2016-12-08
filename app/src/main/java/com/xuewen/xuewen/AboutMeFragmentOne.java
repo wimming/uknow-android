@@ -40,9 +40,16 @@ public class AboutMeFragmentOne extends Fragment {
         questionListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getActivity(), AnswerQuestionActivity.class);
-                intent.putExtra("id", ((UUidBean.Answer) parent.getAdapter().getItem(position)).id);
-                startActivity(intent);
+                if (!((UUidBean.Answer) parent.getAdapter().getItem(position)).finished) {
+                    Intent intent = new Intent(getActivity(), AnswerQuestionActivity.class);
+                    intent.putExtra("id", ((UUidBean.Answer) parent.getAdapter().getItem(position)).id);
+                    startActivity(intent);
+                }
+                else {
+                    Intent intent = new Intent(getActivity(), QuestionDetailActivity.class);
+                    intent.putExtra("id", ((UUidBean.Answer) parent.getAdapter().getItem(position)).id);
+                    startActivity(intent);
+                }
             }
         });
 

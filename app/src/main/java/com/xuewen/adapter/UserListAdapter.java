@@ -8,15 +8,25 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xuewen.bean.UUidFANDUUidRBean;
 import com.xuewen.bean.UUidFARBean;
 import com.xuewen.bean.UserMe;
+import com.xuewen.networkservice.APITestActivity;
+import com.xuewen.networkservice.ApiService;
+import com.xuewen.networkservice.UUidFResult;
+import com.xuewen.utility.CurrentUser;
 import com.xuewen.utility.GlobalUtil;
+import com.xuewen.utility.ToastMsg;
 import com.xuewen.xuewen.R;
 
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by Administrator on 2016/11/12.
@@ -79,7 +89,6 @@ public class UserListAdapter extends BaseAdapter{
             //viewHolder.followed.setVisibility(View.INVISIBLE);
             viewHolder.followed.setBackgroundResource(R.drawable.unfollow_button);
             viewHolder.followed.setText("+关注");
-
             viewHolder.followed.setTextColor(context.getResources().getColor(R.color.main_color));
 
 
@@ -107,6 +116,32 @@ public class UserListAdapter extends BaseAdapter{
         @Override
         public void onClick(View view) {
 
+            final int position = (int)view.getTag();
+            if (list.get(position).followed == 0) {
+
+                ApiService apiService = ApiService.retrofit.create(ApiService.class);
+                Call<UUidFResult> call = apiService.requestUUidF(CurrentUser.userId, list.get(position).id);
+                call.enqueue(new Callback<UUidFResult>() {
+                    @Override
+                    public void onResponse(Call<UUidFResult> call, Response<UUidFResult> response) {
+                        if (!response.isSuccessful()) {
+                            Toast.makeText(context, ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
+                            return;
+                        }
+                        if (response.body().status != 200) {
+                            Toast.makeText(context, response.body().errmsg, Toast.LENGTH_LONG).show();
+                            return;
+                        }
+
+                        list.get(position).followed = 1;
+                    }
+                    @Override
+                    public void onFailure(Call<UUidFResult> call, Throwable t) {
+                        Toast.makeText(context, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                });
+
+            }
         }
     };
 }

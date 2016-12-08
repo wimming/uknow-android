@@ -71,16 +71,18 @@ public class AboutMeQuestionListAnswerAdapter extends BaseAdapter{
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        viewHolder.asker_username.setText(list.get(position).asker_username+"的提问");
+        viewHolder.asker_username.setText(list.get(position).asker_username+"的提问：");
         viewHolder.description.setText(list.get(position).description);
 
         ImageLoader.getInstance().displayImage(GlobalUtil.getInstance().avatarUrl+list.get(position).asker_avatarUrl, viewHolder.asker_avatarUrl, GlobalUtil.getInstance().circleBitmapOptions);
 
         if (list.get(position).finished) {
             viewHolder.answerButton.setVisibility(View.GONE);
+            viewHolder.finishedText.setVisibility(View.VISIBLE);
         }
         else {
             viewHolder.finishedText.setVisibility(View.GONE);
+            viewHolder.answerButton.setVisibility(View.VISIBLE);
         }
 
         return view;

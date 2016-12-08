@@ -108,10 +108,12 @@ public class SearchingFragment extends Fragment {
             public void onResponse(Call<UUidFARResult> call, Response<UUidFARResult> response) {
                 if (!response.isSuccessful()) {
                     Toast.makeText(getActivity(), ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
+                    refresh.setRefreshing(false);
                     return;
                 }
                 if (response.body().status != 200) {
                     Toast.makeText(getActivity(), response.body().errmsg, Toast.LENGTH_LONG).show();
+                    refresh.setRefreshing(false);
                     return;
                 }
                 dataList.clear();
@@ -131,6 +133,7 @@ public class SearchingFragment extends Fragment {
             @Override
             public void onFailure(Call<UUidFARResult> call, Throwable t) {
                 Toast.makeText(getActivity(), ToastMsg.NETWORK_ERROR + " : " + t.getMessage(), Toast.LENGTH_LONG).show();
+                refresh.setRefreshing(false);
             }
         });
     }
