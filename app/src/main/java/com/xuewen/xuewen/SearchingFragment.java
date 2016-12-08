@@ -60,9 +60,7 @@ public class SearchingFragment extends Fragment {
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                requestDataAndUpdateView();
-                //refresh.setRefreshing(false);
-                //handler -> update message
+                requestAndRender();
             }
         });
 
@@ -79,96 +77,47 @@ public class SearchingFragment extends Fragment {
             }
         });
 
-        requestDataAndUpdateView();
-
         // database service -> network service(开始刷新 -> 加载成功 -> 结束刷新) -> write back to database
-//        if (!networkLock) {
-//
-//            // database service
-//            databaseHelper = DatabaseHelper.getHelper(getActivity());
-//            try {
-//                List<UUidFARBean> records = databaseHelper.getUUidFARBeanDao().queryForAll();
-//                dataList.clear();
-//                dataList.addAll(records);
-//                adapter.notifyDataSetChanged();
-//            } catch (SQLException e) {
-//                e.printStackTrace();
-//            }
-//
-//            // network service
-//            // 开始刷新 -> 加载成功 -> 结束刷新
-//            //refresh.setRefreshing(true);
-//
-//            ApiService apiService = ApiService.retrofit.create(ApiService.class);
-//            Call<UUidFARResult> call = apiService.requestUUidFAR(CurrentUser.userId);
-//
-//            call.enqueue(new Callback<UUidFARResult>() {
-//                @Override
-//                public void onResponse(Call<UUidFARResult> call, Response<UUidFARResult> response) {
-//                    if (!response.isSuccessful()) {
-//                        Toast.makeText(getActivity(), ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
-//                        return;
-//                    }
-//                    if (response.body().status != 200) {
-//                        Toast.makeText(getActivity(), response.body().errmsg, Toast.LENGTH_LONG).show();
-//                        return;
-//                    }
-//                    dataList.clear();
-//                    dataList.addAll(response.body().data);
-//                    adapter.notifyDataSetChanged();
-//
-//                    refresh.setRefreshing(false);
-//
-//                    networkLock = true;
-//
-//                    // write back to database
-//                    try {
-//                        databaseHelper.getUUidFARBeanDao().executeRaw("delete from tb_UUidFAR");
-//                        databaseHelper.getUUidFARBeanDao().create(response.body().data);
-//                    } catch (SQLException e) {
-//                        e.printStackTrace();
-//                    }
-//
-//                }
-//
-//                @Override
-//                public void onFailure(Call<UUidFARResult> call, Throwable t) {
-//                    Toast.makeText(getActivity(), ToastMsg.NETWORK_ERROR + " : " + t.getMessage(), Toast.LENGTH_LONG).show();
-//                }
-//            });
-//
-//        }
+        if (!networkLock) {
+
+            // database service
+            databaseHelper = DatabaseHelper.getHelper(getActivity());
+            try {
+                List<UUidFARBean> records = databaseHelper.getUUidFARBeanDao().queryForAll();
+                dataList.clear();
+                dataList.addAll(records);
+                adapter.notifyDataSetChanged();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            // network service
+            // 开始刷新 -> 加载成功 -> 结束刷新
+            refresh.setRefreshing(true);
+            requestAndRender();
+        }
 
         return rootView;
     }
 
-
-    private void requestDataAndUpdateView() {
-
+    private void requestAndRender() {
         ApiService apiService = ApiService.retrofit.create(ApiService.class);
         Call<UUidFARResult> call = apiService.requestUUidFAR(CurrentUser.userId);
-
         call.enqueue(new Callback<UUidFARResult>() {
             @Override
             public void onResponse(Call<UUidFARResult> call, Response<UUidFARResult> response) {
                 if (!response.isSuccessful()) {
                     Toast.makeText(getActivity(), ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
-                    updateFromDB();
-                    refresh.setRefreshing(false);
                     return;
                 }
                 if (response.body().status != 200) {
                     Toast.makeText(getActivity(), response.body().errmsg, Toast.LENGTH_LONG).show();
-                    updateFromDB();
-                    refresh.setRefreshing(false);
                     return;
                 }
                 dataList.clear();
                 dataList.addAll(response.body().data);
                 adapter.notifyDataSetChanged();
-
                 refresh.setRefreshing(false);
-
                 networkLock = true;
 
                 // write back to database
@@ -178,28 +127,71 @@ public class SearchingFragment extends Fragment {
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-
             }
-
             @Override
             public void onFailure(Call<UUidFARResult> call, Throwable t) {
                 Toast.makeText(getActivity(), ToastMsg.NETWORK_ERROR + " : " + t.getMessage(), Toast.LENGTH_LONG).show();
-                updateFromDB();
-                refresh.setRefreshing(false);
             }
         });
     }
 
-    private void updateFromDB() {
-        try {
-            List<UUidFARBean> records = databaseHelper.getUUidFARBeanDao().queryForAll();
-            dataList.clear();
-            dataList.addAll(records);
-            adapter.notifyDataSetChanged();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+//    private void requestDataAndUpdateView() {
+//
+//        ApiService apiService = ApiService.retrofit.create(ApiService.class);
+//        Call<UUidFARResult> call = apiService.requestUUidFAR(CurrentUser.userId);
+//
+//        call.enqueue(new Callback<UUidFARResult>() {
+//            @Override
+//            public void onResponse(Call<UUidFARResult> call, Response<UUidFARResult> response) {
+//                if (!response.isSuccessful()) {
+//                    Toast.makeText(getActivity(), ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
+//                    updateFromDB();
+//                    refresh.setRefreshing(false);
+//                    return;
+//                }
+//                if (response.body().status != 200) {
+//                    Toast.makeText(getActivity(), response.body().errmsg, Toast.LENGTH_LONG).show();
+//                    updateFromDB();
+//                    refresh.setRefreshing(false);
+//                    return;
+//                }
+//                dataList.clear();
+//                dataList.addAll(response.body().data);
+//                adapter.notifyDataSetChanged();
+//
+//                refresh.setRefreshing(false);
+//
+//                networkLock = true;
+//
+//                // write back to database
+//                try {
+//                    databaseHelper.getUUidFARBeanDao().executeRaw("delete from tb_UUidFAR");
+//                    databaseHelper.getUUidFARBeanDao().create(response.body().data);
+//                } catch (SQLException e) {
+//                    e.printStackTrace();
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Call<UUidFARResult> call, Throwable t) {
+//                Toast.makeText(getActivity(), ToastMsg.NETWORK_ERROR + " : " + t.getMessage(), Toast.LENGTH_LONG).show();
+//                updateFromDB();
+//                refresh.setRefreshing(false);
+//            }
+//        });
+//    }
+//
+//    private void updateFromDB() {
+//        try {
+//            List<UUidFARBean> records = databaseHelper.getUUidFARBeanDao().queryForAll();
+//            dataList.clear();
+//            dataList.addAll(records);
+//            adapter.notifyDataSetChanged();
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
 
 
