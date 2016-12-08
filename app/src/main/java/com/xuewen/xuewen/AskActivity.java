@@ -26,8 +26,11 @@ import com.xuewen.bean.QRBean;
 import com.xuewen.bean.UUidIBean;
 import com.xuewen.networkservice.APITestActivity;
 import com.xuewen.networkservice.ApiService;
+import com.xuewen.networkservice.ApiServiceRequestResultHandler;
+import com.xuewen.networkservice.BaseResult;
 import com.xuewen.networkservice.QRResult;
 import com.xuewen.networkservice.QResult;
+import com.xuewen.networkservice.UUidFResult;
 import com.xuewen.networkservice.UUidIResult;
 import com.xuewen.utility.CurrentUser;
 import com.xuewen.utility.GlobalUtil;
@@ -148,6 +151,42 @@ public class AskActivity extends AppCompatActivity {
         }
 
         requestData(id);
+
+        followed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //简单判断当前是否为关注
+                if (followed.getText().equals("+关注")) {
+                    renderFollowedButton();
+                    sendFollowsService(CurrentUser.userId, id, new ApiServiceRequestResultHandler() {
+                        @Override
+                        public void onSuccess(Object dataBean) {
+                            renderFollowedButton();
+                        }
+
+                        @Override
+                        public void onError(String errorMessage) {
+                            renderUnfollowedButton();
+                        }
+                    });
+                } else {
+                    renderUnfollowedButton();
+                    sendUnFollowsService(CurrentUser.userId, id, new ApiServiceRequestResultHandler() {
+                        @Override
+                        public void onSuccess(Object dataBean) {
+                            renderUnfollowedButton();
+                        }
+
+                        @Override
+                        public void onError(String errorMessage) {
+                           renderFollowedButton();
+                        }
+                    });
+                }
+            }
+        });
+
     }
 
 
@@ -173,6 +212,7 @@ public class AskActivity extends AppCompatActivity {
                 //Toast.makeText(AskActivity.this, response.body().toString(), Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(AskActivity.this, AskedSuccessActivity.class);
                 startActivity(intent);
+                finish();
             }
             @Override
             public void onFailure(Call<QResult> call, Throwable t) {
@@ -182,7 +222,7 @@ public class AskActivity extends AppCompatActivity {
     }
 
     private void requestData(int uid) {
-        Call<UUidIResult> call = apiService.requestUUidI(uid);
+        Call<UUidIResult> call = apiService.requestUUidI(uid, CurrentUser.userId);
         call.enqueue(new Callback<UUidIResult>() {
             @Override
             public void onResponse(Call<UUidIResult> call, Response<UUidIResult> response) {
@@ -239,6 +279,70 @@ public class AskActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
     }
+
+
+    private void sendFollowsService(int uid, int followed_uid, final ApiServiceRequestResultHandler apiServiceRequestResultHandler) {
+
+        Call<UUidFResult> call = apiService.requestUUidF(uid, followed_uid);
+        call.enqueue(new Callback<UUidFResult>() {
+            @Override
+            public void onResponse(Call<UUidFResult> call, Response<UUidFResult> response) {
+                if (!response.isSuccessful()) {
+                    apiServiceRequestResultHandler.onError(ToastMsg.SERVER_ERROR);
+                    return;
+                }
+                if (response.body().status != 200) {
+                    apiServiceRequestResultHandler.onSuccess(response.body().data);
+                    return;
+                }
+                apiServiceRequestResultHandler.onSuccess(response.body().data);
+            }
+            @Override
+            public void onFailure(Call<UUidFResult> call, Throwable t) {
+                apiServiceRequestResultHandler.onError(ToastMsg.NETWORK_ERROR+" : "+t.getMessage());
+            }
+        });
+    }
+
+    private void sendUnFollowsService(int uid, int followed_uid, final ApiServiceRequestResultHandler apiServiceRequestResultHandler) {
+
+        Call<UUidFResult> call = apiService.deleteUUidF(uid, followed_uid);
+        call.enqueue(new Callback<UUidFResult>() {
+            @Override
+            public void onResponse(Call<UUidFResult> call, Response<UUidFResult> response) {
+                if (!response.isSuccessful()) {
+                    apiServiceRequestResultHandler.onError(ToastMsg.SERVER_ERROR);
+                    return;
+                }
+                if (response.body().status != 200) {
+                    apiServiceRequestResultHandler.onError(response.body().errmsg);
+                    return;
+                }
+                apiServiceRequestResultHandler.onSuccess(response.body());
+            }
+            @Override
+            public void onFailure(Call<UUidFResult> call, Throwable t) {
+                apiServiceRequestResultHandler.onError(ToastMsg.NETWORK_ERROR+" : "+t.getMessage());
+            }
+        });
+    }
+
+
+
+
+
+
+    private void renderFollowedButton() {
+        followed.setText("已关注");
+        followed.setBackgroundResource(R.drawable.radius_button_shape);
+        followed.setTextColor(Color.WHITE);
+    }
+
+    private void renderUnfollowedButton() {
+        followed.setText("+关注");
+        followed.setBackgroundResource(R.drawable.follow_button);
+        followed.setTextColor(Color.GRAY);
+    }
+
 }
