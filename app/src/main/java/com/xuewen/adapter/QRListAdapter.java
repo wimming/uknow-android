@@ -81,7 +81,7 @@ public class QRListAdapter extends BaseAdapter {
         }
 
         viewHolder.description.setText(list.get(position).description);
-        viewHolder.answerer_description.setText(list.get(position).answerer_description);
+        viewHolder.answerer_description.setText(list.get(position).answerer_username+" | "+list.get(position).answerer_status+"。"+list.get(position).answerer_description);
         ImageLoader.getInstance().displayImage(GlobalUtil.getInstance().avatarUrl+list.get(position).answerer_avatarUrl, viewHolder.answerer_avatarUrl, GlobalUtil.getInstance().circleBitmapOptions);
 
         viewHolder.listen.setText(list.get(position).audioSeconds+"''");
