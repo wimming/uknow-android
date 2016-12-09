@@ -16,6 +16,8 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -174,6 +176,8 @@ public class ProfileFragment extends Fragment {
         status.setText(data.status);
         followedNum.setText(data.followedNum+"人关注");
 
+        BaseAdapter answerAdapter = ((AboutMeFragmentOne)((AskAndAnswerAdapter)viewPager.getAdapter()).aboutMeFragmentOne).dataListAdapter;
+        BaseAdapter askAdapter = ((AboutMeFragmentTwo)((AskAndAnswerAdapter)viewPager.getAdapter()).aboutMeFragmentTwo).dataListAdapter;
         List<UUidBean.Answer> answerList = ((AboutMeFragmentOne)((AskAndAnswerAdapter)viewPager.getAdapter()).aboutMeFragmentOne).dataList;
         List<UUidBean.Asked> askedList = ((AboutMeFragmentTwo)((AskAndAnswerAdapter)viewPager.getAdapter()).aboutMeFragmentTwo).dataList;
 
@@ -182,6 +186,9 @@ public class ProfileFragment extends Fragment {
             answerList.addAll(data.answer);
             askedList.clear();
             askedList.addAll(data.asked);
+
+//            askAdapter.notifyDataSetChanged();
+//            answerAdapter.notifyDataSetChanged();
 
             tabLayout.getTabAt(0).setText("我答 "+data.answer.size());
             tabLayout.getTabAt(1).setText("我问 "+data.asked.size());

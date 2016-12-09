@@ -123,6 +123,7 @@ public class AnswerQuestionActivity extends AppCompatActivity {
                 handler_countdown.removeCallbacks(r);
                 playHandler.removeCallbacks(playRunnable);
                 Intent intent = new Intent(AnswerQuestionActivity.this, AnswerSuccessActivity.class);
+//                Intent intent = new Intent(AnswerQuestionActivity.this, QuestionDetailActivity.class);
                 intent.putExtra("id", id);
                 startActivity(intent);
                 finish();
@@ -278,7 +279,7 @@ public class AnswerQuestionActivity extends AppCompatActivity {
                         //失败后回调
                         @Override
                         public void onError(String errorMsg) {
-                            ListenHelper.showTip(AnswerQuestionActivity.this, errorMsg + "哈哈哈 出错啦");
+                            ListenHelper.showTip(AnswerQuestionActivity.this, errorMsg);
                             speak.setImageResource(R.drawable.microphone);
 
                             page_state = PAGE_STATE.STATE0;

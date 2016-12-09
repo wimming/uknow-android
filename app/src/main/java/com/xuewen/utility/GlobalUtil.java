@@ -1,6 +1,9 @@
 package com.xuewen.utility;
 
+import android.graphics.Bitmap;
+
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.CircleBitmapDisplayer;
 
 /**
@@ -31,7 +34,9 @@ public class GlobalUtil {
         circleBitmapOptions = new DisplayImageOptions.Builder()
                 .displayer(new CircleBitmapDisplayer())  // rounded corner bitmap
                 .cacheOnDisk(true)
-                .cacheInMemory(true)
+                .cacheInMemory(false)
+                .bitmapConfig(Bitmap.Config.RGB_565)
+                .imageScaleType(ImageScaleType.EXACTLY)
                 .build();
     }
 

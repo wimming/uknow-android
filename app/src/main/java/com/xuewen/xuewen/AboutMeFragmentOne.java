@@ -23,21 +23,23 @@ public class AboutMeFragmentOne extends Fragment {
 
     public List<UUidBean.Answer> dataList = new ArrayList<>();
 
+    public AboutMeQuestionListAnswerAdapter dataListAdapter;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_about_me_fragment_one, container, false);
-        ListView questionListView = (ListView) rootView.findViewById(R.id.aboutMe_answer_list);
+        ListView dataListView = (ListView) rootView.findViewById(R.id.aboutMe_answer_list);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            questionListView.setNestedScrollingEnabled(true);
+            dataListView.setNestedScrollingEnabled(true);
         }
 
 
-        AboutMeQuestionListAnswerAdapter questionListAdapter = new AboutMeQuestionListAnswerAdapter(dataList, getActivity());
+        dataListAdapter = new AboutMeQuestionListAnswerAdapter(dataList, getActivity());
 
-        questionListView.setAdapter(questionListAdapter);
-        questionListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        dataListView.setAdapter(dataListAdapter);
+        dataListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (!((UUidBean.Answer) parent.getAdapter().getItem(position)).finished) {

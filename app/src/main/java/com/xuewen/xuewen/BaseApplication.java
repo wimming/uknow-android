@@ -37,7 +37,6 @@ public class BaseApplication extends Application {
         DisplayImageOptions displayOptions = new DisplayImageOptions.Builder()
                 .cacheOnDisk(true)
                 .cacheInMemory(true)
-                .bitmapConfig(Bitmap.Config.RGB_565)
                 .build();
 
         File cacheDir = StorageUtils.getCacheDirectory(context);
@@ -48,6 +47,7 @@ public class BaseApplication extends Application {
                 .diskCacheSize(50 * 1024 * 1024)
                 .diskCacheFileCount(100)
                 .diskCacheFileNameGenerator(new HashCodeFileNameGenerator()) // default
+
                 .threadPoolSize(3)
 
                 .defaultDisplayImageOptions(displayOptions)
@@ -60,7 +60,7 @@ public class BaseApplication extends Application {
         //科大讯飞整体初始化
         ListenHelper.Init(context);
 
-        CurrentUser.userId = 7;
+        CurrentUser.userId = 3;
 
     }
 }
