@@ -7,17 +7,19 @@
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
+        app:elevation="0dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/white"
-        android:theme="@style/AppTheme.AppBarOverlay">
-
+        >
+        <!--android:theme="@style/AppTheme.AppBarOverlay"-->
+        <!--app:popupTheme="@style/AppTheme.PopupOverlay"-->
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/base_toolbar_height"
             app:layout_scrollFlags="scroll|enterAlways"
-            app:popupTheme="@style/AppTheme.PopupOverlay">
+            >
             <TextView
                 android:text="问题详情"
                 android:textColor="@android:color/black"
@@ -28,6 +30,11 @@
         </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
+
+    <View
+        android:background="#FFCCCCCC"
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/refresh"
