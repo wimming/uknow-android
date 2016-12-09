@@ -22,7 +22,7 @@
             app:layout_scrollFlags="scroll|enterAlways"
             app:popupTheme="@style/AppTheme.PopupOverlay">
             <TextView
-                android:text="设置"
+                android:text="回答成功"
                 android:textColor="@color/black_color"
                 android:textSize="@dimen/base_big_font"
                 android:layout_gravity="center"
@@ -30,6 +30,11 @@
                 android:layout_height="wrap_content" />
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
+
+    <View
+        android:background="#FFCCCCCC"
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
 
     <LinearLayout
         android:orientation="vertical"
@@ -57,15 +62,8 @@
             android:layout_height="wrap_content" />
         <TextView
             android:id="@+id/checkQuestionDetail"
-            android:text="返回首页->"
-            android:paddingRight="@dimen/base_margin"
-            android:paddingLeft="@dimen/base_margin"
+            android:text="感谢您的回答, 我们会进行努力"
             android:layout_marginBottom="100dp"
-            android:paddingTop="4dp"
-            android:paddingBottom="4dp"
-            android:textSize="@dimen/base_big_font"
-            android:background="@drawable/button_border"
-            android:textColor="@color/main_color"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
