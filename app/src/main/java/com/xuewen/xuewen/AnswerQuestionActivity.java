@@ -118,10 +118,11 @@ public class AnswerQuestionActivity extends AppCompatActivity {
                     return;
                 }
                 //Toast.makeText(AnswerQuestionActivity.this, response.body().toString(), Toast.LENGTH_SHORT).show();
-
-                //handler_countdown.removeCallbacks(r);
-                //playHandler.removeCallbacks(playRunnable);
-                Intent intent = new Intent(AnswerQuestionActivity.this, QuestionDetailActivity.class);
+                mIat.cancel();
+                mIat.destroy();
+                handler_countdown.removeCallbacks(r);
+                playHandler.removeCallbacks(playRunnable);
+                Intent intent = new Intent(AnswerQuestionActivity.this, AnswerSuccessActivity.class);
                 intent.putExtra("id", id);
                 startActivity(intent);
                 finish();

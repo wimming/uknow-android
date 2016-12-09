@@ -61,7 +61,8 @@
         <activity android:name=".LoginInfoActivity" />
         <activity android:name="com.xuewen.networkservice.APITestActivity" />
         <activity android:name=".AnswerQuestionActivity" />
-        <activity android:name=".AskedSuccessActivity"></activity>
+        <activity android:name=".AskedSuccessActivity" />
+        <activity android:name=".AnswerSuccessActivity"></activity>
     </application>
 
 </manifest>

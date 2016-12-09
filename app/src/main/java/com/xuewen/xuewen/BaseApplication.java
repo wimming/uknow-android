@@ -2,6 +2,7 @@ package com.xuewen.xuewen;
 
 import android.app.Application;
 import android.content.Context;
+import android.graphics.Bitmap;
 
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.cache.disc.naming.HashCodeFileNameGenerator;
@@ -36,6 +37,7 @@ public class BaseApplication extends Application {
         DisplayImageOptions displayOptions = new DisplayImageOptions.Builder()
                 .cacheOnDisk(true)
                 .cacheInMemory(true)
+                .bitmapConfig(Bitmap.Config.RGB_565)
                 .build();
 
         File cacheDir = StorageUtils.getCacheDirectory(context);
@@ -46,6 +48,7 @@ public class BaseApplication extends Application {
                 .diskCacheSize(50 * 1024 * 1024)
                 .diskCacheFileCount(100)
                 .diskCacheFileNameGenerator(new HashCodeFileNameGenerator()) // default
+                .threadPoolSize(3)
 
                 .defaultDisplayImageOptions(displayOptions)
                 .writeDebugLogs()
