@@ -64,35 +64,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //科大讯飞整体初始化
-        ListenHelper.Init(this);
-
         ButterKnife.bind(this);
-
-        DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
-                .cacheInMemory(true).imageScaleType(ImageScaleType.EXACTLY)
-                .cacheOnDisk(true).build();
-        ImageLoaderConfiguration imageLoaderConfiguration =  new ImageLoaderConfiguration.Builder(
-                MainActivity.this)
-                .threadPoolSize(3)
-// default
-                .threadPriority(Thread.NORM_PRIORITY - 2)
-                .denyCacheImageMultipleSizesInMemory()
-                .diskCacheFileNameGenerator(new Md5FileNameGenerator())
-                .tasksProcessingOrder(QueueProcessingType.LIFO)
-                .denyCacheImageMultipleSizesInMemory()
-// .memoryCache(new LruMemoryCache((int) (6 * 1024 * 1024)))
-                .memoryCache(new WeakMemoryCache())
-                .memoryCacheSize((int) (2 * 1024 * 1024))
-                .memoryCacheSizePercentage(13)
-// default
-                .diskCache(new UnlimitedDiskCache(getExternalCacheDir()))
-// default
-                .diskCacheSize(50 * 1024 * 1024).diskCacheFileCount(100)
-                .diskCacheFileNameGenerator(new HashCodeFileNameGenerator())
-                .defaultDisplayImageOptions(defaultOptions).writeDebugLogs() // Remove
-                .build();
-        ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(getApplicationContext()));
 
 //        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 //        setSupportActionBar(toolbar);
@@ -131,8 +103,6 @@ public class MainActivity extends AppCompatActivity {
 //                        .setAction("Action", null).show();
 //            }
 //        });
-
-        CurrentUser.userId = 7;
 
     }
 

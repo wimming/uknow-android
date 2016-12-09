@@ -48,7 +48,7 @@ import retrofit2.Response;
 
 public class AnswerQuestionActivity extends AppCompatActivity {
 
-    final static  String voice_length_show_text0 = "录音最常2分钟";
+    final static  String voice_length_show_text0 = "录音最长2分钟";
     final  static  String voice_status_show_text0 = "点击按钮开始";
     final  static  String voice_status_show_text1 = "点击按钮结束";
     final  static  String voice_status_show_text2 = "点击按钮试听";

@@ -30,6 +30,8 @@ public class GlobalUtil {
     private GlobalUtil() {
         circleBitmapOptions = new DisplayImageOptions.Builder()
                 .displayer(new CircleBitmapDisplayer())  // rounded corner bitmap
+                .cacheOnDisk(true)
+                .cacheInMemory(true)
                 .build();
     }
 
