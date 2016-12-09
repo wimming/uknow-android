@@ -78,7 +78,7 @@ public class ModifyInfoActivity extends AppCompatActivity {
         });
 
         visibilityController.setVisibility(View.GONE);
-        dialog = ProgressDialog.show(this, "", "loadding");
+        dialog = new ProgressDialog(this);
         dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         dialog.show();
 

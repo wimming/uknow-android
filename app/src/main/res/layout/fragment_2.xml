@@ -109,7 +109,7 @@
                 app:layout_scrollFlags="scroll|enterAlways"
                 app:popupTheme="@style/AppTheme.PopupOverlay">
                 <TextView
-                    android:text="uKnow"
+                    android:text="Uknow"
                     android:textColor="@android:color/black"
                       android:textSize="@dimen/base_big_font"
                     android:gravity="center"
