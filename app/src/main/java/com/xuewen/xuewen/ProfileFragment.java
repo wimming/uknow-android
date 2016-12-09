@@ -187,8 +187,10 @@ public class ProfileFragment extends Fragment {
             askedList.clear();
             askedList.addAll(data.asked);
 
-//            askAdapter.notifyDataSetChanged();
-//            answerAdapter.notifyDataSetChanged();
+            if (askAdapter != null && answerAdapter != null) {
+                askAdapter.notifyDataSetChanged();
+                answerAdapter.notifyDataSetChanged();
+            }
 
             tabLayout.getTabAt(0).setText("我答 "+data.answer.size());
             tabLayout.getTabAt(1).setText("我问 "+data.asked.size());
