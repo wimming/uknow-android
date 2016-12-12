@@ -1,8 +1,6 @@
 package com.xuewen.xuewen;
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,8 +11,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.xuewen.bean.Question;
-import com.xuewen.networkservice.APITestActivity;
+import com.xuewen.adapter.AboutMeQuestionListAnswerAdapter;
+import com.xuewen.bean.QRBean;
+import com.xuewen.bean.UUidBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,38 +21,37 @@ import java.util.List;
 
 public class AboutMeFragmentOne extends Fragment {
 
+    public List<UUidBean.Answer> dataList = new ArrayList<>();
+
+    public AboutMeQuestionListAnswerAdapter dataListAdapter;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_about_me_fragment_one, container, false);
-        ListView questionListView = (ListView) rootView.findViewById(R.id.aboutMe_answer_list);
+        ListView dataListView = (ListView) rootView.findViewById(R.id.aboutMe_answer_list);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            questionListView.setNestedScrollingEnabled(true);
+            dataListView.setNestedScrollingEnabled(true);
         }
 
 
-        List<Question> questionList = new ArrayList<>();
+        dataListAdapter = new AboutMeQuestionListAnswerAdapter(dataList, getActivity());
 
-        Question q;
-        for (int i = 0; i < 10; ++i) {
-            q = new Question("张三的回答");
-            q.ans_description = "师兄好，软件学院的学生毕业后有哪些出路呢？";
-            questionList.add(q);
-        }
-
-        AboutMeQuestionListAnswerAdapter questionListAdapter = new AboutMeQuestionListAnswerAdapter(questionList, getActivity());
-
-        questionListView.setAdapter(questionListAdapter);
-        questionListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        dataListView.setAdapter(dataListAdapter);
+        dataListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Intent intent = new Intent(getActivity(), APITestActivity.class);
-//                startActivity(intent);
-
-                Intent intent = new Intent(getActivity(), AnswerQuestionActivity.class);
-                startActivity(intent);
-
+                if (!((UUidBean.Answer) parent.getAdapter().getItem(position)).finished) {
+                    Intent intent = new Intent(getActivity(), AnswerQuestionActivity.class);
+                    intent.putExtra("id", ((UUidBean.Answer) parent.getAdapter().getItem(position)).id);
+                    startActivity(intent);
+                }
+                else {
+                    Intent intent = new Intent(getActivity(), QuestionDetailActivity.class);
+                    intent.putExtra("id", ((UUidBean.Answer) parent.getAdapter().getItem(position)).id);
+                    startActivity(intent);
+                }
             }
         });
 

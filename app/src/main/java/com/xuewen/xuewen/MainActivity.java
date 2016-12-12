@@ -57,46 +57,18 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager mViewPager;
     private TabLayout tabLayout;
 
-    @BindView(R.id.searchView) SearchView searchView;
+//    @BindView(R.id.searchView) SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //科大讯飞整体初始化
-        ListenHelper.Init(this);
-
         ButterKnife.bind(this);
 
-        DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
-                .cacheInMemory(true).imageScaleType(ImageScaleType.EXACTLY)
-                .cacheOnDisk(true).build();
-        ImageLoaderConfiguration imageLoaderConfiguration =  new ImageLoaderConfiguration.Builder(
-                MainActivity.this)
-                .threadPoolSize(3)
-// default
-                .threadPriority(Thread.NORM_PRIORITY - 2)
-                .denyCacheImageMultipleSizesInMemory()
-                .diskCacheFileNameGenerator(new Md5FileNameGenerator())
-                .tasksProcessingOrder(QueueProcessingType.LIFO)
-                .denyCacheImageMultipleSizesInMemory()
-// .memoryCache(new LruMemoryCache((int) (6 * 1024 * 1024)))
-                .memoryCache(new WeakMemoryCache())
-                .memoryCacheSize((int) (2 * 1024 * 1024))
-                .memoryCacheSizePercentage(13)
-// default
-                .diskCache(new UnlimitedDiskCache(getExternalCacheDir()))
-// default
-                .diskCacheSize(50 * 1024 * 1024).diskCacheFileCount(100)
-                .diskCacheFileNameGenerator(new HashCodeFileNameGenerator())
-                .defaultDisplayImageOptions(defaultOptions).writeDebugLogs() // Remove
-                .build();
-        ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(getApplicationContext()));
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("");
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
+//        getSupportActionBar().setTitle("");
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -105,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+        mViewPager.setOffscreenPageLimit(1);
 
         tabLayout = (TabLayout)findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(mViewPager);
@@ -115,13 +88,13 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.getTabAt(1).setCustomView(getLayoutInflater().inflate(R.layout.activity_main_tab2, null));
         tabLayout.getTabAt(2).setCustomView(getLayoutInflater().inflate(R.layout.activity_main_tab3, null));
 
-        searchView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                startActivity(new Intent(MainActivity.this, SearchActivity.class));
-                startActivity(new Intent(MainActivity.this, APITestActivity.class));
-            }
-        });
+//        searchView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+////                startActivity(new Intent(MainActivity.this, SearchActivity.class));
+//                startActivity(new Intent(MainActivity.this, APITestActivity.class));
+//            }
+//        });
 
 //        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 //        fab.setOnClickListener(new View.OnClickListener() {
@@ -131,8 +104,6 @@ public class MainActivity extends AppCompatActivity {
 //                        .setAction("Action", null).show();
 //            }
 //        });
-
-        CurrentUser.userId = 4;
 
     }
 

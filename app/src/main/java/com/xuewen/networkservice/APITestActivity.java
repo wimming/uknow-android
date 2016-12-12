@@ -98,7 +98,7 @@ public class APITestActivity extends Activity {
                 });
             }
             else if (id == buttons.get(2).getId()) {
-                Call<UUidIResult> call = apiService.requestUUidI(uid);
+                Call<UUidIResult> call = apiService.requestUUidI(uid, 3);
                 call.enqueue(new Callback<UUidIResult>() {
                     @Override
                     public void onResponse(Call<UUidIResult> call, Response<UUidIResult> response) {

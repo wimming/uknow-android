@@ -14,39 +14,39 @@
         android:layout_height="match_parent">
 
 
-        <android.support.design.widget.AppBarLayout
-            android:id="@+id/appbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/AppBarLayout_color"
-            android:theme="@style/AppTheme.AppBarOverlay">
+        <!--<android.support.design.widget.AppBarLayout-->
+            <!--android:id="@+id/appbar"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:background="@color/AppBarLayout_color"-->
+            <!--android:theme="@style/AppTheme.AppBarOverlay">-->
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/base_toolbar_height"
-                app:layout_scrollFlags="scroll|enterAlways"
-                app:popupTheme="@style/AppTheme.PopupOverlay">
+            <!--<android.support.v7.widget.Toolbar-->
+                <!--android:id="@+id/toolbar"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="@dimen/base_toolbar_height"-->
+                <!--app:layout_scrollFlags="scroll|enterAlways"-->
+                <!--app:popupTheme="@style/AppTheme.PopupOverlay">-->
 
-                <android.support.v7.widget.SearchView
-                    android:id="@+id/searchView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="6dp"
-                    android:layout_marginBottom="6dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:iconifiedByDefault="false"
-                    android:background="@drawable/search_background"
-                    android:queryHint="请输入搜索内容" />
+                <!--<android.support.v7.widget.SearchView-->
+                    <!--android:id="@+id/searchView"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:layout_marginTop="6dp"-->
+                    <!--android:layout_marginBottom="6dp"-->
+                    <!--android:layout_marginLeft="10dp"-->
+                    <!--android:layout_marginRight="10dp"-->
+                    <!--android:iconifiedByDefault="false"-->
+                    <!--android:background="@drawable/search_background"-->
+                    <!--android:queryHint="请输入搜索内容" />-->
 
-            </android.support.v7.widget.Toolbar>
-        </android.support.design.widget.AppBarLayout>
+            <!--</android.support.v7.widget.Toolbar>-->
+            <!--<View-->
+                <!--android:background="#FFCCCCCC"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="1dp" />-->
+        <!--</android.support.design.widget.AppBarLayout>-->
 
-        <View
-            android:background="#FFCCCCCC"
-            android:layout_width="match_parent"
-            android:layout_height="1dp" />
 
         <android.support.v4.view.ViewPager
             android:id="@+id/container"
@@ -61,6 +61,7 @@
             android:layout_height="1dp" />
         <android.support.design.widget.TabLayout
             android:id="@+id/tab_layout"
+            android:background="@android:color/white"
             app:tabMode="fixed"
             app:tabIndicatorHeight="0dp"
             app:tabTextColor="@color/tab_unselected_text_color"

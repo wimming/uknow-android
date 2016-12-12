@@ -7,31 +7,46 @@
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
+        app:elevation="0dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/AppBarLayout_color"
-        android:theme="@style/AppTheme.AppBarOverlay">
-
+        android:background="@android:color/white"
+        >
+        <!--android:theme="@style/AppTheme.AppBarOverlay"-->
+        <!--app:popupTheme="@style/AppTheme.PopupOverlay"-->
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/base_toolbar_height"
             app:layout_scrollFlags="scroll|enterAlways"
-            app:popupTheme="@style/AppTheme.PopupOverlay">
+            >
             <TextView
                 android:text="问题详情"
+                android:textColor="@android:color/black"
                 android:textSize="@dimen/base_big_font"
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </android.support.v7.widget.Toolbar>
+
     </android.support.design.widget.AppBarLayout>
 
+    <View
+        android:background="#FFCCCCCC"
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/refresh"
+        android:background="@android:color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <LinearLayout
+            android:id="@+id/visibilityController"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="10dp"
@@ -42,8 +57,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                >
+                android:layout_marginBottom="10dp">
                 <ImageView
                     android:id="@+id/asker_avatarUrl"
                     android:src="@drawable/avatar"
@@ -80,7 +94,7 @@
 
             <ImageView
                 android:id="@+id/answerer_avatarUrl"
-                android:src="@drawable/avatar"
+
                 android:layout_width="90dp"
                 android:layout_height="90dp"
                 android:layout_marginBottom="10dp"
@@ -133,6 +147,8 @@
                 android:id="@+id/review" />
 
             <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/commentLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -144,6 +160,7 @@
                     android:orientation="vertical"
                     android:layout_marginRight="30dp">
                     <ImageView
+                        android:id="@+id/good"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_marginBottom="10dp"
@@ -161,6 +178,7 @@
                     android:gravity="center"
                     android:orientation="vertical">
                     <ImageView
+                        android:id="@+id/bad"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_marginBottom="10dp"
@@ -175,5 +193,7 @@
         </LinearLayout>
 
     </ScrollView>
+    </android.support.v4.widget.SwipeRefreshLayout>
+
 
 </LinearLayout>

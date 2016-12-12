@@ -54,4 +54,8 @@ public class QQidBean {
 
     @DatabaseField(columnName = "liked")
     public int liked;
+
+    @DatabaseField(columnName = "audioSeconds")
+    public int audioSeconds;
+
 }

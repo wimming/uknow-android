@@ -14,7 +14,6 @@ import android.widget.Toast;
 
 import com.xuewen.adapter.QRListAdapter;
 import com.xuewen.bean.QRBean;
-import com.xuewen.bean.Question;
 import com.xuewen.databaseservice.DatabaseHelper;
 import com.xuewen.networkservice.ApiService;
 import com.xuewen.networkservice.QQidResult;
@@ -25,6 +24,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -38,28 +39,28 @@ public class RecommendationFragment extends Fragment {
     private List<QRBean> list = new ArrayList<>();
     private DatabaseHelper databaseHelper;
     private boolean networkLock = false;
+    private QRListAdapter adapter;
+
+    @BindView(R.id.refresh) SwipeRefreshLayout refresh;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
     {
         View rootView = inflater.inflate(R.layout.fragment_0, container, false);
-
-        final  SwipeRefreshLayout refresh = (SwipeRefreshLayout) rootView.findViewById(R.id.refresh);
+        ButterKnife.bind(this, rootView);
+        databaseHelper = DatabaseHelper.getHelper(getActivity());
         refresh.setColorSchemeResources(android.R.color.holo_blue_bright, android.R.color.holo_green_light, android.R.color.holo_orange_light);
 
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-
-                Toast.makeText(getActivity(), "刷新一下", Toast.LENGTH_SHORT).show();
-                refresh.setRefreshing(false);
-                //handler -> update message
+                requestAndRender();
             }
         });
 
         final ListView listView = (ListView) rootView.findViewById(R.id.listView);
-        final QRListAdapter adapter = new QRListAdapter(list, getActivity());
+        adapter = new QRListAdapter(list, getActivity());
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -71,6 +72,7 @@ public class RecommendationFragment extends Fragment {
             }
         });
 
+        // database service -> network service(开始刷新 -> 加载成功 -> 结束刷新) -> write back to database
         if (!networkLock) {
 
             // database service
@@ -85,43 +87,108 @@ public class RecommendationFragment extends Fragment {
             }
 
             // network service
-            ApiService apiService = ApiService.retrofit.create(ApiService.class);
-            Call<QRResult> call = apiService.requestQR();
-
-            call.enqueue(new Callback<QRResult>() {
-                @Override
-                public void onResponse(Call<QRResult> call, Response<QRResult> response) {
-                    if (!response.isSuccessful()) {
-                        Toast.makeText(getActivity(), ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
-                        return;
-                    }
-                    if (response.body().status != 200) {
-                        Toast.makeText(getActivity(), response.body().errmsg, Toast.LENGTH_LONG).show();
-                        return;
-                    }
-                    list.clear();
-                    list.addAll(response.body().data);
-                    adapter.notifyDataSetChanged();
-
-                    // write back to database
-                    try {
-                        databaseHelper.getQRBeanDao().executeRaw("delete from tb_QR");
-                        databaseHelper.getQRBeanDao().create(response.body().data);
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-
-                    networkLock = true;
-                }
-
-                @Override
-                public void onFailure(Call<QRResult> call, Throwable t) {
-                    Toast.makeText(getActivity(), ToastMsg.NETWORK_ERROR + " : " + t.getMessage(), Toast.LENGTH_LONG).show();
-                }
-            });
-
+            // 开始刷新 -> 加载成功 -> 结束刷新
+            refresh.setRefreshing(true);
+            requestAndRender();
         }
 
         return rootView;
     }
+
+    private void requestAndRender() {
+        ApiService apiService = ApiService.retrofit.create(ApiService.class);
+        Call<QRResult> call = apiService.requestQR();
+        call.enqueue(new Callback<QRResult>() {
+            @Override
+            public void onResponse(Call<QRResult> call, Response<QRResult> response) {
+                if (!response.isSuccessful()) {
+                    Toast.makeText(getActivity(), ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
+                    refresh.setRefreshing(false);
+                    return;
+                }
+                if (response.body().status != 200) {
+                    Toast.makeText(getActivity(), response.body().errmsg, Toast.LENGTH_LONG).show();
+                    refresh.setRefreshing(false);
+                    return;
+                }
+                list.clear();
+                list.addAll(response.body().data);
+                adapter.notifyDataSetChanged();
+                refresh.setRefreshing(false);
+                networkLock = true;
+
+                // write back to database
+                try {
+                    databaseHelper.getQRBeanDao().executeRaw("delete from tb_QR");
+                    databaseHelper.getQRBeanDao().create(response.body().data);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            public void onFailure(Call<QRResult> call, Throwable t) {
+                Toast.makeText(getActivity(), ToastMsg.NETWORK_ERROR + " : " + t.getMessage(), Toast.LENGTH_LONG).show();
+                refresh.setRefreshing(false);
+            }
+        });
+    }
+
+//    // 如果网络请求不到数据 就从数据库请求
+//    private void requestDataAndUpdateView() {
+//        databaseHelper = DatabaseHelper.getHelper(getActivity());
+//        ApiService apiService = ApiService.retrofit.create(ApiService.class);
+//        Call<QRResult> call = apiService.requestQR();
+//
+//        call.enqueue(new Callback<QRResult>() {
+//            @Override
+//            public void onResponse(Call<QRResult> call, Response<QRResult> response) {
+//                if (!response.isSuccessful()) {
+//                    //Toast.makeText(getActivity(), ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
+//                    updateFromDB();
+//                    refresh.setRefreshing(false);
+//                    return;
+//                }
+//
+//                if (response.body().status != 200) {
+//                    Toast.makeText(getActivity(), response.body().errmsg, Toast.LENGTH_LONG).show();
+//                    updateFromDB();
+//                    refresh.setRefreshing(false);
+//                    return;
+//                }
+//                list.clear();
+//                list.addAll(response.body().data);
+//                adapter.notifyDataSetChanged();
+//                refresh.setRefreshing(false);
+//
+//                //networkLock = true;
+//
+//                // write back to database
+//                try {
+//                    databaseHelper.getQRBeanDao().executeRaw("delete from tb_QR");
+//                    databaseHelper.getQRBeanDao().create(response.body().data);
+//                } catch (SQLException e) {
+//                    e.printStackTrace();
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Call<QRResult> call, Throwable t) {
+//                Toast.makeText(getActivity(), ToastMsg.NETWORK_ERROR + " : " + t.getMessage(), Toast.LENGTH_LONG).show();
+//                updateFromDB();
+//                refresh.setRefreshing(false);
+//            }
+//        });
+//    }
+//
+//    private void updateFromDB() {
+//        try {
+//            List<QRBean> records = databaseHelper.getQRBeanDao().queryForAll();
+//            list.clear();
+//            list.addAll(records);
+//            adapter.notifyDataSetChanged();
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//    }
 }

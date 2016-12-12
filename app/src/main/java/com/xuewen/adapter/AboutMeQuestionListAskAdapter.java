@@ -9,7 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.xuewen.bean.Question;
+import com.xuewen.bean.UUidBean;
+import com.xuewen.bean.UUidFARBean;
 import com.xuewen.utility.GlobalUtil;
 import com.xuewen.xuewen.R;
 
@@ -20,10 +21,10 @@ import java.util.List;
  */
 public class AboutMeQuestionListAskAdapter extends BaseAdapter{
 
-    private List<Question> list;
+    private List<UUidBean.Asked> list;
     private Context context;
 
-    public AboutMeQuestionListAskAdapter(List<Question> list, Context context) {
+    public AboutMeQuestionListAskAdapter(List<UUidBean.Asked> list, Context context) {
         this.list = list;
         this.context = context;
     }
@@ -57,10 +58,10 @@ public class AboutMeQuestionListAskAdapter extends BaseAdapter{
         if (convertView == null) {
             view = LayoutInflater.from(context).inflate(R.layout.aboutme_ask_list_item, null);
             viewHolder = new ViewHolder();
-            viewHolder.que_headimgurl = (ImageView) view.findViewById(R.id.que_headimgurl);
-            viewHolder.que_username = (TextView)view.findViewById(R.id.que_username);
-            viewHolder.que_description = (TextView) view.findViewById(R.id.que_description);
-            viewHolder.ans_status = (TextView) view.findViewById(R.id.ans_status);
+            viewHolder.answerer_avatarUrl = (ImageView) view.findViewById(R.id.answerer_avatarUrl);
+            viewHolder.answerer_status = (TextView)view.findViewById(R.id.answerer_status);
+            viewHolder.description = (TextView) view.findViewById(R.id.description);
+            viewHolder.isAnswered = (TextView) view.findViewById(R.id.isAnswered);
             view.setTag(viewHolder);
         }
         else {
@@ -68,18 +69,20 @@ public class AboutMeQuestionListAskAdapter extends BaseAdapter{
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        viewHolder.que_username.setText(list.get(position).que_username);
-        viewHolder.que_description.setText(list.get(position).que_description);
+        viewHolder.answerer_status.setText(list.get(position).answerer_username+" | "+list.get(position).answerer_status);
+        viewHolder.description.setText(list.get(position).description);
 
-        ImageLoader.getInstance().displayImage("drawable://" +  R.drawable.avatar, viewHolder.que_headimgurl, GlobalUtil.getInstance().circleBitmapOptions);
+        viewHolder.isAnswered.setText(list.get(position).finished ? "已回答" : "未回答");
+
+        ImageLoader.getInstance().displayImage(GlobalUtil.getInstance().avatarUrl+list.get(position).answerer_avatarUrl, viewHolder.answerer_avatarUrl, GlobalUtil.getInstance().circleBitmapOptions);
 
         return view;
     }
 
     private class ViewHolder {
-        public ImageView que_headimgurl;
-        public TextView que_username;
-        public TextView que_description;
-        public TextView ans_status;
+        public ImageView answerer_avatarUrl;
+        public TextView answerer_status;
+        public TextView description;
+        public TextView isAnswered;
     }
 }

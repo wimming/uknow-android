@@ -19,6 +19,9 @@ public class QRBean {
     @DatabaseField(columnName = "description")
     public String description;
 
+    @DatabaseField(columnName = "answerer_id")
+    public int answerer_id;
+
     @DatabaseField(columnName = "answerer_username")
     public String answerer_username;
 
@@ -36,5 +39,8 @@ public class QRBean {
 
     @DatabaseField(columnName = "praiseNum")
     public int praiseNum;
+
+    @DatabaseField(columnName = "audioSeconds")
+    public int audioSeconds;
 
 }

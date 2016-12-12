@@ -11,6 +11,7 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -78,7 +79,11 @@ public interface ApiService {
                                  @Nullable @Part MultipartBody.Part file);
 
     @GET("api/users/{user_id}/introduction")
-    Call<UUidIResult> requestUUidI(@Path("user_id") int uid);
+    Call<UUidIResult> requestUUidI(@Path("user_id") int uid,
+                                   @Nullable @Query("id") int request_uid);
+
+    @GET("api/users/{user_id}/followsAndRecommendations")
+    Call<UUidFARResult> requestUUidFAR(@Path("user_id") int uid);
 
     @GET("api/users/{user_id}/follows")
     Call<UUidFResult> requestUUidF(@Path("user_id") int uid);
@@ -86,6 +91,10 @@ public interface ApiService {
     @FormUrlEncoded
     Call<UUidFResult> requestUUidF(@Path("user_id") int uid,
                                    @Field("followed_uid") int followed_uid);
+
+    @DELETE("api/users/{user_id}/follows")  //安卓delete不支持body传递数据
+    Call<UUidFResult> deleteUUidF(@Path("user_id") int uid,
+                                  @Nullable @Query("followed_uid") int followed_uid);
 
     @GET("api/users/{user_id}/recommendations")
     Call<UUidRResult> requestUUidR(@Path("user_id") int uid);

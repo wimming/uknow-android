@@ -10,9 +10,10 @@
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
+        app:elevation="0dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FFCCCCCC"
+        android:background="@color/white_color"
         android:theme="@style/AppTheme.AppBarOverlay">
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
@@ -22,6 +23,7 @@
             app:popupTheme="@style/AppTheme.PopupOverlay">
             <TextView
                 android:text="设置"
+                android:textColor="@color/black_color"
                 android:textSize="@dimen/base_big_font"
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"
@@ -29,11 +31,17 @@
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 
+    <View
+        android:background="#FFCCCCCC"
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
+
     <LinearLayout
+        android:background="@color/white_color"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_marginLeft="@dimen/base_margin"
-        android:layout_marginRight="@dimen/base_margin"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:layout_height="wrap_content">
 
         <ListView

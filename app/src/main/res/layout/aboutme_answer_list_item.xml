@@ -14,13 +14,13 @@
         android:gravity="center_vertical"
         android:layout_marginBottom="8dp">
         <ImageView
-            android:id="@+id/que_headimgurl"
-            android:src="@mipmap/avatar"
+            android:id="@+id/asker_avatarUrl"
+            android:src="@drawable/avatar"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginRight="@dimen/base_margin"/>
         <TextView
-            android:id="@+id/que_username"
+            android:id="@+id/asker_username"
             android:layout_gravity="bottom"
             android:layout_marginBottom="3dp"
             android:textSize="@dimen/base_medium_font"
@@ -30,16 +30,30 @@
     </LinearLayout>
     
     <TextView
-        android:id="@+id/que_description"
+        android:id="@+id/description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="@dimen/base_big_font"
         android:textColor="#000000"
         android:layout_marginBottom="@dimen/base_margin"
         android:text="师兄好，我想问问腾讯的产品经理的流程是怎么样的， 能说说么？"/>
-    <ImageView
-        android:src="@drawable/answer"
-        android:layout_gravity="end"
-        android:layout_width="150dp"
-        android:layout_height="50dp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/finishedText"
+            android:text="已回答"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/answerButton"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/answer"
+            android:layout_gravity="end"
+            android:layout_width="150dp"
+            android:layout_height="50dp" />
+    </RelativeLayout>
 </LinearLayout>

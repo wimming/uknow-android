@@ -40,13 +40,13 @@
 
         <ImageView
             android:id="@+id/answerer_avatarUrl"
-            android:src="@drawable/user_full"
+            android:src="@drawable/avatar"
             android:layout_width="40dp"
             android:layout_height="40dp" />
 
         <Button
             android:id="@+id/listen"
-            android:text='97"'
+            android:text="97''"
             android:background="@drawable/listen_view"
             android:layout_marginRight="40dp"
             android:layout_marginLeft="5dp"

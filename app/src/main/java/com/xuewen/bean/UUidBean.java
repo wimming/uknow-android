@@ -50,25 +50,26 @@ public class UUidBean {
     @DatabaseField(columnName = "ansNum")
     public int ansNum;
 
-    public List<Answered> answered;
+    public List<Answer> answer;
     public List<Asked> asked;
 
-    class Answered {
+    public class Answer {
         public int id;
         public String description;
         public String asker_username;
         public String asker_avatarUrl;
+        public boolean finished;
     }
 
-    class Asked {
+    public class Asked {
         public int id;
         public String description;
-        public boolean finished;
         public int answerer_id;
         public String answerer_username;
         public String answerer_status;
         public String answerer_description;
         public String answerer_avatarUrl;
+        public boolean finished;
     }
 
 }
