@@ -42,13 +42,15 @@ public class BaseApplication extends Application {
         File cacheDir = StorageUtils.getCacheDirectory(context);
         ImageLoaderConfiguration imageLoaderConfiguration = new ImageLoaderConfiguration.Builder(context)
 
-                .diskCacheExtraOptions(480, 800, null)
+//                .diskCacheExtraOptions(480, 800, null)
                 .diskCache(new UnlimitedDiskCache(cacheDir)) // default
                 .diskCacheSize(50 * 1024 * 1024)
                 .diskCacheFileCount(100)
                 .diskCacheFileNameGenerator(new HashCodeFileNameGenerator()) // default
 
                 .threadPoolSize(3)
+
+                .denyCacheImageMultipleSizesInMemory()
 
                 .defaultDisplayImageOptions(displayOptions)
                 .writeDebugLogs()

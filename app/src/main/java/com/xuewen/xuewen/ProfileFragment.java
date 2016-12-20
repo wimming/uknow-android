@@ -102,21 +102,21 @@ public class ProfileFragment extends Fragment {
         // database service -> network service(不可见、开始刷新 -> 加载成功 -> 可见、结束刷新) -> write back to database
         if (!networkLock) {
 
-            // database service
-            databaseHelper = DatabaseHelper.getHelper(getActivity());
-            try {
-                List<UUidBean> records = databaseHelper.getUUidBeanDao().queryForEq("id", CurrentUser.userId);
-                if (records.size() > 1) {
-                    Toast.makeText(getActivity(), ToastMsg.APPLICATION_ERROR, Toast.LENGTH_SHORT).show();
-                }
-                if (records.size() != 0) {
-                    UUidBean record = records.get(0);
-                    renderView(record);
-                }
-
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+//            // database service
+//            databaseHelper = DatabaseHelper.getHelper(getActivity());
+//            try {
+//                List<UUidBean> records = databaseHelper.getUUidBeanDao().queryForEq("id", CurrentUser.userId);
+//                if (records.size() > 1) {
+//                    Toast.makeText(getActivity(), ToastMsg.APPLICATION_ERROR, Toast.LENGTH_SHORT).show();
+//                }
+//                if (records.size() != 0) {
+//                    UUidBean record = records.get(0);
+//                    renderView(record);
+//                }
+//
+//            } catch (SQLException e) {
+//                e.printStackTrace();
+//            }
 
             // network service
             // 不可见、开始刷新 -> 加载成功 -> 可见、结束刷新
@@ -145,12 +145,12 @@ public class ProfileFragment extends Fragment {
                     data = response.body().data;
                     networkLock = true;
 
-                    // write back to database
-                    try {
-                        databaseHelper.getUUidBeanDao().createOrUpdate(response.body().data);
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
+//                    // write back to database
+//                    try {
+//                        databaseHelper.getUUidBeanDao().createOrUpdate(response.body().data);
+//                    } catch (SQLException e) {
+//                        e.printStackTrace();
+//                    }
 
                 }
 

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
@@ -74,13 +75,50 @@ public class MainActivity extends AppCompatActivity {
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
-        // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.container);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
-        mViewPager.setOffscreenPageLimit(1);
-
+//        // Set up the ViewPager with the sections adapter.
+//        mViewPager = (ViewPager) findViewById(R.id.container);
+//        mViewPager.setAdapter(mSectionsPagerAdapter);
+//        mViewPager.setOffscreenPageLimit(1);
+//
         tabLayout = (TabLayout)findViewById(R.id.tab_layout);
-        tabLayout.setupWithViewPager(mViewPager);
+//        tabLayout.setupWithViewPager(mViewPager);
+
+
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(R.id.layoutContainer, new RecommendationFragment());
+        ft.commit();
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                FragmentManager fm = getSupportFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                switch (tab.getPosition()) {
+                    case 0:
+                        ft.replace(R.id.layoutContainer, new RecommendationFragment());
+                        break;
+                    case 1:
+                        ft.replace(R.id.layoutContainer, new SearchingFragment());
+                        break;
+                    case 2:
+                        ft.replace(R.id.layoutContainer, new ProfileFragment());
+                        break;
+                }
+                ft.commit();
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
 //        tabLayout.getTabAt(0).setIcon(R.drawable.star_selector);
 //        tabLayout.getTabAt(1).setIcon(R.drawable.search_selector);
 //        tabLayout.getTabAt(2).setIcon(R.drawable.user_selector);

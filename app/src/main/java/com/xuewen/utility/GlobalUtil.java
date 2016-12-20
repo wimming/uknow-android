@@ -37,6 +37,7 @@ public class GlobalUtil {
                 .cacheInMemory(false)
                 .bitmapConfig(Bitmap.Config.RGB_565)
                 .imageScaleType(ImageScaleType.EXACTLY)
+                .delayBeforeLoading(100)  // 载入图片前稍做延时可以提高整体滑动的流畅度
                 .build();
     }
 

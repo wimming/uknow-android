@@ -75,16 +75,16 @@ public class RecommendationFragment extends Fragment {
         // database service -> network service(开始刷新 -> 加载成功 -> 结束刷新) -> write back to database
         if (!networkLock) {
 
-            // database service
-            databaseHelper = DatabaseHelper.getHelper(getActivity());
-            try {
-                List<QRBean> records = databaseHelper.getQRBeanDao().queryForAll();
-                list.clear();
-                list.addAll(records);
-                adapter.notifyDataSetChanged();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+//            // database service
+//            databaseHelper = DatabaseHelper.getHelper(getActivity());
+//            try {
+//                List<QRBean> records = databaseHelper.getQRBeanDao().queryForAll();
+//                list.clear();
+//                list.addAll(records);
+//                adapter.notifyDataSetChanged();
+//            } catch (SQLException e) {
+//                e.printStackTrace();
+//            }
 
             // network service
             // 开始刷新 -> 加载成功 -> 结束刷新
@@ -117,13 +117,13 @@ public class RecommendationFragment extends Fragment {
                 refresh.setRefreshing(false);
                 networkLock = true;
 
-                // write back to database
-                try {
-                    databaseHelper.getQRBeanDao().executeRaw("delete from tb_QR");
-                    databaseHelper.getQRBeanDao().create(response.body().data);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+//                // write back to database
+//                try {
+//                    databaseHelper.getQRBeanDao().executeRaw("delete from tb_QR");
+//                    databaseHelper.getQRBeanDao().create(response.body().data);
+//                } catch (SQLException e) {
+//                    e.printStackTrace();
+//                }
             }
             @Override
             public void onFailure(Call<QRResult> call, Throwable t) {
