@@ -85,11 +85,11 @@ public class ModifyInfoActivity extends AppCompatActivity {
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                patchModifyUserInfoService(2);
+                patchModifyUserInfoService(CurrentUser.userId);
             }
         });
 
-        renderView(2);
+        renderView(CurrentUser.userId);
         username.addTextChangedListener(new MyTextWatch(this, 10, usernameTextInfo));
         status.addTextChangedListener(new MyTextWatch(this, 10, statusTextInfo));
         description.addTextChangedListener(new MyTextWatch(this, 50, descriptionTextInfo));
