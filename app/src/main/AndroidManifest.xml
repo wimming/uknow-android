@@ -22,6 +22,14 @@
 
     <!-- 外存储写入权限，构建语法需要用到此权限 -->
     <!-- <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> -->
+
+    <!--微信登录权限-->
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
     <application
         android:name=".BaseApplication"
         android:allowBackup="true"
@@ -30,7 +38,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
         <activity
-            android:name=".MainActivity"
+            android:name=".LoginActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -42,6 +50,10 @@
                 android:name="android.app.default_searchable"
                 android:value=".SearchActivity" />
         </activity>
+
+        <activity android:name=".MainActivity" />
+        <!--<activity android:name=".LoginActivity" />-->
+
         <activity android:name=".QuestionDetailActivity" />
         <activity
             android:name=".SearchActivity"
@@ -57,7 +69,6 @@
         <activity android:name=".ModifyInfoActivity" />
         <activity android:name=".AskActivity" />
         <activity android:name=".SettingActivity" />
-        <activity android:name=".LoginActivity" />
         <activity android:name=".LoginInfoActivity" />
         <activity android:name="com.xuewen.networkservice.APITestActivity" />
         <activity android:name=".AnswerQuestionActivity" />
@@ -66,6 +77,11 @@
         </activity>
         <activity android:name=".AnswerSuccessActivity">
         </activity>
+
+        <activity android:name=".wxapi.WXEntryActivity"
+            android:label="@string/app_name"
+            android:exported="true" />
+
     </application>
 
 </manifest>

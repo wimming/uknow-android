@@ -2,6 +2,7 @@ package com.xuewen.networkservice;
 
 import android.support.annotation.Nullable;
 
+import com.xuewen.bean.EmptyBean;
 import com.xuewen.utility.GlobalUtil;
 
 import java.util.List;
@@ -27,6 +28,11 @@ import retrofit2.http.Query;
  */
 
 public interface ApiService {
+    @POST("api/wxlogin")
+    @FormUrlEncoded
+    Call<WXLoginResult> requestWXLogin(@Field("appid") String appid,
+                                       @Field("code") String code);
+
     @GET("api/questions/recommend")
     Call<QRResult> requestQR();
 
