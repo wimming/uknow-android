@@ -16,6 +16,7 @@ import com.xuewen.networkservice.WXLoginResult;
 import com.xuewen.utility.CurrentUser;
 import com.xuewen.utility.IWXAPIHelper;
 import com.xuewen.utility.ToastMsg;
+import com.xuewen.xuewen.LoginInfoActivity;
 import com.xuewen.xuewen.MainActivity;
 
 import retrofit2.Call;
@@ -65,10 +66,18 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                     Toast.makeText(WXEntryActivity.this, response.body().errmsg, Toast.LENGTH_LONG).show();
                     return;
                 }
+//                response.body().data.isNew = 1;  // temp
                 CurrentUser.userId = response.body().data.user_id;
-                Intent intent = new Intent(WXEntryActivity.this, MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
+                if (response.body().data.isNew == 0) {
+                    Intent intent = new Intent(WXEntryActivity.this, MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                }
+                else {
+                    Intent intent = new Intent(WXEntryActivity.this, LoginInfoActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                }
 
             }
             @Override

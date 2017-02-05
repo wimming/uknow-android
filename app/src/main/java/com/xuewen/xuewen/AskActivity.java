@@ -193,7 +193,7 @@ public class AskActivity extends AppCompatActivity {
     private void sendSendAskedRequestService(int asker_id, String  description, int answerer_id) {
 
         if (Validate.isExistEmpty(editText)) {
-            ToastMsg.showTips(AskActivity.this, ToastMsg.VALIDE_EMPTY_ERROR);
+            ToastMsg.showTips(AskActivity.this, ToastMsg.ARG_INVALID_EMPTY);
             return;
         }
 

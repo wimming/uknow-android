@@ -140,7 +140,7 @@ public class ModifyInfoActivity extends AppCompatActivity {
     private void patchModifyUserInfoService(int uid) {
 
         if (Validate.isExistEmpty(username, status, description)) {
-            Toast.makeText(ModifyInfoActivity.this, ToastMsg.VALIDE_EMPTY_ERROR, Toast.LENGTH_SHORT).show();
+            Toast.makeText(ModifyInfoActivity.this, ToastMsg.ARG_INVALID_EMPTY, Toast.LENGTH_SHORT).show();
             return;
         }
 
