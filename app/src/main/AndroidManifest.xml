@@ -38,28 +38,38 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
         <activity
-            android:name=".LoginActivity"
-            android:label="@string/app_name">
+            android:name=".EntryActivity"
+            android:label="@string/app_name"
+            android:noHistory="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity android:name=".MainActivity">
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value=".SearchActivity" />
         </activity>
 
-        <activity android:name=".MainActivity" />
-        <!--<activity android:name=".LoginActivity" />-->
         <activity android:name=".QuestionDetailActivity" />
         <activity android:name=".ModifyInfoActivity" />
         <activity android:name=".AskActivity" />
         <activity android:name=".SettingActivity" />
-        <activity android:name=".LoginInfoActivity" />
         <activity android:name=".AnswerQuestionActivity" />
         <activity android:name=".AskedSuccessActivity" />
         <activity android:name=".AnswerSuccessActivity" />
         <activity android:name="com.xuewen.networkservice.APITestActivity" />
+
+        <activity android:name=".LoginActivity"
+            android:noHistory="true" />
+        <activity android:name=".LoginInfoActivity"
+            android:noHistory="true" />
+        <activity android:name=".wxapi.WXEntryActivity"
+            android:label="@string/app_name"
+            android:exported="true"
+            android:noHistory="true" />
 
         <activity
             android:name=".SearchActivity"
@@ -72,10 +82,6 @@
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
         </activity>
-
-        <activity android:name=".wxapi.WXEntryActivity"
-            android:label="@string/app_name"
-            android:exported="true" />
 
     </application>
 

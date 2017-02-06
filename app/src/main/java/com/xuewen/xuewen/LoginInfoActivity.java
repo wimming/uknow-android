@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.xuewen.networkservice.ApiService;
+import com.xuewen.networkservice.UUidPResult;
 import com.xuewen.networkservice.UUidResult;
 import com.xuewen.utility.CurrentUser;
 import com.xuewen.utility.ToastMsg;
@@ -104,8 +105,6 @@ public class LoginInfoActivity extends AppCompatActivity {
 
         String usernameString = username.getText().toString();
         RequestBody username = RequestBody.create(MediaType.parse("multipart/form-data"), usernameString);
-        String statusString = "";
-        RequestBody status = RequestBody.create(MediaType.parse("multipart/form-data"), statusString);
         String descriptionString = description.getText().toString();
         RequestBody description = RequestBody.create(MediaType.parse("multipart/form-data"), descriptionString);
         String schoolString = school_auto_complete.getText().toString();
@@ -117,19 +116,17 @@ public class LoginInfoActivity extends AppCompatActivity {
 
         // 执行请求
         ApiService apiService = ApiService.retrofit.create(ApiService.class);
-        Call<UUidResult> call = apiService.requestUUid(
+        Call<UUidPResult> call = apiService.requestUUidP(
                 uid,
                 username,
-                status,
                 description,
                 school,
                 major,
-                grade,
-                null
+                grade
         );
-        call.enqueue(new Callback<UUidResult>() {
+        call.enqueue(new Callback<UUidPResult>() {
             @Override
-            public void onResponse(Call<UUidResult> call, Response<UUidResult> response) {
+            public void onResponse(Call<UUidPResult> call, Response<UUidPResult> response) {
                 if (!response.isSuccessful()) {
                     Toast.makeText(LoginInfoActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
                     return;
@@ -139,15 +136,12 @@ public class LoginInfoActivity extends AppCompatActivity {
                     return;
                 }
 
-                Toast.makeText(LoginInfoActivity.this, ToastMsg.MODIFY_SUCCESS, Toast.LENGTH_SHORT).show();
-
                 Intent intent = new Intent(LoginInfoActivity.this, MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             }
 
             @Override
-            public void onFailure(Call<UUidResult> call, Throwable t) {
+            public void onFailure(Call<UUidPResult> call, Throwable t) {
                 Toast.makeText(LoginInfoActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });

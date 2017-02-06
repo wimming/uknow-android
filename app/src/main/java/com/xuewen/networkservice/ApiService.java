@@ -28,10 +28,20 @@ import retrofit2.http.Query;
  */
 
 public interface ApiService {
+
     @POST("api/wxlogin")
     @FormUrlEncoded
     Call<WXLoginResult> requestWXLogin(@Field("appid") String appid,
                                        @Field("code") String code);
+
+    @PATCH("api/users/{user_id}/perfect")
+    @Multipart
+    Call<UUidPResult> requestUUidP(@Path("user_id") int uid,
+                                 @Part("username") RequestBody username,
+                                 @Part("description") RequestBody description,
+                                 @Part("school") RequestBody school,
+                                 @Part("major") RequestBody major,
+                                 @Part("grade") RequestBody grade);
 
     @GET("api/questions/recommend")
     Call<QRResult> requestQR();

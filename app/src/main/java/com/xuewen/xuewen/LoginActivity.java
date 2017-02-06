@@ -18,8 +18,6 @@ import butterknife.OnClick;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private ProgressDialog mDialog;
-
     @OnClick(R.id.login)
     void loginOnClick() {
 
@@ -41,7 +39,7 @@ public class LoginActivity extends AppCompatActivity {
         req.state = "wechat_sdk_demo_test";
         IWXAPIHelper.getApi().sendReq(req);
 
-        mDialog = ProgressDialog.show(this, "", "微信授权启动中...");
+        ProgressDialog.show(this, "", "微信授权启动中...");
 
     }
 
@@ -57,11 +55,6 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
-        if (mDialog != null) {
-            mDialog.dismiss();
-        }
-
     }
 
 }

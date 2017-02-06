@@ -16,6 +16,7 @@ import com.xuewen.networkservice.WXLoginResult;
 import com.xuewen.utility.CurrentUser;
 import com.xuewen.utility.IWXAPIHelper;
 import com.xuewen.utility.ToastMsg;
+import com.xuewen.xuewen.LoginActivity;
 import com.xuewen.xuewen.LoginInfoActivity;
 import com.xuewen.xuewen.MainActivity;
 
@@ -45,7 +46,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
     public void onResp(BaseResp baseResp) {
         if (((SendAuth.Resp)baseResp).errCode != 0) {
             Toast.makeText(this, "授权失败", Toast.LENGTH_SHORT).show();
-            finish();
+            startActivity(new Intent(WXEntryActivity.this, LoginActivity.class));
             return;
         }
 
@@ -66,16 +67,17 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                     Toast.makeText(WXEntryActivity.this, response.body().errmsg, Toast.LENGTH_LONG).show();
                     return;
                 }
+
 //                response.body().data.isNew = 1;  // temp
                 CurrentUser.userId = response.body().data.user_id;
                 if (response.body().data.isNew == 0) {
                     Intent intent = new Intent(WXEntryActivity.this, MainActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+//                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                 }
                 else {
                     Intent intent = new Intent(WXEntryActivity.this, LoginInfoActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+//                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                 }
 
