@@ -3,6 +3,7 @@ package com.xuewen.xuewen.wxapi;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
@@ -70,6 +71,13 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
 
 //                response.body().data.isNew = 1;  // temp
                 CurrentUser.userId = response.body().data.user_id;
+
+                if (!response.body().data.token.isEmpty()) {
+                    SharedPreferences.Editor editor = getSharedPreferences("login_info", MODE_PRIVATE).edit();
+                    editor.putString("token", response.body().data.token);
+                    editor.commit();
+                }
+
                 if (response.body().data.isNew == 0) {
                     Intent intent = new Intent(WXEntryActivity.this, MainActivity.class);
 //                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);

@@ -7,4 +7,5 @@ package com.xuewen.bean;
 public class WXLoginBean {
     public int user_id;
     public int isNew;
+    public String token;
 }
