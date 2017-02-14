@@ -6,4 +6,5 @@ package com.xuewen.utility;
 
 public class CurrentUser {
     public static int userId = -1;
+    public static String cookie = "";
 }

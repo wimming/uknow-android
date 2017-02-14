@@ -66,14 +66,16 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                 }
                 if (response.body().status != 200) {
                     Toast.makeText(WXEntryActivity.this, response.body().errmsg, Toast.LENGTH_LONG).show();
+                    startActivity(new Intent(WXEntryActivity.this, LoginActivity.class));
                     return;
                 }
 
-//                response.body().data.isNew = 1;  // temp
+                CurrentUser.cookie = response.headers().get("Set-Cookie");
                 CurrentUser.userId = response.body().data.user_id;
 
-                if (!response.body().data.token.isEmpty()) {
+                if (response.body().data.token != null && !response.body().data.token.isEmpty()) {
                     SharedPreferences.Editor editor = getSharedPreferences("login_info", MODE_PRIVATE).edit();
+                    editor.putInt("user_id", response.body().data.user_id);
                     editor.putString("token", response.body().data.token);
                     editor.commit();
                 }

@@ -16,6 +16,8 @@ public class ToastMsg {
     public static final String ARG_INVALID_EMPTY = "输入字段不能为空";
     public static final String MODIFY_SUCCESS = "修改成功";
 
+    public static final String LOGIN_FAILED = "登录失败";
+
     public static void showTips(Context context, String message) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
     }

@@ -3,12 +3,18 @@ package com.xuewen.networkservice;
 import android.support.annotation.Nullable;
 
 import com.xuewen.bean.EmptyBean;
+import com.xuewen.utility.CurrentUser;
 import com.xuewen.utility.GlobalUtil;
 
+import java.io.IOException;
 import java.util.List;
 
+import okhttp3.Interceptor;
 import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import okhttp3.RequestBody;
+import okhttp3.Response;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -16,6 +22,7 @@ import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
@@ -33,6 +40,10 @@ public interface ApiService {
     @FormUrlEncoded
     Call<WXLoginResult> requestWXLogin(@Field("appid") String appid,
                                        @Field("code") String code);
+    @POST("api/tklogin")
+    @FormUrlEncoded
+    Call<TKLoginResult> requestTKLogin(@Field("user_id") int user_id,
+                                       @Field("token") String token);
 
     @PATCH("api/users/{user_id}/perfect")
     @Multipart
@@ -118,12 +129,30 @@ public interface ApiService {
     @GET("api/users/find")
     Call<UFResult> requestUF(@Query("query_string") String query_string);
 
-//    Call<QRResult> repoContributors(
-//            @Path("owner") String owner,
-//            @Path("repo") String repo);
+    static Interceptor interceptor = new Interceptor() {
+        @Override
+        public Response intercept(Chain chain) throws IOException {
+            Request oldRequest = chain.request();
+
+            // 新的请求
+            Request newRequest = oldRequest
+                    .newBuilder()
+                    .header("Cookie", CurrentUser.cookie)
+                    .build();
+
+            return chain.proceed(newRequest);
+        }
+    };
+    static final OkHttpClient client = new OkHttpClient
+            .Builder()
+            .addInterceptor(interceptor)
+            .build();
 
     public static final Retrofit retrofit = new Retrofit.Builder()
             .baseUrl(GlobalUtil.getInstance().baseUrl)
             .addConverterFactory(GsonConverterFactory.create())
+            .client(client)
             .build();
+
+
 }
