@@ -82,7 +82,7 @@ public class UserListAdapter extends BaseAdapter{
         viewHolder.username.setText(list.get(position).username);
         viewHolder.status.setText(list.get(position).status);
         viewHolder.description.setText(list.get(position).description);
-        ImageLoader.getInstance().displayImage(GlobalUtil.getInstance().avatarUrl+list.get(position).avatarUrl, viewHolder.avatarUrl, GlobalUtil.getInstance().circleBitmapOptions);
+        ImageLoader.getInstance().displayImage(GlobalUtil.getInstance().baseAvatarUrl+list.get(position).avatarUrl, viewHolder.avatarUrl, GlobalUtil.getInstance().circleBitmapOptions);
 
         // 渲染层已经做了渲染判断 点击只需更改数据即可 无需再次渲染
         if (list.get(position).followed == 0) {

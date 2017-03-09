@@ -39,7 +39,9 @@ public class BaseApplication extends Application {
         // configuration of image loader
         DisplayImageOptions displayOptions = new DisplayImageOptions.Builder()
                 .cacheOnDisk(true)
-                .cacheInMemory(true)
+//                .cacheInMemory(false)
+                .bitmapConfig(Bitmap.Config.RGB_565)
+                .imageScaleType(ImageScaleType.IN_SAMPLE_INT)
                 .build();
 
         File cacheDir = StorageUtils.getCacheDirectory(context);
@@ -51,9 +53,12 @@ public class BaseApplication extends Application {
                 .diskCacheFileCount(100)
                 .diskCacheFileNameGenerator(new HashCodeFileNameGenerator()) // default
 
+                .memoryCache(new WeakMemoryCache())
+
                 .threadPoolSize(3)
 
                 .defaultDisplayImageOptions(displayOptions)
+
                 .writeDebugLogs()
                 .build();
 

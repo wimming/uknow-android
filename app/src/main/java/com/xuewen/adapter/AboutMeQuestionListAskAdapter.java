@@ -74,7 +74,7 @@ public class AboutMeQuestionListAskAdapter extends BaseAdapter{
 
         viewHolder.isAnswered.setText(list.get(position).finished ? "已回答" : "未回答");
 
-        ImageLoader.getInstance().displayImage(GlobalUtil.getInstance().avatarUrl+list.get(position).answerer_avatarUrl, viewHolder.answerer_avatarUrl, GlobalUtil.getInstance().circleBitmapOptions);
+        ImageLoader.getInstance().displayImage(GlobalUtil.getInstance().baseAvatarUrl+list.get(position).answerer_avatarUrl, viewHolder.answerer_avatarUrl, GlobalUtil.getInstance().circleBitmapOptions);
 
         return view;
     }

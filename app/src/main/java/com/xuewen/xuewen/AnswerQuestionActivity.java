@@ -413,7 +413,7 @@ public class AnswerQuestionActivity extends AppCompatActivity {
 
     private void renderView(QQidBean data) {
 
-        ImageLoader.getInstance().displayImage(GlobalUtil.getInstance().avatarUrl+data.asker_avatarUrl, asker_avatarUrl, GlobalUtil.getInstance().circleBitmapOptions);
+        ImageLoader.getInstance().displayImage(GlobalUtil.getInstance().baseAvatarUrl+data.asker_avatarUrl, asker_avatarUrl, GlobalUtil.getInstance().circleBitmapOptions);
         asker_username.setText(data.asker_username);
         askDate.setText(data.askDate);
         description.setText(data.description);

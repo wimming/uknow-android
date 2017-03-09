@@ -122,7 +122,7 @@ public class ModifyInfoActivity extends AppCompatActivity {
                 username.setText(bean.username);
                 status.setText(bean.status);
                 description.setText(bean.description);
-                ImageLoader.getInstance().displayImage(GlobalUtil.getInstance().avatarUrl+bean.avatarUrl, avatar, GlobalUtil.getInstance().circleBitmapOptions);
+                ImageLoader.getInstance().displayImage(GlobalUtil.getInstance().baseAvatarUrl+bean.avatarUrl, avatar, GlobalUtil.getInstance().circleBitmapOptions);
                 dialog.dismiss();
                 visibilityController.setVisibility(View.VISIBLE);
 

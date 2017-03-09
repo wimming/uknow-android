@@ -2,6 +2,10 @@ package com.xuewen.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
+import android.support.v4.util.LruCache;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +16,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.xuewen.bean.QRBean;
 import com.xuewen.utility.GlobalUtil;
 import com.xuewen.xuewen.AskActivity;
@@ -29,9 +35,32 @@ public class QRListAdapter extends BaseAdapter {
     private List<QRBean> list;
     private Context context;
 
+    LruCache<String, Bitmap> mCaches;
+
     public QRListAdapter(List<QRBean> list, Context context) {
         this.list = list;
         this.context = context;
+
+        //下面是建立缓存
+        int maxMemory = (int) Runtime.getRuntime().maxMemory();  //运行时最大内存
+        int cacheSize = maxMemory/4;  //缓存的大小
+        mCaches = new LruCache<String, Bitmap>(cacheSize){
+            @Override
+            protected int sizeOf(String key, Bitmap value) {
+                return value.getByteCount();
+            }
+        };
+    }
+
+    //将bitmap添加到缓存
+    public void addBitmapToCache(String url, Bitmap bitmap){
+        if (getBitmapFormCache(url) == null){
+            mCaches.put(url, bitmap);
+        }
+    }
+    //从缓存中获取数据
+    public Bitmap getBitmapFormCache(String url){
+        return mCaches.get(url);
     }
 
     @Override
@@ -82,13 +111,39 @@ public class QRListAdapter extends BaseAdapter {
 
         viewHolder.description.setText(list.get(position).description);
         viewHolder.answerer_description.setText(list.get(position).answerer_username+" | "+list.get(position).answerer_status+"。"+list.get(position).answerer_description);
-        ImageLoader.getInstance().displayImage(GlobalUtil.getInstance().avatarUrl+list.get(position).answerer_avatarUrl, viewHolder.answerer_avatarUrl, GlobalUtil.getInstance().circleBitmapOptions);
-
         viewHolder.listen.setText(list.get(position).audioSeconds+"''");
         viewHolder.review.setText(list.get(position).listeningNum+"人听过，"+list.get(position).praiseNum+"人觉得好");
 
+        ImageLoader.getInstance().displayImage(GlobalUtil.getInstance().baseAvatarUrl + list.get(position).answerer_avatarUrl,
+                viewHolder.answerer_avatarUrl,
+                GlobalUtil.getInstance().circleBitmapOptions,
+                new ImageLoadingListener() {
+                    @Override
+                    public void onLoadingStarted(String imageUri, View view) {
+
+                    }
+
+                    @Override
+                    public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+
+                    }
+
+                    @Override
+                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                        if (imageUri.equals(view.getTag())) {
+                            ((ImageView)view).setImageBitmap(loadedImage);
+                        }
+                    }
+
+                    @Override
+                    public void onLoadingCancelled(String imageUri, View view) {
+
+                    }
+                });
+
         viewHolder.listen.setTag(position);
         viewHolder.answerer_avatarUrl.setTag(position);
+        viewHolder.answerer_avatarUrl.setTag(list.get(position).answerer_avatarUrl);
 
         return view;
     }

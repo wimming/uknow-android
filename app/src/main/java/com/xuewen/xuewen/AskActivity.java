@@ -265,7 +265,7 @@ public class AskActivity extends AppCompatActivity {
             //viewHolder.followed.setTextColor(context.getResources().getColor(R.color.main_color));
         }
 
-        ImageLoader.getInstance().displayImage(GlobalUtil.getInstance().avatarUrl+ data.avatarUrl, avatarUrl, GlobalUtil.getInstance().circleBitmapOptions);
+        ImageLoader.getInstance().displayImage(GlobalUtil.getInstance().baseAvatarUrl+ data.avatarUrl, avatarUrl, GlobalUtil.getInstance().circleBitmapOptions);
 
         followedAndAnswerSituation.setText(data.followedNum + "人关注, 回答了" + data.ansNum + "个问题");
 

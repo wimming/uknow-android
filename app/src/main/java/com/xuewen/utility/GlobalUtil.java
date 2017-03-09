@@ -27,16 +27,16 @@ public class GlobalUtil {
 //    public String baseUrl = "http://192.168.1.100:5000/";
 //    public String baseUrl = "http://172.22.192.65:5000/";
 
-    public String avatarUrl = baseUrl+"static/avatar/";
-    public String audioUrl = baseUrl+"static/audio/";
+    public String baseAvatarUrl = baseUrl+"static/avatar/";
+    public String baseAudioUrl = baseUrl+"static/audio/";
 
     private GlobalUtil() {
         circleBitmapOptions = new DisplayImageOptions.Builder()
                 .displayer(new CircleBitmapDisplayer())  // rounded corner bitmap
                 .cacheOnDisk(true)
-                .cacheInMemory(false)
+//                .cacheInMemory(false)
                 .bitmapConfig(Bitmap.Config.RGB_565)
-                .imageScaleType(ImageScaleType.EXACTLY)
+                .imageScaleType(ImageScaleType.IN_SAMPLE_INT)
                 .build();
     }
 

@@ -169,11 +169,11 @@ public class QuestionDetailActivity extends AppCompatActivity {
 
     private void renderView(QQidBean data) {
 
-        ImageLoader.getInstance().displayImage(GlobalUtil.getInstance().avatarUrl+data.asker_avatarUrl, asker_avatarUrl, GlobalUtil.getInstance().circleBitmapOptions);
+        ImageLoader.getInstance().displayImage(GlobalUtil.getInstance().baseAvatarUrl+data.asker_avatarUrl, asker_avatarUrl, GlobalUtil.getInstance().circleBitmapOptions);
         asker_username.setText(data.asker_username);
         askDate.setText(data.askDate);
         description.setText(data.description);
-        ImageLoader.getInstance().displayImage(GlobalUtil.getInstance().avatarUrl+data.answerer_avatarUrl, answerer_avatarUrl, GlobalUtil.getInstance().circleBitmapOptions);
+        ImageLoader.getInstance().displayImage(GlobalUtil.getInstance().baseAvatarUrl+data.answerer_avatarUrl, answerer_avatarUrl, GlobalUtil.getInstance().circleBitmapOptions);
         answerer_username.setText(data.answerer_username);
         answerer_status.setText(data.answerer_status);
         answerer_description.setText(data.answerer_description);
@@ -191,7 +191,7 @@ public class QuestionDetailActivity extends AppCompatActivity {
                 // 显示progress -> 下载完成 -> 收起progress
                 final ProgressDialog dialog = ProgressDialog.show(QuestionDetailActivity.this, "", "语音文件下载中...");
 
-                final String filePath = GlobalUtil.getInstance().audioUrl + data.audioUrl;
+                final String filePath = GlobalUtil.getInstance().baseAudioUrl + data.audioUrl;
 
                 FileService fileService = FileService.retrofit.create(FileService.class);
                 Call<ResponseBody> fileCall = fileService.downloadFile(filePath);

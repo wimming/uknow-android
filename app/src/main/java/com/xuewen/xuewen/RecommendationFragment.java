@@ -12,6 +12,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.listener.PauseOnScrollListener;
 import com.xuewen.adapter.QRListAdapter;
 import com.xuewen.bean.QRBean;
 import com.xuewen.databaseservice.DatabaseHelper;
@@ -71,6 +73,7 @@ public class RecommendationFragment extends Fragment {
 
             }
         });
+//        listView.setOnScrollListener(new PauseOnScrollListener(ImageLoader.getInstance(), true, true));
 
         // database service -> network service(开始刷新 -> 加载成功 -> 结束刷新) -> write back to database
         if (!networkLock) {
