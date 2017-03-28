@@ -14,14 +14,14 @@ import org.w3c.dom.Text;
  * Created by Administrator on 2016/12/07.
  */
 
-public class MyTextWatch implements TextWatcher{
+public class MyTextWatcher implements TextWatcher{
 
     private Context context;
     private int length = 0;
     private TextView textView;
 
     //textView 为动态监听的textview lenght 最大长度
-    public MyTextWatch(Context context, int length, TextView textView) {
+    public MyTextWatcher(Context context, int length, TextView textView) {
         this.context = context;
         this.length = length;
         this.textView = textView;

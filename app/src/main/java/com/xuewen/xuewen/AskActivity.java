@@ -4,13 +4,10 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.v4.app.ShareCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -24,24 +21,16 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xuewen.adapter.QRListAdapter;
 import com.xuewen.bean.QRBean;
 import com.xuewen.bean.UUidIBean;
-import com.xuewen.networkservice.APITestActivity;
 import com.xuewen.networkservice.ApiService;
 import com.xuewen.networkservice.ApiServiceRequestResultHandler;
-import com.xuewen.networkservice.BaseResult;
-import com.xuewen.networkservice.QRResult;
 import com.xuewen.networkservice.QResult;
 import com.xuewen.networkservice.UUidFResult;
 import com.xuewen.networkservice.UUidIResult;
 import com.xuewen.utility.CurrentUser;
 import com.xuewen.utility.GlobalUtil;
-import com.xuewen.utility.MyTextWatch;
+import com.xuewen.utility.MyTextWatcher;
 import com.xuewen.utility.ToastMsg;
 import com.xuewen.utility.Validate;
-
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -123,7 +112,7 @@ public class AskActivity extends AppCompatActivity {
 
 
 
-        editText.addTextChangedListener(new MyTextWatch(this, 60, textView));
+        editText.addTextChangedListener(new MyTextWatcher(this, 60, textView));
 
         sendAskedRequest.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -1,6 +1,5 @@
 package com.xuewen.xuewen;
 
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,27 +13,21 @@ import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xuewen.bean.UUidBean;
-import com.xuewen.networkservice.APITestActivity;
 import com.xuewen.networkservice.ApiService;
 import com.xuewen.networkservice.UUidResult;
 import com.xuewen.utility.CurrentUser;
 import com.xuewen.utility.GlobalUtil;
-import com.xuewen.utility.MyTextWatch;
+import com.xuewen.utility.MyTextWatcher;
 import com.xuewen.utility.ToastMsg;
 import com.xuewen.utility.Validate;
-
-import java.io.File;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import okhttp3.MediaType;
-import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.http.Multipart;
 
 public class ModifyInfoActivity extends AppCompatActivity {
 
@@ -90,9 +83,9 @@ public class ModifyInfoActivity extends AppCompatActivity {
         });
 
         renderView(CurrentUser.userId);
-        username.addTextChangedListener(new MyTextWatch(this, 10, usernameTextInfo));
-        status.addTextChangedListener(new MyTextWatch(this, 10, statusTextInfo));
-        description.addTextChangedListener(new MyTextWatch(this, 50, descriptionTextInfo));
+        username.addTextChangedListener(new MyTextWatcher(this, 10, usernameTextInfo));
+        status.addTextChangedListener(new MyTextWatcher(this, 20, statusTextInfo));
+        description.addTextChangedListener(new MyTextWatcher(this, 50, descriptionTextInfo));
 
     }
 
