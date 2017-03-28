@@ -36,7 +36,13 @@
                 <!--android:background="@drawable/search_background"-->
                 <!--android:queryHint="请输入搜索内容" />-->
 
+            <!--<ImageButton-->
+                <!--android:text="sss"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                 <!--/>-->
             <ImageView
+                android:id="@+id/searchBtn"
                 android:background="@drawable/searchbar"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent" />

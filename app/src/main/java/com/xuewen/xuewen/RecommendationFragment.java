@@ -44,6 +44,7 @@ public class RecommendationFragment extends Fragment {
     private QRListAdapter adapter;
 
     @BindView(R.id.refresh) SwipeRefreshLayout refresh;
+    @BindView(R.id.searchBtn) View searchBtn;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -74,6 +75,13 @@ public class RecommendationFragment extends Fragment {
             }
         });
 //        listView.setOnScrollListener(new PauseOnScrollListener(ImageLoader.getInstance(), true, true));
+
+        searchBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), SearchActivity.class));
+            }
+        });
 
         // database service -> network service(开始刷新 -> 加载成功 -> 结束刷新) -> write back to database
         if (!networkLock) {

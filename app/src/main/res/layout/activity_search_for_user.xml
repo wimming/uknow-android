@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="@android:color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -34,38 +33,6 @@
 
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
-
-
-    <View
-        android:background="@color/gray_color"
-        android:layout_width="match_parent"
-        android:layout_height="2px"/>
-    <TextView
-        android:paddingTop="@dimen/base_margin"
-        android:paddingBottom="@dimen/base_margin"
-        android:text="推荐关键字"
-        android:textColor="@color/black_color"
-        android:textSize="@dimen/base_big_font"
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <View
-        android:background="@color/gray_color"
-        android:layout_marginBottom="@dimen/base_margin"
-        android:layout_width="match_parent"
-        android:layout_height="2px"/>
-
-    <GridView
-        android:id="@+id/gridView"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:horizontalSpacing="20dp"
-        android:verticalSpacing="10dp"
-
-        android:numColumns="3" />
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/refresh"

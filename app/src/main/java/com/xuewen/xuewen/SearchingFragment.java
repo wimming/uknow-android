@@ -46,6 +46,7 @@ public class SearchingFragment extends Fragment {
     private UserListAdapter adapter;
 
     @BindView(R.id.refresh) SwipeRefreshLayout refresh;
+    @BindView(R.id.searchBtn) View searchBtn;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -74,6 +75,13 @@ public class SearchingFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), AskActivity.class);
                 intent.putExtra("id", ((UUidFARBean) parent.getAdapter().getItem(position)).id);
                 startActivity(intent);
+            }
+        });
+
+        searchBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), SearchForUserActivity.class));
             }
         });
 
