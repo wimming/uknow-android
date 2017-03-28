@@ -55,7 +55,7 @@ public class SearchForUserActivity extends AppCompatActivity {
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                retrieveQuestionsAndRender("");
+                retrieveUsersAndRender("");
             }
         });
 
@@ -79,21 +79,22 @@ public class SearchForUserActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 Toast.makeText(SearchForUserActivity.this, query, Toast.LENGTH_SHORT).show();
-                retrieveQuestionsAndRender(query);
+                retrieveUsersAndRender(query);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
                 Toast.makeText(SearchForUserActivity.this, newText, Toast.LENGTH_SHORT).show();
-                retrieveQuestionsAndRender(newText);
+                retrieveUsersAndRender(newText);
                 return false;
             }
         });
 
     }
 
-    private void retrieveQuestionsAndRender(String query) {
+    private void retrieveUsersAndRender(String query) {
+        refresh.setRefreshing(true);
         ApiService apiService = ApiService.retrofit.create(ApiService.class);
         Call<UUidFARResult> call = apiService.requestUUidFAR(CurrentUser.userId);
         call.enqueue(new Callback<UUidFARResult>() {
