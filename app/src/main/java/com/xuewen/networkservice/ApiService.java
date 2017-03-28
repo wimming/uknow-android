@@ -44,6 +44,8 @@ public interface ApiService {
     @FormUrlEncoded
     Call<TKLoginResult> requestTKLogin(@Field("user_id") int user_id,
                                        @Field("token") String token);
+    @POST("api/logout")
+    Call<LogoutResult> requestLogout();
 
     @PATCH("api/users/{user_id}/perfect")
     @Multipart
