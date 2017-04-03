@@ -193,7 +193,7 @@ public class QuestionAnswerActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_answer_question);
+        setContentView(R.layout.activity_question_answer);
         ButterKnife.bind(this);
 
         id = getIntent().getIntExtra("id", -1);

@@ -50,7 +50,7 @@ public class QuestionsRcmdFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
     {
-        View rootView = inflater.inflate(R.layout.fragment_0, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_questions_rcmd, container, false);
         ButterKnife.bind(this, rootView);
         databaseHelper = DatabaseHelper.getHelper(getActivity());
         refresh.setColorSchemeResources(android.R.color.holo_blue_bright, android.R.color.holo_green_light, android.R.color.holo_orange_light);

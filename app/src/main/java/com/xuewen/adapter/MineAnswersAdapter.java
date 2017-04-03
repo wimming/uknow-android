@@ -5,13 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xuewen.bean.UUidBean;
-import com.xuewen.bean.UUidFARBean;
 import com.xuewen.utility.GlobalUtil;
 import com.xuewen.xuewen.R;
 
@@ -57,7 +55,7 @@ public class MineAnswersAdapter extends BaseAdapter{
         ViewHolder viewHolder;
 
         if (convertView == null) {
-            view = LayoutInflater.from(context).inflate(R.layout.aboutme_answer_list_item, null);
+            view = LayoutInflater.from(context).inflate(R.layout.mine_answers_item, null);
             viewHolder = new ViewHolder();
             viewHolder.asker_avatarUrl = (ImageView) view.findViewById(R.id.asker_avatarUrl);
             viewHolder.asker_username = (TextView)view.findViewById(R.id.asker_username);

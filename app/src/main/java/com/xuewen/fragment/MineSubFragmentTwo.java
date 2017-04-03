@@ -30,7 +30,7 @@ public class MineSubFragmentTwo extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_about_me_fragment_two, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_mine_sub_two, container, false);
         ListView dataListView = (ListView) rootView.findViewById(R.id.aboutMe_ask_list);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

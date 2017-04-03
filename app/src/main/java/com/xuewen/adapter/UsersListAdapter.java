@@ -60,7 +60,7 @@ public class UsersListAdapter extends BaseAdapter{
         View view;
         ViewHolder viewHolder;
         if (convertView == null) {
-            view = LayoutInflater.from(context).inflate(R.layout.user_list_item, null);
+            view = LayoutInflater.from(context).inflate(R.layout.users_list_item, null);
             viewHolder = new ViewHolder();
             viewHolder.username = (TextView) view.findViewById(R.id.username);
             viewHolder.avatarUrl = (ImageView) view.findViewById(R.id.avatarUrl);

@@ -15,7 +15,7 @@ public class QuestionAnswerSuccessActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_answer_success);
+        setContentView(R.layout.activity_question_answer_success);
 
         id = getIntent().getIntExtra("id", -1);
         if (id == -1) {

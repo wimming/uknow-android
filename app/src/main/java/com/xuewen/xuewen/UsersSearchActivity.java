@@ -78,14 +78,14 @@ public class UsersSearchActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Toast.makeText(UsersSearchActivity.this, query, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(UsersSearchActivity.this, query, Toast.LENGTH_SHORT).show();
                 retrieveUsersAndRender(query);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                Toast.makeText(UsersSearchActivity.this, newText, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(UsersSearchActivity.this, newText, Toast.LENGTH_SHORT).show();
                 retrieveUsersAndRender(newText);
                 return false;
             }

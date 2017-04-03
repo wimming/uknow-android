@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xuewen.bean.UUidBean;
-import com.xuewen.bean.UUidFARBean;
 import com.xuewen.utility.GlobalUtil;
 import com.xuewen.xuewen.R;
 
@@ -56,7 +55,7 @@ public class MineAsksAdapter extends BaseAdapter{
         ViewHolder viewHolder;
 
         if (convertView == null) {
-            view = LayoutInflater.from(context).inflate(R.layout.aboutme_ask_list_item, null);
+            view = LayoutInflater.from(context).inflate(R.layout.mine_asks_item, null);
             viewHolder = new ViewHolder();
             viewHolder.answerer_avatarUrl = (ImageView) view.findViewById(R.id.answerer_avatarUrl);
             viewHolder.answerer_status = (TextView)view.findViewById(R.id.answerer_status);

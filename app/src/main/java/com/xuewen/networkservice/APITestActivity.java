@@ -6,13 +6,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.xuewen.bean.QRBean;
 import com.xuewen.utility.ToastMsg;
 import com.xuewen.xuewen.R;
 
 import java.util.List;
 
-import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
 import okhttp3.MediaType;
@@ -39,7 +37,7 @@ public class APITestActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.apitest_activity);
+        setContentView(R.layout.activity_apitest);
 
         ButterKnife.bind(this);
 

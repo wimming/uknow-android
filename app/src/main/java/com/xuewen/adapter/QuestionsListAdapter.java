@@ -87,7 +87,7 @@ public class QuestionsListAdapter extends BaseAdapter {
         QuestionsListAdapter.ViewHolder viewHolder;
 
         if (convertView == null) {
-            view = LayoutInflater.from(context).inflate(R.layout.qr_list_item, null);
+            view = LayoutInflater.from(context).inflate(R.layout.questions_list_item, null);
             viewHolder = new QuestionsListAdapter.ViewHolder();
 
             viewHolder.description = (TextView)view.findViewById(R.id.description);

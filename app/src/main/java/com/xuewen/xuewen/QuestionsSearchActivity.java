@@ -74,7 +74,7 @@ public class QuestionsSearchActivity extends AppCompatActivity {
 //        }
 //        String[] from = {"button"};
 //        int[] to = {R.id.button};
-//        SimpleAdapter adapter = new SimpleAdapter(this, datalist, R.layout.search_recommend_gridview_item, from, to);
+//        SimpleAdapter adapter = new SimpleAdapter(this, datalist, R.layout.activity_questions_search_item, from, to);
 //        gridView.setAdapter(adapter);
 
         // 下拉刷新
