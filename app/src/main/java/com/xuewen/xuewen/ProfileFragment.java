@@ -152,7 +152,7 @@ public class ProfileFragment extends Fragment {
                     Toast.makeText(getActivity(), response.body().errmsg, Toast.LENGTH_LONG).show();
                     return;
                 }
-                Toast.makeText(getActivity(), "prof Request success.", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), "prof Request success.", Toast.LENGTH_SHORT).show();
                 renderView(response.body().data);
 
                 appbar.setVisibility(View.VISIBLE);

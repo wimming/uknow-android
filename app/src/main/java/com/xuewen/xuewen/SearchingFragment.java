@@ -129,7 +129,7 @@ public class SearchingFragment extends Fragment {
                     refresh.setRefreshing(false);
                     return;
                 }
-                Toast.makeText(getActivity(), "user Request success.", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), "user Request success.", Toast.LENGTH_SHORT).show();
                 dataList.clear();
                 dataList.addAll(response.body().data);
                 adapter.notifyDataSetChanged();
