@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.xuewen.xuewen.AboutMeFragmentOne">
+    tools:context="com.xuewen.xuewen.com.xuewen.fragment.AboutMeFragmentOne">
 
     <ListView
         android:id="@+id/aboutMe_answer_list"

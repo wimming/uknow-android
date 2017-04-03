@@ -1,4 +1,4 @@
-package com.xuewen.xuewen;
+package com.xuewen.fragment;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,6 +16,8 @@ import android.widget.Toast;
 
 import com.xuewen.adapter.AboutMeQuestionListAskAdapter;
 import com.xuewen.bean.UUidBean;
+import com.xuewen.xuewen.QuestionDetailActivity;
+import com.xuewen.xuewen.R;
 
 import java.util.ArrayList;
 import java.util.List;

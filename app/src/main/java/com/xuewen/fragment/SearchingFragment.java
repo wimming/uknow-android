@@ -1,4 +1,4 @@
-package com.xuewen.xuewen;
+package com.xuewen.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,6 +18,10 @@ import com.xuewen.networkservice.ApiService;
 import com.xuewen.networkservice.UUidFARResult;
 import com.xuewen.utility.CurrentUser;
 import com.xuewen.utility.ToastMsg;
+import com.xuewen.xuewen.AskActivity;
+import com.xuewen.xuewen.MainActivity;
+import com.xuewen.xuewen.R;
+import com.xuewen.xuewen.SearchForUserActivity;
 
 import java.sql.SQLException;
 import java.util.ArrayList;

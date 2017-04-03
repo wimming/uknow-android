@@ -1,4 +1,4 @@
-package com.xuewen.xuewen;
+package com.xuewen.fragment;
 
 import android.content.Intent;
 import android.os.Build;
@@ -14,6 +14,9 @@ import android.widget.ListView;
 import com.xuewen.adapter.AboutMeQuestionListAnswerAdapter;
 import com.xuewen.bean.QRBean;
 import com.xuewen.bean.UUidBean;
+import com.xuewen.xuewen.AnswerQuestionActivity;
+import com.xuewen.xuewen.QuestionDetailActivity;
+import com.xuewen.xuewen.R;
 
 import java.util.ArrayList;
 import java.util.List;

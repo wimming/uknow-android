@@ -1,4 +1,4 @@
-package com.xuewen.xuewen;
+package com.xuewen.fragment;
 
 import android.app.ActivityManager;
 import android.content.Intent;
@@ -18,6 +18,10 @@ import com.xuewen.databaseservice.DatabaseHelper;
 import com.xuewen.networkservice.ApiService;
 import com.xuewen.networkservice.QRResult;
 import com.xuewen.utility.ToastMsg;
+import com.xuewen.xuewen.MainActivity;
+import com.xuewen.xuewen.QuestionDetailActivity;
+import com.xuewen.xuewen.R;
+import com.xuewen.xuewen.SearchActivity;
 
 import java.sql.SQLException;
 import java.util.ArrayList;

@@ -1,7 +1,5 @@
-package com.xuewen.xuewen;
+package com.xuewen.fragment;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
@@ -10,30 +8,28 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.xuewen.bean.QRBean;
 import com.xuewen.bean.UUidBean;
-import com.xuewen.bean.UUidFANDUUidRBean;
 import com.xuewen.databaseservice.DatabaseHelper;
+import com.xuewen.fragment.AboutMeFragmentOne;
+import com.xuewen.fragment.AboutMeFragmentTwo;
 import com.xuewen.networkservice.ApiService;
-import com.xuewen.networkservice.QQidResult;
 import com.xuewen.networkservice.UUidResult;
 import com.xuewen.utility.CurrentUser;
 import com.xuewen.utility.GlobalUtil;
 import com.xuewen.utility.ToastMsg;
+import com.xuewen.xuewen.MainActivity;
+import com.xuewen.xuewen.ModifyInfoActivity;
+import com.xuewen.xuewen.R;
+import com.xuewen.xuewen.SettingActivity;
 
 import java.sql.SQLException;
 import java.util.List;

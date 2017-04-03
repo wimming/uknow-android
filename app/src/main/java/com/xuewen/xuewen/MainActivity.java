@@ -1,14 +1,8 @@
 package com.xuewen.xuewen;
 
 import android.app.ActivityManager;
-import android.app.SearchManager;
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SearchView;
-import android.support.v7.widget.Toolbar;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -17,30 +11,18 @@ import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
-import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
-import com.nostra13.universalimageloader.cache.disc.naming.HashCodeFileNameGenerator;
-import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
-import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
-import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.xuewen.bean.QRBean;
 import com.xuewen.bean.UUidBean;
-import com.xuewen.bean.UUidFANDUUidRBean;
 import com.xuewen.bean.UUidFARBean;
-import com.xuewen.networkservice.APITestActivity;
-import com.xuewen.utility.CurrentUser;
-import com.xuewen.utility.ListenHelper;
+import com.xuewen.fragment.ProfileFragment;
+import com.xuewen.fragment.RecommendationFragment;
+import com.xuewen.fragment.SearchingFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
@@ -212,12 +194,12 @@ public class MainActivity extends AppCompatActivity {
         return dataKeeper;
     }
     public class DataKeeper {
-        List<QRBean> questionsList = new ArrayList<>();
-        List<UUidFARBean> usersList = new ArrayList<>();
-        UUidBean profile;
-        boolean questionsCached = false;
-        boolean usersCached = false;
-        boolean profileCached = false;
+        public List<QRBean> questionsList = new ArrayList<>();
+        public List<UUidFARBean> usersList = new ArrayList<>();
+        public UUidBean profile;
+        public boolean questionsCached = false;
+        public boolean usersCached = false;
+        public boolean profileCached = false;
     }
 
 }
