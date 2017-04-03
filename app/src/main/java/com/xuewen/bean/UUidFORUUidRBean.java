@@ -8,8 +8,8 @@ import com.j256.ormlite.table.DatabaseTable;
  */
 
 @DatabaseTable(tableName = "tb_UUidFANDUUidR")
-public class UUidFANDUUidRBean {
-    public UUidFANDUUidRBean() {}
+public class UUidFORUUidRBean {
+    public UUidFORUUidRBean() {}
 //    @DatabaseField(generatedId = true)
 //    private int id;
 

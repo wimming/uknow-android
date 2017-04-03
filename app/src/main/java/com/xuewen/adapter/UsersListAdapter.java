@@ -11,10 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.xuewen.bean.UUidFANDUUidRBean;
 import com.xuewen.bean.UUidFARBean;
-import com.xuewen.bean.UserMe;
-import com.xuewen.networkservice.APITestActivity;
 import com.xuewen.networkservice.ApiService;
 import com.xuewen.networkservice.UUidFResult;
 import com.xuewen.utility.CurrentUser;

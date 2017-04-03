@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.xuewen.adapter.UsersListAdapter;
 import com.xuewen.bean.UUidFARBean;
 import com.xuewen.networkservice.ApiService;
+import com.xuewen.networkservice.UFResult;
 import com.xuewen.networkservice.UUidFARResult;
 import com.xuewen.utility.CurrentUser;
 import com.xuewen.utility.ToastMsg;
@@ -46,7 +47,7 @@ public class UsersSearchActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setContentView(R.layout.activity_search_for_user);
+        this.setContentView(R.layout.activity_users_search);
 
         ButterKnife.bind(this);
 
@@ -54,7 +55,7 @@ public class UsersSearchActivity extends AppCompatActivity {
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                retrieveUsersAndRender("");
+                retrieveUsersAndRender(searchView.getQuery().toString());
             }
         });
 
@@ -95,10 +96,10 @@ public class UsersSearchActivity extends AppCompatActivity {
     private void retrieveUsersAndRender(String query) {
         refresh.setRefreshing(true);
         ApiService apiService = ApiService.retrofit.create(ApiService.class);
-        Call<UUidFARResult> call = apiService.requestUUidFAR(CurrentUser.userId);
-        call.enqueue(new Callback<UUidFARResult>() {
+        Call<UFResult> call = apiService.requestUF(query);
+        call.enqueue(new Callback<UFResult>() {
             @Override
-            public void onResponse(Call<UUidFARResult> call, Response<UUidFARResult> response) {
+            public void onResponse(Call<UFResult> call, Response<UFResult> response) {
                 if (!response.isSuccessful()) {
                     Toast.makeText(UsersSearchActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
                     refresh.setRefreshing(false);
@@ -115,7 +116,7 @@ public class UsersSearchActivity extends AppCompatActivity {
                 refresh.setRefreshing(false);
             }
             @Override
-            public void onFailure(Call<UUidFARResult> call, Throwable t) {
+            public void onFailure(Call<UFResult> call, Throwable t) {
                 Toast.makeText(UsersSearchActivity.this, ToastMsg.NETWORK_ERROR + " : " + t.getMessage(), Toast.LENGTH_LONG).show();
                 refresh.setRefreshing(false);
             }

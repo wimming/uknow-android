@@ -8,21 +8,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.GridView;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 import com.xuewen.adapter.QuestionsListAdapter;
 import com.xuewen.bean.QRBean;
 import com.xuewen.networkservice.ApiService;
-import com.xuewen.networkservice.QRResult;
+import com.xuewen.networkservice.QFResult;
 import com.xuewen.utility.ToastMsg;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,8 +37,8 @@ public class QuestionsSearchActivity extends AppCompatActivity {
 
     @BindView(R.id.searchView)
     SearchView searchView;
-    @BindView(R.id.gridView)
-    GridView gridView;
+//    @BindView(R.id.gridView)
+//    GridView gridView;
     @BindView(R.id.refresh)
     SwipeRefreshLayout refresh;
     @BindView(R.id.resultListView)
@@ -51,7 +47,7 @@ public class QuestionsSearchActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setContentView(R.layout.activity_search);
+        this.setContentView(R.layout.activity_questions_search);
 
         ButterKnife.bind(this);
 
@@ -66,42 +62,26 @@ public class QuestionsSearchActivity extends AppCompatActivity {
 //        textView.setTextColor(Color.RED);
 //        textView.setHintTextColor(Color.RED);
 
-
-        //多行多列网格 九宫格布局 gridview
-        String[] buttonsText = {"软件工程", "中山大学", "互联网", "安卓开发", "腾讯", "奖学金" };
-        //simpleAdapter数据源
-        List<Map<String, Object>> datalist = new ArrayList<>();
-        for (String aButtonsText : buttonsText) {
-            Map<String, Object> tempMap = new HashMap<>();
-            tempMap.put("button", aButtonsText);
-            datalist.add(tempMap);
-        }
-        String[] from = {"button"};
-        int[] to = {R.id.button};
-        SimpleAdapter adapter = new SimpleAdapter(this, datalist, R.layout.search_recommend_gridview_item, from, to);
-        gridView.setAdapter(adapter);
-        //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.search_recommend_gridview_item,R.id.button, data);
-//        ArrayAdapter adapter = new ArrayAdapter() {
-//            @Override
-//            public View getView(int position, View convertView, ViewGroup parent) {
-//                View view;
-//                if (convertView == null) {
-//                    view = LayoutInflater.from(getContext()).inflate(R.layout.search_recommend_gridview_item, null);
-//                } else {
-//                    view = convertView;
-//                }
-//                Button button = (Button) view.findViewById(R.id.button);
-//                button.setText(data[position]);
-//                return view;
-//            }
-//        };
-        gridView.setAdapter(adapter);
+        // 暂时不用标签
+//        //多行多列网格 九宫格布局 gridview
+//        String[] buttonsText = {"软件工程", "中山大学", "互联网", "安卓开发", "腾讯", "奖学金" };
+//        //simpleAdapter数据源
+//        List<Map<String, Object>> datalist = new ArrayList<>();
+//        for (String aButtonsText : buttonsText) {
+//            Map<String, Object> tempMap = new HashMap<>();
+//            tempMap.put("button", aButtonsText);
+//            datalist.add(tempMap);
+//        }
+//        String[] from = {"button"};
+//        int[] to = {R.id.button};
+//        SimpleAdapter adapter = new SimpleAdapter(this, datalist, R.layout.search_recommend_gridview_item, from, to);
+//        gridView.setAdapter(adapter);
 
         // 下拉刷新
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                retrieveQuestionsAndRender("");
+                retrieveQuestionsAndRender(searchView.getQuery().toString());
             }
         });
 
@@ -114,7 +94,6 @@ public class QuestionsSearchActivity extends AppCompatActivity {
                 Intent intent = new Intent(QuestionsSearchActivity.this, QuestionDetailActivity.class);
                 intent.putExtra("id", ((QRBean) parent.getAdapter().getItem(position)).id);
                 startActivity(intent);
-
             }
         });
 
@@ -124,29 +103,28 @@ public class QuestionsSearchActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Toast.makeText(QuestionsSearchActivity.this, query, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(QuestionsSearchActivity.this, query, Toast.LENGTH_SHORT).show();
                 retrieveQuestionsAndRender(query);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                Toast.makeText(QuestionsSearchActivity.this, newText, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(QuestionsSearchActivity.this, newText, Toast.LENGTH_SHORT).show();
                 retrieveQuestionsAndRender(newText);
                 return false;
             }
         });
-
 
     }
 
     private void retrieveQuestionsAndRender(String query) {
         refresh.setRefreshing(true);
         ApiService apiService = ApiService.retrofit.create(ApiService.class);
-        Call<QRResult> call = apiService.requestQR();
-        call.enqueue(new Callback<QRResult>() {
+        Call<QFResult> call = apiService.requestQF(query);
+        call.enqueue(new Callback<QFResult>() {
             @Override
-            public void onResponse(Call<QRResult> call, Response<QRResult> response) {
+            public void onResponse(Call<QFResult> call, Response<QFResult> response) {
                 if (!response.isSuccessful()) {
                     Toast.makeText(QuestionsSearchActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
                     refresh.setRefreshing(false);
@@ -164,7 +142,7 @@ public class QuestionsSearchActivity extends AppCompatActivity {
 
             }
             @Override
-            public void onFailure(Call<QRResult> call, Throwable t) {
+            public void onFailure(Call<QFResult> call, Throwable t) {
                 Toast.makeText(QuestionsSearchActivity.this, ToastMsg.NETWORK_ERROR + " : " + t.getMessage(), Toast.LENGTH_LONG).show();
                 refresh.setRefreshing(false);
             }
