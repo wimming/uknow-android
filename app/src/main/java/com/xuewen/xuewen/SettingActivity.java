@@ -91,10 +91,10 @@ public class SettingActivity extends AppCompatActivity {
                     return;
                 }
 
-//                SharedPreferences.Editor editor = getSharedPreferences("login_info", MODE_PRIVATE).edit();
-//                editor.putInt("user_id", -1);
-//                editor.putString("token", "");
-//                editor.commit();
+                SharedPreferences.Editor editor = getSharedPreferences("login_info", MODE_PRIVATE).edit();
+                editor.putInt("user_id", -1);
+                editor.putString("token", "");
+                editor.commit();
 
                 Intent intent = new Intent(SettingActivity.this, EntryActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK);
