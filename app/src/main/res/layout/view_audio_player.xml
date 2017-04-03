@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <Button
+        android:id="@+id/listenButton"
+        android:text="00''"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@drawable/listen_view"
+        android:textColor="@color/white_color"
+        android:gravity="right|center"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:padding="@dimen/base_margin" />
+
+    <SeekBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="100"
+        android:id="@+id/seekBar" />
+</LinearLayout>
+
+
+    <!--android:scaleType="centerCrop"-->
+    <!--<RelativeLayout-->
+    <!--android:background="@drawable/listen_view3_9p"-->
+    <!---->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="40dp">-->
+    <!--<TextView-->
+    <!--android:text="听听看"-->
+    <!--android:layout_alignParentLeft="true"-->
+    <!--android:layout_centerVertical="true"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content" />-->
+    <!--<TextView-->
+    <!--android:text="00''"-->
+    <!--android:layout_alignParentRight="true"-->
+    <!--android:layout_centerVertical="true"-->
+    <!--android:marginLeft="100dp"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content" />-->
+    <!--</RelativeLayout>-->
+
+    <!--<Button-->
+    <!--android:id="@+id/listenButton"-->
+    <!--android:text="00''"-->
+    <!--android:layout_gravity="center"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="40dp"-->
+    <!--android:background="@drawable/listen_view"-->
+    <!--android:textColor="@color/white_color"-->
+    <!--android:gravity="right|center"-->
+    <!--android:padding="@dimen/base_margin" />-->
+
+    <!--<Button-->
+    <!--android:id="@+id/listenButton"-->
+    <!--android:text="00''"-->
+    <!--android:layout_gravity="center"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="40dp"-->
+    <!--android:background="@drawable/listen_view2"-->
+    <!--android:textColor="@color/white_color"-->
+    <!--android:gravity="right|center"-->
+    <!--android:padding="@dimen/base_margin" />-->
+
+    <!--<Button-->
+    <!--android:id="@+id/listenButton"-->
+    <!--android:text="00''"-->
+    <!--android:layout_gravity="center"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="40dp"-->
+    <!--android:background="@drawable/listen_view3"-->
+    <!--android:textColor="@color/white_color"-->
+    <!--android:gravity="right|center"-->
+    <!--android:padding="@dimen/base_margin" />-->
+
+    <!--<Button-->
+    <!--android:id="@+id/listenButton"-->
+    <!--android:text="00''"-->
+    <!--android:layout_gravity="center"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="40dp"-->
+    <!--android:background="@drawable/listen_view_9p"-->
+    <!--android:textColor="@color/white_color"-->
+    <!--android:gravity="right|center"-->
+    <!--android:padding="@dimen/base_margin" />-->
+
+    <!--<Button-->
+    <!--android:id="@+id/listenButton"-->
+    <!--android:text="00''"-->
+    <!--android:layout_gravity="center"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="40dp"-->
+    <!--android:background="@drawable/listen_view3_9p"-->
+    <!--android:textColor="@color/white_color"-->
+    <!--android:gravity="right|center"-->
+    <!--android:padding="@dimen/base_margin" />-->

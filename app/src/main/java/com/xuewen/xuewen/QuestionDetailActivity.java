@@ -2,6 +2,7 @@ package com.xuewen.xuewen;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xuewen.bean.QQidBean;
+import com.xuewen.customview.AudioPlayerView;
 import com.xuewen.networkservice.ApiService;
 import com.xuewen.networkservice.FileService;
 import com.xuewen.networkservice.QQidCResult;
@@ -63,6 +65,7 @@ public class QuestionDetailActivity extends AppCompatActivity {
     @BindView(R.id.answerer_description) TextView answerer_description;
     @BindView(R.id.review) TextView review;
     @BindView(R.id.listen) Button listen;
+    @BindView(R.id.audioPlayerView) AudioPlayerView audioPlayerView;
 
     @BindView(R.id.refresh) SwipeRefreshLayout refresh;
     @BindView(R.id.visibilityController) LinearLayout visibilityController;
@@ -140,6 +143,7 @@ public class QuestionDetailActivity extends AppCompatActivity {
                 data = response.body().data;
 
                 listen.setOnClickListener(listenClickListener);
+                audioPlayerView.prepare(GlobalUtil.getInstance().baseAudioUrl + data.audioUrl, data.audioSeconds);
 
                 visibilityController.setVisibility(View.VISIBLE);
                 refresh.setRefreshing(false);
@@ -158,6 +162,7 @@ public class QuestionDetailActivity extends AppCompatActivity {
         if (mediaPlayer.isPlaying()) {
             mediaPlayer.pause();
         }
+        audioPlayerView.release();
         super.onPause();
     }
 
@@ -186,59 +191,70 @@ public class QuestionDetailActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
 
-            if (downloadedFilePath == null || downloadedFilePath.equals("")) {
-
-                // 显示progress -> 下载完成 -> 收起progress
-                final ProgressDialog dialog = ProgressDialog.show(QuestionDetailActivity.this, "", "语音文件下载中...");
-
-                final String filePath = GlobalUtil.getInstance().baseAudioUrl + data.audioUrl;
-
-                FileService fileService = FileService.retrofit.create(FileService.class);
-                Call<ResponseBody> fileCall = fileService.downloadFile(filePath);
-
-                fileCall.enqueue(new Callback<ResponseBody>() {
-                    @Override
-                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                        dialog.dismiss();
-                        if (!response.isSuccessful()) {
-                            Toast.makeText(QuestionDetailActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
-                            return;
-                        }
-
-                        boolean writtenToDisk = FileWriter.getInstance().writeResponseBodyToDisk(response.body(), getExternalFilesDir(null) + "", data.id + ".wav");
-                        if (!writtenToDisk) {
-                            Toast.makeText(QuestionDetailActivity.this, ToastMsg.FILE_OPERATION_ERROR, Toast.LENGTH_LONG).show();
-                            return;
-                        }
-
-                        downloadedFilePath = filePath;
-
-                        if (!mediaPlayer.isPlaying()) {
-                            try {
-                                mediaPlayer.setDataSource(downloadedFilePath);
-                                mediaPlayer.prepare();
-                                mediaPlayer.start();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                                Toast.makeText(QuestionDetailActivity.this, ToastMsg.FILE_OPERATION_ERROR, Toast.LENGTH_LONG).show();
-                            }
-                        }
-
-                    }
-
-                    @Override
-                    public void onFailure(Call<ResponseBody> call, Throwable t) {
-                        Toast.makeText(QuestionDetailActivity.this, ToastMsg.NETWORK_ERROR + " : " + t.getMessage(), Toast.LENGTH_LONG).show();
-                        dialog.dismiss();
-                    }
-                });
-
+            String url = GlobalUtil.getInstance().baseAudioUrl + data.audioUrl; // your URL here
+//            MediaPlayer mediaPlayer = new MediaPlayer();
+            mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+            try {
+                mediaPlayer.setDataSource(url);
+                mediaPlayer.prepare(); // might take long! (for buffering, etc)
+                mediaPlayer.start();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-            else {
-                if (!mediaPlayer.isPlaying()) {
-                    mediaPlayer.start();
-                }
-            }
+
+//            if (downloadedFilePath == null || downloadedFilePath.equals("")) {
+//
+//                // 显示progress -> 下载完成 -> 收起progress
+//                final ProgressDialog dialog = ProgressDialog.show(QuestionDetailActivity.this, "", "语音文件下载中...");
+//
+//                final String filePath = GlobalUtil.getInstance().baseAudioUrl + data.audioUrl;
+//
+//                FileService fileService = FileService.retrofit.create(FileService.class);
+//                Call<ResponseBody> fileCall = fileService.downloadFile(filePath);
+//
+//                fileCall.enqueue(new Callback<ResponseBody>() {
+//                    @Override
+//                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+//                        dialog.dismiss();
+//                        if (!response.isSuccessful()) {
+//                            Toast.makeText(QuestionDetailActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
+//                            return;
+//                        }
+//
+//                        boolean writtenToDisk = FileWriter.getInstance().writeResponseBodyToDisk(response.body(), getExternalFilesDir(null) + "", data.id + ".wav");
+//                        if (!writtenToDisk) {
+//                            Toast.makeText(QuestionDetailActivity.this, ToastMsg.FILE_OPERATION_ERROR, Toast.LENGTH_LONG).show();
+//                            return;
+//                        }
+//
+//                        downloadedFilePath = filePath;
+//
+//                        if (!mediaPlayer.isPlaying()) {
+//                            try {
+//                                mediaPlayer.setDataSource(downloadedFilePath);
+//                                mediaPlayer.prepare();
+//                                mediaPlayer.start();
+//                            } catch (IOException e) {
+//                                e.printStackTrace();
+//                                Toast.makeText(QuestionDetailActivity.this, ToastMsg.FILE_OPERATION_ERROR, Toast.LENGTH_LONG).show();
+//                            }
+//                        }
+//
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+//                        Toast.makeText(QuestionDetailActivity.this, ToastMsg.NETWORK_ERROR + " : " + t.getMessage(), Toast.LENGTH_LONG).show();
+//                        dialog.dismiss();
+//                    }
+//                });
+//
+//            }
+//            else {
+//                if (!mediaPlayer.isPlaying()) {
+//                    mediaPlayer.start();
+//                }
+//            }
         }
     };
 
