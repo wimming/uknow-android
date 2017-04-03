@@ -7,10 +7,8 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.xuewen.networkservice.ApiService;
@@ -30,7 +28,7 @@ import retrofit2.Response;
 
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
-public class SettingActivity extends AppCompatActivity {
+public class ProfileActivity extends AppCompatActivity {
 
 //    @BindView(R.id.listView) ListView listView;
 
@@ -83,11 +81,11 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<LogoutResult> call, Response<LogoutResult> response) {
                 if (!response.isSuccessful()) {
-                    Toast.makeText(SettingActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
+                    Toast.makeText(ProfileActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
                     return;
                 }
                 if (response.body().status != 200) {
-                    Toast.makeText(SettingActivity.this, response.body().errmsg, Toast.LENGTH_LONG).show();
+                    Toast.makeText(ProfileActivity.this, response.body().errmsg, Toast.LENGTH_LONG).show();
                     return;
                 }
 
@@ -96,17 +94,17 @@ public class SettingActivity extends AppCompatActivity {
                 editor.putString("token", "");
                 editor.commit();
 
-                Intent intent = new Intent(SettingActivity.this, EntryActivity.class);
+                Intent intent = new Intent(ProfileActivity.this, EntryActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
 
-                Toast.makeText(SettingActivity.this, "退出成功", Toast.LENGTH_LONG).show();
+                Toast.makeText(ProfileActivity.this, "退出成功", Toast.LENGTH_LONG).show();
 
             }
 
             @Override
             public void onFailure(Call<LogoutResult> call, Throwable t) {
-                Toast.makeText(SettingActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(ProfileActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }

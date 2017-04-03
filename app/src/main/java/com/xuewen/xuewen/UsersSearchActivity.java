@@ -31,7 +31,7 @@ import retrofit2.Response;
  * Created by huangyuming on 17-3-28.
  */
 
-public class SearchForUserActivity extends AppCompatActivity {
+public class UsersSearchActivity extends AppCompatActivity {
 
     private List<UUidFARBean> resultList = new ArrayList<>();
     private UsersListAdapter resultAdapter;
@@ -59,12 +59,12 @@ public class SearchForUserActivity extends AppCompatActivity {
         });
 
         // 结果列表
-        resultAdapter = new UsersListAdapter(resultList, SearchForUserActivity.this);
+        resultAdapter = new UsersListAdapter(resultList, UsersSearchActivity.this);
         resultListView.setAdapter(resultAdapter);
         resultListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(SearchForUserActivity.this, AskActivity.class);
+                Intent intent = new Intent(UsersSearchActivity.this, AskActivity.class);
                 intent.putExtra("id", ((UUidFARBean) parent.getAdapter().getItem(position)).id);
                 startActivity(intent);
 
@@ -77,14 +77,14 @@ public class SearchForUserActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Toast.makeText(SearchForUserActivity.this, query, Toast.LENGTH_SHORT).show();
+                Toast.makeText(UsersSearchActivity.this, query, Toast.LENGTH_SHORT).show();
                 retrieveUsersAndRender(query);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                Toast.makeText(SearchForUserActivity.this, newText, Toast.LENGTH_SHORT).show();
+                Toast.makeText(UsersSearchActivity.this, newText, Toast.LENGTH_SHORT).show();
                 retrieveUsersAndRender(newText);
                 return false;
             }
@@ -100,12 +100,12 @@ public class SearchForUserActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<UUidFARResult> call, Response<UUidFARResult> response) {
                 if (!response.isSuccessful()) {
-                    Toast.makeText(SearchForUserActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
+                    Toast.makeText(UsersSearchActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
                     refresh.setRefreshing(false);
                     return;
                 }
                 if (response.body().status != 200) {
-                    Toast.makeText(SearchForUserActivity.this, response.body().errmsg, Toast.LENGTH_LONG).show();
+                    Toast.makeText(UsersSearchActivity.this, response.body().errmsg, Toast.LENGTH_LONG).show();
                     refresh.setRefreshing(false);
                     return;
                 }
@@ -116,7 +116,7 @@ public class SearchForUserActivity extends AppCompatActivity {
             }
             @Override
             public void onFailure(Call<UUidFARResult> call, Throwable t) {
-                Toast.makeText(SearchForUserActivity.this, ToastMsg.NETWORK_ERROR + " : " + t.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(UsersSearchActivity.this, ToastMsg.NETWORK_ERROR + " : " + t.getMessage(), Toast.LENGTH_LONG).show();
                 refresh.setRefreshing(false);
             }
         });

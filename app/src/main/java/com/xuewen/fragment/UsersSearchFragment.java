@@ -21,7 +21,7 @@ import com.xuewen.utility.ToastMsg;
 import com.xuewen.xuewen.AskActivity;
 import com.xuewen.xuewen.MainActivity;
 import com.xuewen.xuewen.R;
-import com.xuewen.xuewen.SearchForUserActivity;
+import com.xuewen.xuewen.UsersSearchActivity;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -37,7 +37,7 @@ import retrofit2.Response;
  * Created by ym on 16-10-23.
  */
 
-public class SearchingFragment extends Fragment {
+public class UsersSearchFragment extends Fragment {
 
     private List<UUidFARBean> dataList = new ArrayList<>();
     private DatabaseHelper databaseHelper;
@@ -80,7 +80,7 @@ public class SearchingFragment extends Fragment {
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getActivity(), SearchForUserActivity.class));
+                startActivity(new Intent(getActivity(), UsersSearchActivity.class));
             }
         });
 

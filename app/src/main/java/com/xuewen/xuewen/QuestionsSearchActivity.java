@@ -34,7 +34,7 @@ import retrofit2.Response;
  * Created by ym on 16-10-28.
  */
 
-public class SearchActivity extends AppCompatActivity {
+public class QuestionsSearchActivity extends AppCompatActivity {
 
     private List<QRBean> resultList = new ArrayList<>();
     private QuestionsListAdapter resultAdapter;
@@ -106,12 +106,12 @@ public class SearchActivity extends AppCompatActivity {
         });
 
         // 结果列表
-        resultAdapter = new QuestionsListAdapter(resultList, SearchActivity.this);
+        resultAdapter = new QuestionsListAdapter(resultList, QuestionsSearchActivity.this);
         resultListView.setAdapter(resultAdapter);
         resultListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(SearchActivity.this, QuestionDetailActivity.class);
+                Intent intent = new Intent(QuestionsSearchActivity.this, QuestionDetailActivity.class);
                 intent.putExtra("id", ((QRBean) parent.getAdapter().getItem(position)).id);
                 startActivity(intent);
 
@@ -124,14 +124,14 @@ public class SearchActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Toast.makeText(SearchActivity.this, query, Toast.LENGTH_SHORT).show();
+                Toast.makeText(QuestionsSearchActivity.this, query, Toast.LENGTH_SHORT).show();
                 retrieveQuestionsAndRender(query);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                Toast.makeText(SearchActivity.this, newText, Toast.LENGTH_SHORT).show();
+                Toast.makeText(QuestionsSearchActivity.this, newText, Toast.LENGTH_SHORT).show();
                 retrieveQuestionsAndRender(newText);
                 return false;
             }
@@ -148,12 +148,12 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<QRResult> call, Response<QRResult> response) {
                 if (!response.isSuccessful()) {
-                    Toast.makeText(SearchActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
+                    Toast.makeText(QuestionsSearchActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
                     refresh.setRefreshing(false);
                     return;
                 }
                 if (response.body().status != 200) {
-                    Toast.makeText(SearchActivity.this, response.body().errmsg, Toast.LENGTH_LONG).show();
+                    Toast.makeText(QuestionsSearchActivity.this, response.body().errmsg, Toast.LENGTH_LONG).show();
                     refresh.setRefreshing(false);
                     return;
                 }
@@ -165,7 +165,7 @@ public class SearchActivity extends AppCompatActivity {
             }
             @Override
             public void onFailure(Call<QRResult> call, Throwable t) {
-                Toast.makeText(SearchActivity.this, ToastMsg.NETWORK_ERROR + " : " + t.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(QuestionsSearchActivity.this, ToastMsg.NETWORK_ERROR + " : " + t.getMessage(), Toast.LENGTH_LONG).show();
                 refresh.setRefreshing(false);
             }
         });

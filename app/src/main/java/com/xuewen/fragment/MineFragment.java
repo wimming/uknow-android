@@ -19,8 +19,6 @@ import android.widget.Toast;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xuewen.bean.UUidBean;
 import com.xuewen.databaseservice.DatabaseHelper;
-import com.xuewen.fragment.AboutMeFragmentOne;
-import com.xuewen.fragment.AboutMeFragmentTwo;
 import com.xuewen.networkservice.ApiService;
 import com.xuewen.networkservice.UUidResult;
 import com.xuewen.utility.CurrentUser;
@@ -29,7 +27,7 @@ import com.xuewen.utility.ToastMsg;
 import com.xuewen.xuewen.MainActivity;
 import com.xuewen.xuewen.ModifyInfoActivity;
 import com.xuewen.xuewen.R;
-import com.xuewen.xuewen.SettingActivity;
+import com.xuewen.xuewen.ProfileActivity;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -44,7 +42,7 @@ import retrofit2.Response;
  * Created by ym on 16-10-23.
  */
 
-public class ProfileFragment extends Fragment {
+public class MineFragment extends Fragment {
 
     private UUidBean data;
     private DatabaseHelper databaseHelper;
@@ -90,14 +88,14 @@ public class ProfileFragment extends Fragment {
         aboutme_iv_setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), SettingActivity.class);
+                Intent intent = new Intent(getActivity(), ProfileActivity.class);
                 startActivity(intent);
             }
         });
 
         // database service -> network service(不可见、开始刷新 -> 加载成功 -> 可见、结束刷新) -> write back to database
         // 内存中无数据，请求数据并缓存
-        if (!((MainActivity)getActivity()).getDataKeeper().profileCached) {
+        if (!((MainActivity)getActivity()).getDataKeeper().mimeCached) {
 
             // database service
             databaseHelper = DatabaseHelper.getHelper(getActivity());
@@ -125,7 +123,7 @@ public class ProfileFragment extends Fragment {
         // 内存中有数据，直接用
         else {
 
-            data = ((MainActivity)getActivity()).getDataKeeper().profile;
+            data = ((MainActivity)getActivity()).getDataKeeper().mime;
             renderView(data);
 
         }
@@ -158,8 +156,8 @@ public class ProfileFragment extends Fragment {
 //                    networkLock = true;
 
                 // 缓存至内存
-                ((MainActivity)getActivity()).getDataKeeper().profile = response.body().data;
-                ((MainActivity)getActivity()).getDataKeeper().profileCached = true;
+                ((MainActivity)getActivity()).getDataKeeper().mime = response.body().data;
+                ((MainActivity)getActivity()).getDataKeeper().mimeCached = true;
 
                 // write back to database
                 try {

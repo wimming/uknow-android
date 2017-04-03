@@ -1,6 +1,5 @@
 package com.xuewen.fragment;
 
-import android.app.ActivityManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -20,8 +19,8 @@ import com.xuewen.networkservice.QRResult;
 import com.xuewen.utility.ToastMsg;
 import com.xuewen.xuewen.MainActivity;
 import com.xuewen.xuewen.QuestionDetailActivity;
+import com.xuewen.xuewen.QuestionsSearchActivity;
 import com.xuewen.xuewen.R;
-import com.xuewen.xuewen.SearchActivity;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -33,13 +32,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static android.content.Context.ACTIVITY_SERVICE;
-
 /**
  * Created by ym on 16-10-23.
  */
 
-public class RecommendationFragment extends Fragment {
+public class QuestionsRcmdFragment extends Fragment {
 
     private List<QRBean> dataList = new ArrayList<>();
     private DatabaseHelper databaseHelper;
@@ -82,7 +79,7 @@ public class RecommendationFragment extends Fragment {
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getActivity(), SearchActivity.class));
+                startActivity(new Intent(getActivity(), QuestionsSearchActivity.class));
             }
         });
 

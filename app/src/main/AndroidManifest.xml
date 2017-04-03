@@ -51,13 +51,13 @@
         <activity android:name=".MainActivity">
             <!--<meta-data-->
                 <!--android:name="android.app.default_searchable"-->
-                <!--android:value=".SearchActivity" />-->
+                <!--android:value=".QuestionsSearchActivity" />-->
         </activity>
 
         <activity android:name=".QuestionDetailActivity" />
         <activity android:name=".ModifyInfoActivity" />
         <activity android:name=".AskActivity" />
-        <activity android:name=".SettingActivity" />
+        <activity android:name=".ProfileActivity" />
         <activity android:name=".AnswerQuestionActivity" />
         <activity android:name=".AskedSuccessActivity" />
         <activity android:name=".AnswerSuccessActivity" />
@@ -73,7 +73,7 @@
             android:noHistory="true" />
 
         <activity
-            android:name=".SearchActivity"
+            android:name=".QuestionsSearchActivity"
             android:launchMode="singleTask">
             <!--<intent-filter>-->
                 <!--<action android:name="android.intent.action.SEARCH" />-->
@@ -84,7 +84,7 @@
                 <!--android:resource="@xml/searchable" />-->
         </activity>
         <activity
-            android:name=".SearchForUserActivity"
+            android:name=".UsersSearchActivity"
             android:launchMode="singleTask">
         </activity>
 

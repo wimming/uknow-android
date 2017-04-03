@@ -16,9 +16,9 @@ import android.widget.Toast;
 import com.xuewen.bean.QRBean;
 import com.xuewen.bean.UUidBean;
 import com.xuewen.bean.UUidFARBean;
-import com.xuewen.fragment.ProfileFragment;
-import com.xuewen.fragment.RecommendationFragment;
-import com.xuewen.fragment.SearchingFragment;
+import com.xuewen.fragment.MineFragment;
+import com.xuewen.fragment.QuestionsRcmdFragment;
+import com.xuewen.fragment.UsersSearchFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
 //        searchView.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
-////                startActivity(new Intent(MainActivity.this, SearchActivity.class));
+////                startActivity(new Intent(MainActivity.this, QuestionsSearchActivity.class));
 //                startActivity(new Intent(MainActivity.this, APITestActivity.class));
 //            }
 //        });
@@ -148,19 +148,19 @@ public class MainActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             if (position == 0) {
                 if (recommendationFragment == null) {
-                    recommendationFragment = new RecommendationFragment();
+                    recommendationFragment = new QuestionsRcmdFragment();
                 }
                 return recommendationFragment;
             }
             else if (position == 1) {
                 if (searchingFragment == null) {
-                    searchingFragment = new SearchingFragment();
+                    searchingFragment = new UsersSearchFragment();
                 }
                 return searchingFragment;
             }
             else if (position == 2) {
                 if (profileFragment == null) {
-                    profileFragment = new ProfileFragment();
+                    profileFragment = new MineFragment();
                 }
                 return profileFragment;
             }
@@ -196,10 +196,10 @@ public class MainActivity extends AppCompatActivity {
     public class DataKeeper {
         public List<QRBean> questionsList = new ArrayList<>();
         public List<UUidFARBean> usersList = new ArrayList<>();
-        public UUidBean profile;
+        public UUidBean mime;
         public boolean questionsCached = false;
         public boolean usersCached = false;
-        public boolean profileCached = false;
+        public boolean mimeCached = false;
     }
 
 }
