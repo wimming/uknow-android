@@ -11,16 +11,11 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.xuewen.adapter.QRListAdapter;
-import com.xuewen.adapter.UserListAdapter;
-import com.xuewen.bean.QRBean;
-import com.xuewen.bean.UUidFANDUUidRBean;
+import com.xuewen.adapter.UsersListAdapter;
 import com.xuewen.bean.UUidFARBean;
 import com.xuewen.databaseservice.DatabaseHelper;
 import com.xuewen.networkservice.ApiService;
-import com.xuewen.networkservice.QRResult;
 import com.xuewen.networkservice.UUidFARResult;
-import com.xuewen.networkservice.UUidRResult;
 import com.xuewen.utility.CurrentUser;
 import com.xuewen.utility.ToastMsg;
 
@@ -42,8 +37,8 @@ public class SearchingFragment extends Fragment {
 
     private List<UUidFARBean> dataList = new ArrayList<>();
     private DatabaseHelper databaseHelper;
-    private boolean networkLock = false;
-    private UserListAdapter adapter;
+//    private boolean networkLock = false;
+    private UsersListAdapter adapter;
 
     @BindView(R.id.refresh) SwipeRefreshLayout refresh;
     @BindView(R.id.searchBtn) View searchBtn;
@@ -66,7 +61,7 @@ public class SearchingFragment extends Fragment {
         });
 
         final ListView listView = (ListView) rootView.findViewById(R.id.listView);
-        adapter = new UserListAdapter(dataList, getActivity());
+        adapter = new UsersListAdapter(dataList, getActivity());
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -86,7 +81,8 @@ public class SearchingFragment extends Fragment {
         });
 
         // database service -> network service(开始刷新 -> 加载成功 -> 结束刷新) -> write back to database
-        if (!networkLock) {
+        // 内存中无数据，请求数据并缓存
+        if (!((MainActivity)getActivity()).getDataKeeper().usersCached) {
 
             // database service
             databaseHelper = DatabaseHelper.getHelper(getActivity());
@@ -103,6 +99,15 @@ public class SearchingFragment extends Fragment {
             // 开始刷新 -> 加载成功 -> 结束刷新
             refresh.setRefreshing(true);
             requestAndRender();
+
+        }
+        // 内存中有数据，直接用
+        else {
+
+            dataList.clear();
+            dataList.addAll(((MainActivity)getActivity()).getDataKeeper().usersList);
+            adapter.notifyDataSetChanged();
+
         }
 
         return rootView;
@@ -124,11 +129,17 @@ public class SearchingFragment extends Fragment {
                     refresh.setRefreshing(false);
                     return;
                 }
+                Toast.makeText(getActivity(), "user Request success.", Toast.LENGTH_SHORT).show();
                 dataList.clear();
                 dataList.addAll(response.body().data);
                 adapter.notifyDataSetChanged();
                 refresh.setRefreshing(false);
-                networkLock = true;
+//                networkLock = true;
+
+                // 缓存至内存
+                ((MainActivity)getActivity()).getDataKeeper().usersList.clear();
+                ((MainActivity)getActivity()).getDataKeeper().usersList.addAll(response.body().data);
+                ((MainActivity)getActivity()).getDataKeeper().usersCached = true;
 
                 // write back to database
                 try {

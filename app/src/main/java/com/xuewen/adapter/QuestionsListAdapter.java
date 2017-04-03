@@ -3,13 +3,10 @@ package com.xuewen.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.support.v4.util.LruCache;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewParent;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -30,14 +27,14 @@ import java.util.List;
  * Created by ym on 16-11-22.
  */
 
-public class QRListAdapter extends BaseAdapter {
+public class QuestionsListAdapter extends BaseAdapter {
 
     private List<QRBean> list;
     private Context context;
 
     LruCache<String, Bitmap> mCaches;
 
-    public QRListAdapter(List<QRBean> list, Context context) {
+    public QuestionsListAdapter(List<QRBean> list, Context context) {
         this.list = list;
         this.context = context;
 
@@ -87,11 +84,11 @@ public class QRListAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View view;
-        QRListAdapter.ViewHolder viewHolder;
+        QuestionsListAdapter.ViewHolder viewHolder;
 
         if (convertView == null) {
             view = LayoutInflater.from(context).inflate(R.layout.qr_list_item, null);
-            viewHolder = new QRListAdapter.ViewHolder();
+            viewHolder = new QuestionsListAdapter.ViewHolder();
 
             viewHolder.description = (TextView)view.findViewById(R.id.description);
             viewHolder.answerer_description = (TextView)view.findViewById(R.id.answerer_description);
@@ -106,7 +103,7 @@ public class QRListAdapter extends BaseAdapter {
         }
         else {
             view = convertView;
-            viewHolder = (QRListAdapter.ViewHolder) convertView.getTag();
+            viewHolder = (QuestionsListAdapter.ViewHolder) convertView.getTag();
         }
 
         viewHolder.description.setText(list.get(position).description);

@@ -11,14 +11,13 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.xuewen.adapter.UserListAdapter;
+import com.xuewen.adapter.UsersListAdapter;
 import com.xuewen.bean.UUidFARBean;
 import com.xuewen.networkservice.ApiService;
 import com.xuewen.networkservice.UUidFARResult;
 import com.xuewen.utility.CurrentUser;
 import com.xuewen.utility.ToastMsg;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +34,7 @@ import retrofit2.Response;
 public class SearchForUserActivity extends AppCompatActivity {
 
     private List<UUidFARBean> resultList = new ArrayList<>();
-    private UserListAdapter resultAdapter;
+    private UsersListAdapter resultAdapter;
 
     @BindView(R.id.searchView)
     SearchView searchView;
@@ -60,7 +59,7 @@ public class SearchForUserActivity extends AppCompatActivity {
         });
 
         // 结果列表
-        resultAdapter = new UserListAdapter(resultList, SearchForUserActivity.this);
+        resultAdapter = new UsersListAdapter(resultList, SearchForUserActivity.this);
         resultListView.setAdapter(resultAdapter);
         resultListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

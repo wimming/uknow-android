@@ -1,40 +1,28 @@
 package com.xuewen.xuewen;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.util.ArrayMap;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
-import android.text.Layout;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.xuewen.adapter.QRListAdapter;
+import com.xuewen.adapter.QuestionsListAdapter;
 import com.xuewen.bean.QRBean;
 import com.xuewen.networkservice.ApiService;
 import com.xuewen.networkservice.QRResult;
 import com.xuewen.utility.ToastMsg;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -49,7 +37,7 @@ import retrofit2.Response;
 public class SearchActivity extends AppCompatActivity {
 
     private List<QRBean> resultList = new ArrayList<>();
-    private QRListAdapter resultAdapter;
+    private QuestionsListAdapter resultAdapter;
 
     @BindView(R.id.searchView)
     SearchView searchView;
@@ -118,7 +106,7 @@ public class SearchActivity extends AppCompatActivity {
         });
 
         // 结果列表
-        resultAdapter = new QRListAdapter(resultList, SearchActivity.this);
+        resultAdapter = new QuestionsListAdapter(resultList, SearchActivity.this);
         resultListView.setAdapter(resultAdapter);
         resultListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

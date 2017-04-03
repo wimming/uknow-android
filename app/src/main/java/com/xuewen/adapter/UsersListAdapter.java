@@ -31,12 +31,12 @@ import retrofit2.Response;
 /**
  * Created by Administrator on 2016/11/12.
  */
-public class UserListAdapter extends BaseAdapter{
+public class UsersListAdapter extends BaseAdapter{
 
     private List<UUidFARBean> list;
     private Context context;
 
-    public UserListAdapter(List<UUidFARBean> list, Context context) {
+    public UsersListAdapter(List<UUidFARBean> list, Context context) {
         this.list = list;
         this.context = context;
     }

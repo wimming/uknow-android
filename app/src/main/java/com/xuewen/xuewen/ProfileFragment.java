@@ -52,7 +52,7 @@ public class ProfileFragment extends Fragment {
 
     private UUidBean data;
     private DatabaseHelper databaseHelper;
-    private boolean networkLock = false;
+//    private boolean networkLock = false;
 
     @BindView(R.id.avatarUrl) ImageView avatarUrl;
     @BindView(R.id.followedNum) TextView followedNum;
@@ -100,7 +100,8 @@ public class ProfileFragment extends Fragment {
         });
 
         // database service -> network service(不可见、开始刷新 -> 加载成功 -> 可见、结束刷新) -> write back to database
-        if (!networkLock) {
+        // 内存中无数据，请求数据并缓存
+        if (!((MainActivity)getActivity()).getDataKeeper().profileCached) {
 
             // database service
             databaseHelper = DatabaseHelper.getHelper(getActivity());
@@ -121,51 +122,63 @@ public class ProfileFragment extends Fragment {
             // network service
             // 不可见、开始刷新 -> 加载成功 -> 可见、结束刷新
             appbar.setVisibility(View.GONE);
+            requestAndRender();
 //            refresh.setRefreshing(true);
 
-            ApiService apiService = ApiService.retrofit.create(ApiService.class);
-            Call<UUidResult> call = apiService.requestUUid(CurrentUser.userId);
-
-            call.enqueue(new Callback<UUidResult>() {
-                @Override
-                public void onResponse(Call<UUidResult> call, Response<UUidResult> response) {
-                    if (!response.isSuccessful()) {
-                        Toast.makeText(getActivity(), ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
-                        return;
-                    }
-                    if (response.body().status != 200) {
-                        Toast.makeText(getActivity(), response.body().errmsg, Toast.LENGTH_LONG).show();
-                        return;
-                    }
-                    renderView(response.body().data);
-
-                    appbar.setVisibility(View.VISIBLE);
-//                    refresh.setRefreshing(false);
-
-                    data = response.body().data;
-                    networkLock = true;
-
-                    // write back to database
-                    try {
-                        databaseHelper.getUUidBeanDao().createOrUpdate(response.body().data);
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-
-                @Override
-                public void onFailure(Call<UUidResult> call, Throwable t) {
-                    Toast.makeText(getActivity(), ToastMsg.NETWORK_ERROR + " : " + t.getMessage(), Toast.LENGTH_LONG).show();
-                }
-            });
-
         }
+        // 内存中有数据，直接用
         else {
+
+            data = ((MainActivity)getActivity()).getDataKeeper().profile;
             renderView(data);
+
         }
 
         return rootView;
+    }
+
+    private void requestAndRender() {
+        ApiService apiService = ApiService.retrofit.create(ApiService.class);
+        Call<UUidResult> call = apiService.requestUUid(CurrentUser.userId);
+
+        call.enqueue(new Callback<UUidResult>() {
+            @Override
+            public void onResponse(Call<UUidResult> call, Response<UUidResult> response) {
+                if (!response.isSuccessful()) {
+                    Toast.makeText(getActivity(), ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
+                    return;
+                }
+                if (response.body().status != 200) {
+                    Toast.makeText(getActivity(), response.body().errmsg, Toast.LENGTH_LONG).show();
+                    return;
+                }
+                Toast.makeText(getActivity(), "prof Request success.", Toast.LENGTH_SHORT).show();
+                renderView(response.body().data);
+
+                appbar.setVisibility(View.VISIBLE);
+//                    refresh.setRefreshing(false);
+
+                data = response.body().data;
+//                    networkLock = true;
+
+                // 缓存至内存
+                ((MainActivity)getActivity()).getDataKeeper().profile = response.body().data;
+                ((MainActivity)getActivity()).getDataKeeper().profileCached = true;
+
+                // write back to database
+                try {
+                    databaseHelper.getUUidBeanDao().createOrUpdate(response.body().data);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<UUidResult> call, Throwable t) {
+                Toast.makeText(getActivity(), ToastMsg.NETWORK_ERROR + " : " + t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     private void renderView(UUidBean data) {

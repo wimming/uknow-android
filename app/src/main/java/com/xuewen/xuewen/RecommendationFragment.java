@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,13 +11,10 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.listener.PauseOnScrollListener;
-import com.xuewen.adapter.QRListAdapter;
+import com.xuewen.adapter.QuestionsListAdapter;
 import com.xuewen.bean.QRBean;
 import com.xuewen.databaseservice.DatabaseHelper;
 import com.xuewen.networkservice.ApiService;
-import com.xuewen.networkservice.QQidResult;
 import com.xuewen.networkservice.QRResult;
 import com.xuewen.utility.ToastMsg;
 
@@ -38,10 +34,10 @@ import retrofit2.Response;
 
 public class RecommendationFragment extends Fragment {
 
-    private List<QRBean> list = new ArrayList<>();
+    private List<QRBean> dataList = new ArrayList<>();
     private DatabaseHelper databaseHelper;
-    private boolean networkLock = false;
-    private QRListAdapter adapter;
+//    private boolean networkLock = false;
+    private QuestionsListAdapter adapter;
 
     @BindView(R.id.refresh) SwipeRefreshLayout refresh;
     @BindView(R.id.searchBtn) View searchBtn;
@@ -63,7 +59,7 @@ public class RecommendationFragment extends Fragment {
         });
 
         final ListView listView = (ListView) rootView.findViewById(R.id.listView);
-        adapter = new QRListAdapter(list, getActivity());
+        adapter = new QuestionsListAdapter(dataList, getActivity());
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -84,14 +80,15 @@ public class RecommendationFragment extends Fragment {
         });
 
         // database service -> network service(开始刷新 -> 加载成功 -> 结束刷新) -> write back to database
-        if (!networkLock) {
+        // 内存中无数据，请求数据并缓存
+        if (!((MainActivity)getActivity()).getDataKeeper().questionsCached) {
 
             // database service
             databaseHelper = DatabaseHelper.getHelper(getActivity());
             try {
                 List<QRBean> records = databaseHelper.getQRBeanDao().queryForAll();
-                list.clear();
-                list.addAll(records);
+                dataList.clear();
+                dataList.addAll(records);
                 adapter.notifyDataSetChanged();
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -101,6 +98,15 @@ public class RecommendationFragment extends Fragment {
             // 开始刷新 -> 加载成功 -> 结束刷新
             refresh.setRefreshing(true);
             requestAndRender();
+
+        }
+        // 内存中有数据，直接用
+        else {
+
+            dataList.clear();
+            dataList.addAll(((MainActivity)getActivity()).getDataKeeper().questionsList);
+            adapter.notifyDataSetChanged();
+
         }
 
         return rootView;
@@ -122,11 +128,16 @@ public class RecommendationFragment extends Fragment {
                     refresh.setRefreshing(false);
                     return;
                 }
-                list.clear();
-                list.addAll(response.body().data);
+                Toast.makeText(getActivity(), "Ques Request success.", Toast.LENGTH_SHORT).show();
+                dataList.clear();
+                dataList.addAll(response.body().data);
                 adapter.notifyDataSetChanged();
                 refresh.setRefreshing(false);
-                networkLock = true;
+
+                // 缓存至内存
+                ((MainActivity)getActivity()).getDataKeeper().questionsList.clear();
+                ((MainActivity)getActivity()).getDataKeeper().questionsList.addAll(response.body().data);
+                ((MainActivity)getActivity()).getDataKeeper().questionsCached = true;
 
                 // write back to database
                 try {

@@ -18,7 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.xuewen.adapter.QRListAdapter;
+import com.xuewen.adapter.QuestionsListAdapter;
 import com.xuewen.bean.QRBean;
 import com.xuewen.bean.UUidIBean;
 import com.xuewen.networkservice.ApiService;
@@ -258,7 +258,7 @@ public class AskActivity extends AppCompatActivity {
 
         followedAndAnswerSituation.setText(data.followedNum + "人关注, 回答了" + data.ansNum + "个问题");
 
-        final QRListAdapter adapter = new QRListAdapter(data.answers, AskActivity.this);
+        final QuestionsListAdapter adapter = new QuestionsListAdapter(data.answers, AskActivity.this);
         questionListView.setAdapter(adapter);
         questionListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

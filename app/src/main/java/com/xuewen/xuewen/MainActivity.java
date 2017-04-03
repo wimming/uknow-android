@@ -30,10 +30,12 @@ import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.xuewen.bean.QRBean;
 import com.xuewen.bean.UUidBean;
 import com.xuewen.bean.UUidFANDUUidRBean;
+import com.xuewen.bean.UUidFARBean;
 import com.xuewen.networkservice.APITestActivity;
 import com.xuewen.utility.CurrentUser;
 import com.xuewen.utility.ListenHelper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -207,4 +209,18 @@ public class MainActivity extends AppCompatActivity {
             return null;
         }
     }
+
+    private DataKeeper dataKeeper = new DataKeeper();
+    public DataKeeper getDataKeeper() {
+        return dataKeeper;
+    }
+    public class DataKeeper {
+        List<QRBean> questionsList = new ArrayList<>();
+        List<UUidFARBean> usersList = new ArrayList<>();
+        UUidBean profile;
+        boolean questionsCached = false;
+        boolean usersCached = false;
+        boolean profileCached = false;
+    }
+
 }
