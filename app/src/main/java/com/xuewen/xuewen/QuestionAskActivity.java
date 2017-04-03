@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,8 +41,6 @@ import retrofit2.Response;
 
 public class QuestionAskActivity extends AppCompatActivity {
 
-    private int id;
-
     @BindView(R.id.editText)
     EditText editText;
     @BindView((R.id.textView))
@@ -65,15 +64,15 @@ public class QuestionAskActivity extends AppCompatActivity {
     ListView questionListView;
     @BindView(R.id.title)
     TextView title;
+
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-
     @BindView(R.id.refresh)
     SwipeRefreshLayout refresh;
     @BindView(R.id.main_content)
     CoordinatorLayout main_content;
 
-
+    private int id;
 
     private ApiService apiService;
 
@@ -81,13 +80,9 @@ public class QuestionAskActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ask);
-        //注册
         ButterKnife.bind(this);
+
         apiService = ApiService.retrofit.create(ApiService.class);
-
-        ImageLoader.getInstance().displayImage("drawable://" +  R.drawable.avatar,avatarUrl, GlobalUtil.getInstance().circleBitmapOptions);
-
-
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             questionListView.setNestedScrollingEnabled(true);
@@ -105,23 +100,10 @@ public class QuestionAskActivity extends AppCompatActivity {
 //            }
 //        });
 
-
-        refresh.setEnabled(false); //不做刷新
-        refresh.setRefreshing(true);
+//        refresh.setEnabled(false);  // 不做刷新
         main_content.setVisibility(View.GONE);
 
-
-
         editText.addTextChangedListener(new MyTextWatcher(this, 60, textView));
-
-        sendAskedRequest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                sendSendAskedRequestService(CurrentUser.userId, editText.getText().toString(), id);
-                Toast.makeText(QuestionAskActivity.this, "提问成功", Toast.LENGTH_SHORT).show();
-            }
-        });
 
         toolbar.setNavigationIcon(R.drawable.back);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -131,20 +113,17 @@ public class QuestionAskActivity extends AppCompatActivity {
             }
         });
 
-
-        id = getIntent().getIntExtra("id", -1);
-        if (id == -1) {
-            Toast.makeText(QuestionAskActivity.this, ToastMsg.APPLICATION_ERROR, Toast.LENGTH_LONG).show();
-            finish();
-            return;
-        }
-
-        requestData(id);
+        sendAskedRequest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendSendAskedRequestService(CurrentUser.userId, editText.getText().toString(), id);
+                Toast.makeText(QuestionAskActivity.this, "提问成功", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         followed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 //简单判断当前是否为关注
                 if (followed.getText().equals("+关注")) {
                     renderFollowedButton();
@@ -169,48 +148,27 @@ public class QuestionAskActivity extends AppCompatActivity {
 
                         @Override
                         public void onError(String errorMessage) {
-                           renderFollowedButton();
+                            renderFollowedButton();
                         }
                     });
                 }
             }
         });
 
-    }
-
-
-    private void sendSendAskedRequestService(int asker_id, String  description, int answerer_id) {
-
-        if (Validate.isExistEmpty(editText)) {
-            ToastMsg.showTips(QuestionAskActivity.this, ToastMsg.ARG_INVALID_EMPTY);
+        // retrieve data
+        id = getIntent().getIntExtra("id", -1);
+        if (id == -1) {
+            Toast.makeText(QuestionAskActivity.this, ToastMsg.APPLICATION_ERROR, Toast.LENGTH_LONG).show();
+            finish();
             return;
         }
 
-        Call<QResult> call = apiService.requestQ(asker_id, description, answerer_id); //7
-        call.enqueue(new Callback<QResult>() {
-            @Override
-            public void onResponse(Call<QResult> call, Response<QResult> response) {
-                if (!response.isSuccessful()) {
-                    Toast.makeText(QuestionAskActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
-                    return;
-                }
-                if (response.body().status != 200) {
-                    Toast.makeText(QuestionAskActivity.this, response.body().errmsg, Toast.LENGTH_LONG).show();
-                    return;
-                }
-                //Toast.makeText(QuestionAskActivity.this, response.body().toString(), Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(QuestionAskActivity.this, QuestionAskSuccessActivity.class);
-                startActivity(intent);
-                finish();
-            }
-            @Override
-            public void onFailure(Call<QResult> call, Throwable t) {
-                Toast.makeText(QuestionAskActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
+        requestData(id);
+
     }
 
     private void requestData(int uid) {
+        refresh.setRefreshing(true);
         Call<UUidIResult> call = apiService.requestUUidI(uid, CurrentUser.userId);
         call.enqueue(new Callback<UUidIResult>() {
             @Override
@@ -218,13 +176,13 @@ public class QuestionAskActivity extends AppCompatActivity {
                 if (!response.isSuccessful()) {
                     Toast.makeText(QuestionAskActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
                     refresh.setRefreshing(false);
-                    main_content.setVisibility(View.VISIBLE);
+//                    main_content.setVisibility(View.VISIBLE);
                     return;
                 }
                 if (response.body().status != 200) {
                     Toast.makeText(QuestionAskActivity.this, response.body().errmsg, Toast.LENGTH_LONG).show();
                     refresh.setRefreshing(false);
-                    main_content.setVisibility(View.VISIBLE);
+//                    main_content.setVisibility(View.VISIBLE);
                     return;
                 }
 
@@ -237,7 +195,7 @@ public class QuestionAskActivity extends AppCompatActivity {
             public void onFailure(Call<UUidIResult> call, Throwable t) {
                 Toast.makeText(QuestionAskActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_LONG).show();
                 refresh.setRefreshing(false);
-                main_content.setVisibility(View.VISIBLE);
+//                main_content.setVisibility(View.VISIBLE);
             }
         });
     }
@@ -270,6 +228,36 @@ public class QuestionAskActivity extends AppCompatActivity {
         });
     }
 
+    private void sendSendAskedRequestService(int asker_id, String  description, int answerer_id) {
+
+        if (Validate.isExistEmpty(editText)) {
+            ToastMsg.showTips(QuestionAskActivity.this, ToastMsg.ARG_INVALID_EMPTY);
+            return;
+        }
+
+        Call<QResult> call = apiService.requestQ(asker_id, description, answerer_id); //7
+        call.enqueue(new Callback<QResult>() {
+            @Override
+            public void onResponse(Call<QResult> call, Response<QResult> response) {
+                if (!response.isSuccessful()) {
+                    Toast.makeText(QuestionAskActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
+                    return;
+                }
+                if (response.body().status != 200) {
+                    Toast.makeText(QuestionAskActivity.this, response.body().errmsg, Toast.LENGTH_LONG).show();
+                    return;
+                }
+                //Toast.makeText(QuestionAskActivity.this, response.body().toString(), Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(QuestionAskActivity.this, QuestionAskSuccessActivity.class);
+                startActivity(intent);
+                finish();
+            }
+            @Override
+            public void onFailure(Call<QResult> call, Throwable t) {
+                Toast.makeText(QuestionAskActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
 
     private void sendFollowsService(int uid, int followed_uid, final ApiServiceRequestResultHandler apiServiceRequestResultHandler) {
 
@@ -316,9 +304,6 @@ public class QuestionAskActivity extends AppCompatActivity {
             }
         });
     }
-
-
-
 
 
 

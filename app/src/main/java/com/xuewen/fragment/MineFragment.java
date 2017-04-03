@@ -132,6 +132,7 @@ public class MineFragment extends Fragment {
     }
 
     private void requestAndRender() {
+//        refresh.setRefreshing(true);
         ApiService apiService = ApiService.retrofit.create(ApiService.class);
         Call<UUidResult> call = apiService.requestUUid(CurrentUser.userId);
 
@@ -150,7 +151,6 @@ public class MineFragment extends Fragment {
                 renderView(response.body().data);
 
                 appbar.setVisibility(View.VISIBLE);
-//                    refresh.setRefreshing(false);
 
                 data = response.body().data;
 //                    networkLock = true;
@@ -176,7 +176,6 @@ public class MineFragment extends Fragment {
     }
 
     private void renderView(UUidBean data) {
-
         ImageLoader.getInstance().displayImage(GlobalUtil.getInstance().baseUrl+"static/avatar/"+data.avatarUrl, avatarUrl, GlobalUtil.getInstance().circleBitmapOptions);
         username.setText(data.username);
         description.setText(data.description);

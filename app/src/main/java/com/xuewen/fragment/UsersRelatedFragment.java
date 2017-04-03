@@ -101,7 +101,6 @@ public class UsersRelatedFragment extends Fragment {
 
             // network service
             // 开始刷新 -> 加载成功 -> 结束刷新
-            refresh.setRefreshing(true);
             requestAndRender();
 
         }
@@ -118,6 +117,7 @@ public class UsersRelatedFragment extends Fragment {
     }
 
     private void requestAndRender() {
+        refresh.setRefreshing(true);
         ApiService apiService = ApiService.retrofit.create(ApiService.class);
         Call<UUidFARResult> call = apiService.requestUUidFAR(CurrentUser.userId);
         call.enqueue(new Callback<UUidFARResult>() {

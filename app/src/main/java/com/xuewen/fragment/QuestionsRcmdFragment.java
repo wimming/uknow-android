@@ -100,7 +100,6 @@ public class QuestionsRcmdFragment extends Fragment {
 
             // network service
             // 开始刷新 -> 加载成功 -> 结束刷新
-            refresh.setRefreshing(true);
             requestAndRender();
 
         }
@@ -117,6 +116,7 @@ public class QuestionsRcmdFragment extends Fragment {
     }
 
     private void requestAndRender() {
+        refresh.setRefreshing(true);
         ApiService apiService = ApiService.retrofit.create(ApiService.class);
         Call<QRResult> call = apiService.requestQR();
         call.enqueue(new Callback<QRResult>() {

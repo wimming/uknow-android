@@ -49,9 +49,6 @@ import retrofit2.Retrofit;
 
 public class QuestionDetailActivity extends AppCompatActivity {
 
-    private int id;
-    private QQidBean data;
-
     @BindView(R.id.asker_avatarUrl) ImageView asker_avatarUrl;
     @BindView(R.id.asker_username) TextView asker_username;
     @BindView(R.id.askDate) TextView askDate;
@@ -61,22 +58,25 @@ public class QuestionDetailActivity extends AppCompatActivity {
     @BindView(R.id.answerer_status) TextView answerer_status;
     @BindView(R.id.answerer_description) TextView answerer_description;
     @BindView(R.id.review) TextView review;
+
     @BindView(R.id.audioPlayerView) AudioPlayerView audioPlayerView;
 
+    @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.refresh) SwipeRefreshLayout refresh;
     @BindView(R.id.visibilityController) LinearLayout visibilityController;
     @BindView(R.id.commentLayout) LinearLayout commentLayout;
     @BindView(R.id.good) ImageView good;
     @BindView(R.id.bad) ImageView bad;
 
+
+    private int id;
+    private QQidBean data;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question_detail);
-
         ButterKnife.bind(this);
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         toolbar.setNavigationIcon(R.drawable.back);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -101,6 +101,11 @@ public class QuestionDetailActivity extends AppCompatActivity {
             }
         });
 
+        // 不可见、开始刷新 -> 加载成功 -> 可见、结束刷新
+        refresh.setEnabled(false);  // 不做刷新
+        visibilityController.setVisibility(View.GONE);
+
+        // retrieve data
         id = getIntent().getIntExtra("id", -1);
         if (id == -1) {
             Toast.makeText(QuestionDetailActivity.this, ToastMsg.APPLICATION_ERROR, Toast.LENGTH_LONG).show();
@@ -108,36 +113,7 @@ public class QuestionDetailActivity extends AppCompatActivity {
             return;
         }
 
-        // 不可见、开始刷新 -> 加载成功 -> 可见、结束刷新
-        visibilityController.setVisibility(View.GONE);
-        refresh.setRefreshing(true);
-
-        ApiService apiService = ApiService.retrofit.create(ApiService.class);
-        Call<QQidResult> call = apiService.requestQQid(id, CurrentUser.userId);
-
-        call.enqueue(new Callback<QQidResult>() {
-            @Override
-            public void onResponse(Call<QQidResult> call, Response<QQidResult> response) {
-                if (!response.isSuccessful()) {
-                    Toast.makeText(QuestionDetailActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
-                    return;
-                }
-                if (response.body().status != 200) {
-                    Toast.makeText(QuestionDetailActivity.this, response.body().errmsg, Toast.LENGTH_LONG).show();
-                    return;
-                }
-                renderView(response.body().data);
-                data = response.body().data;
-
-                visibilityController.setVisibility(View.VISIBLE);
-                refresh.setRefreshing(false);
-            }
-
-            @Override
-            public void onFailure(Call<QQidResult> call, Throwable t) {
-                Toast.makeText(QuestionDetailActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
+        requestData(id);
 
     }
 
@@ -152,8 +128,41 @@ public class QuestionDetailActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-    private void renderView(final QQidBean data) {
+    private void requestData(int id) {
+        refresh.setRefreshing(true);
+        ApiService apiService = ApiService.retrofit.create(ApiService.class);
+        Call<QQidResult> call = apiService.requestQQid(id, CurrentUser.userId);
 
+        call.enqueue(new Callback<QQidResult>() {
+            @Override
+            public void onResponse(Call<QQidResult> call, Response<QQidResult> response) {
+                if (!response.isSuccessful()) {
+                    Toast.makeText(QuestionDetailActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
+                    refresh.setRefreshing(false);
+                    return;
+                }
+                if (response.body().status != 200) {
+                    Toast.makeText(QuestionDetailActivity.this, response.body().errmsg, Toast.LENGTH_LONG).show();
+                    refresh.setRefreshing(false);
+                    return;
+                }
+                renderView(response.body().data);
+                data = response.body().data;
+
+                visibilityController.setVisibility(View.VISIBLE);
+                refresh.setRefreshing(false);
+            }
+
+            @Override
+            public void onFailure(Call<QQidResult> call, Throwable t) {
+                Toast.makeText(QuestionDetailActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_LONG).show();
+                refresh.setRefreshing(false);
+            }
+        });
+
+    }
+
+    private void renderView(final QQidBean data) {
         ImageLoader.getInstance().displayImage(GlobalUtil.getInstance().baseAvatarUrl+data.asker_avatarUrl, asker_avatarUrl, GlobalUtil.getInstance().circleBitmapOptions);
         asker_username.setText(data.asker_username);
         askDate.setText(data.askDate);
