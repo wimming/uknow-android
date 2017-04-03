@@ -123,20 +123,6 @@
                 android:text="爱好产品策划, 曾在腾讯实习，略懂开发"
                 android:id="@+id/answerer_description" />
 
-            <Button
-                android:id="@+id/listen"
-                android:text='97"'
-                android:textColor="@color/white_color"
-                android:gravity="right|center"
-                android:padding="@dimen/base_margin"
-                android:scaleType="centerCrop"
-                android:background="@drawable/listen_view"
-                android:layout_gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginBottom="10dp"/>
             <com.xuewen.customview.AudioPlayerView
                 android:id="@+id/audioPlayerView"
                 android:layout_width="match_parent"

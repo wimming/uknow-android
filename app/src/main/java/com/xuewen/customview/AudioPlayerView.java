@@ -1,5 +1,6 @@
 package com.xuewen.customview;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -28,6 +29,10 @@ public class AudioPlayerView extends LinearLayout {
     private String url;
     private MediaPlayer mediaPlayer = new MediaPlayer();
     private boolean firstLock = true;
+    private boolean userCtrling = false;
+    private ProgressDialog progressDialog;
+
+    private OnCompleteListener onCompleteListener;
 
     Handler progressHandler = new Handler();
     Runnable progressRunnable = new Runnable() {
@@ -35,9 +40,11 @@ public class AudioPlayerView extends LinearLayout {
         public void run() {
             int position = mediaPlayer.getCurrentPosition();
             int duration = mediaPlayer.getDuration();
-            seekBar.setProgress(seekBar.getMax() * position / duration);
+            if (!userCtrling) {
+                seekBar.setProgress(seekBar.getMax() * position / duration);
+            }
             listenButton.setText((duration-position)/1000+"''");
-            progressHandler.postDelayed(progressRunnable, 100);
+            progressHandler.postDelayed(progressRunnable, 50);
         }
     };
 
@@ -69,8 +76,11 @@ public class AudioPlayerView extends LinearLayout {
         progressHandler.removeCallbacks(progressRunnable);
         mediaPlayer.release();
     }
+    public void setOnCompleteListener(OnCompleteListener onCompleteListener) {
+        this.onCompleteListener = onCompleteListener;
+    }
 
-    private void init(Context context) {
+    private void init(final Context context) {
         this.context = context;
         LayoutInflater.from(context).inflate(R.layout.view_audio_player, this);
         seekBar = (SeekBar) findViewById(R.id.seekBar);
@@ -85,6 +95,7 @@ public class AudioPlayerView extends LinearLayout {
                         mediaPlayer.setDataSource(url);
                         mediaPlayer.prepareAsync(); // might take long! (for buffering, etc)
                         firstLock = false;
+                        progressDialog = ProgressDialog.show(context, "", "");
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -109,6 +120,9 @@ public class AudioPlayerView extends LinearLayout {
             @Override
             public void onCompletion(MediaPlayer mp) {
                 Log.e("TAG", "onCompletion is called!");
+                if (onCompleteListener != null) {
+                    onCompleteListener.onComplete();
+                }
             }
         });
         mediaPlayer.setOnErrorListener(new MediaPlayer.OnErrorListener() {
@@ -123,7 +137,9 @@ public class AudioPlayerView extends LinearLayout {
             public void onPrepared(MediaPlayer mediaPlayer) {
                 Log.e("TAG", "onPrepared");
                 mediaPlayer.start();
+                seekBar.setVisibility(VISIBLE);
                 progressHandler.post(progressRunnable);
+                progressDialog.dismiss();
             }
         });
         mediaPlayer.setOnSeekCompleteListener(new MediaPlayer.OnSeekCompleteListener() {
@@ -132,7 +148,6 @@ public class AudioPlayerView extends LinearLayout {
                 Log.e("TAG", "onSeekComplete");
             }
         });
-
 //        mediaPlayer.setOn
         mediaPlayer.setOnInfoListener(new MediaPlayer.OnInfoListener() {
             @Override
@@ -141,6 +156,30 @@ public class AudioPlayerView extends LinearLayout {
                 return false;
             }
         });
+
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                if (b) {
+                    userCtrling = true;
+                }
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                Log.e("TAG", "start tracking . progress "+seekBar.getProgress());
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                Log.e("TAG", "stop tracking");
+                userCtrling = false;
+            }
+        });
+    }
+
+    public interface OnCompleteListener {
+        void onComplete();
     }
 
 }

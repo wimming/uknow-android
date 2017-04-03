@@ -52,9 +52,6 @@ public class QuestionDetailActivity extends AppCompatActivity {
     private int id;
     private QQidBean data;
 
-    private MediaPlayer mediaPlayer = new MediaPlayer();
-    private String downloadedFilePath;
-
     @BindView(R.id.asker_avatarUrl) ImageView asker_avatarUrl;
     @BindView(R.id.asker_username) TextView asker_username;
     @BindView(R.id.askDate) TextView askDate;
@@ -64,7 +61,6 @@ public class QuestionDetailActivity extends AppCompatActivity {
     @BindView(R.id.answerer_status) TextView answerer_status;
     @BindView(R.id.answerer_description) TextView answerer_description;
     @BindView(R.id.review) TextView review;
-    @BindView(R.id.listen) Button listen;
     @BindView(R.id.audioPlayerView) AudioPlayerView audioPlayerView;
 
     @BindView(R.id.refresh) SwipeRefreshLayout refresh;
@@ -105,15 +101,6 @@ public class QuestionDetailActivity extends AppCompatActivity {
             }
         });
 
-        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mediaPlayer) {
-                if (data.commented == 0) {
-                    commentLayout.setVisibility(View.VISIBLE);
-                }
-            }
-        });
-
         id = getIntent().getIntExtra("id", -1);
         if (id == -1) {
             Toast.makeText(QuestionDetailActivity.this, ToastMsg.APPLICATION_ERROR, Toast.LENGTH_LONG).show();
@@ -142,9 +129,6 @@ public class QuestionDetailActivity extends AppCompatActivity {
                 renderView(response.body().data);
                 data = response.body().data;
 
-                listen.setOnClickListener(listenClickListener);
-                audioPlayerView.prepare(GlobalUtil.getInstance().baseAudioUrl + data.audioUrl, data.audioSeconds);
-
                 visibilityController.setVisibility(View.VISIBLE);
                 refresh.setRefreshing(false);
             }
@@ -159,20 +143,16 @@ public class QuestionDetailActivity extends AppCompatActivity {
 
     @Override
     protected void onPause() {
-        if (mediaPlayer.isPlaying()) {
-            mediaPlayer.pause();
-        }
         audioPlayerView.release();
         super.onPause();
     }
 
     @Override
     protected void onDestroy() {
-        mediaPlayer.release();
         super.onDestroy();
     }
 
-    private void renderView(QQidBean data) {
+    private void renderView(final QQidBean data) {
 
         ImageLoader.getInstance().displayImage(GlobalUtil.getInstance().baseAvatarUrl+data.asker_avatarUrl, asker_avatarUrl, GlobalUtil.getInstance().circleBitmapOptions);
         asker_username.setText(data.asker_username);
@@ -183,80 +163,17 @@ public class QuestionDetailActivity extends AppCompatActivity {
         answerer_status.setText(data.answerer_status);
         answerer_description.setText(data.answerer_description);
         review.setText(data.listeningNum+"人听过，"+data.praiseNum+"人觉得好");
-        listen.setText(data.audioSeconds+"''");
 
-    }
-
-    private View.OnClickListener listenClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-
-            String url = GlobalUtil.getInstance().baseAudioUrl + data.audioUrl; // your URL here
-//            MediaPlayer mediaPlayer = new MediaPlayer();
-            mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-            try {
-                mediaPlayer.setDataSource(url);
-                mediaPlayer.prepare(); // might take long! (for buffering, etc)
-                mediaPlayer.start();
-            } catch (IOException e) {
-                e.printStackTrace();
+        audioPlayerView.prepare(GlobalUtil.getInstance().baseAudioUrl + data.audioUrl, data.audioSeconds);
+        audioPlayerView.setOnCompleteListener(new AudioPlayerView.OnCompleteListener() {
+            @Override
+            public void onComplete() {
+                if (data.commented == 0) {
+                    commentLayout.setVisibility(View.VISIBLE);
+                }
             }
-
-//            if (downloadedFilePath == null || downloadedFilePath.equals("")) {
-//
-//                // 显示progress -> 下载完成 -> 收起progress
-//                final ProgressDialog dialog = ProgressDialog.show(QuestionDetailActivity.this, "", "语音文件下载中...");
-//
-//                final String filePath = GlobalUtil.getInstance().baseAudioUrl + data.audioUrl;
-//
-//                FileService fileService = FileService.retrofit.create(FileService.class);
-//                Call<ResponseBody> fileCall = fileService.downloadFile(filePath);
-//
-//                fileCall.enqueue(new Callback<ResponseBody>() {
-//                    @Override
-//                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-//                        dialog.dismiss();
-//                        if (!response.isSuccessful()) {
-//                            Toast.makeText(QuestionDetailActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
-//                            return;
-//                        }
-//
-//                        boolean writtenToDisk = FileWriter.getInstance().writeResponseBodyToDisk(response.body(), getExternalFilesDir(null) + "", data.id + ".wav");
-//                        if (!writtenToDisk) {
-//                            Toast.makeText(QuestionDetailActivity.this, ToastMsg.FILE_OPERATION_ERROR, Toast.LENGTH_LONG).show();
-//                            return;
-//                        }
-//
-//                        downloadedFilePath = filePath;
-//
-//                        if (!mediaPlayer.isPlaying()) {
-//                            try {
-//                                mediaPlayer.setDataSource(downloadedFilePath);
-//                                mediaPlayer.prepare();
-//                                mediaPlayer.start();
-//                            } catch (IOException e) {
-//                                e.printStackTrace();
-//                                Toast.makeText(QuestionDetailActivity.this, ToastMsg.FILE_OPERATION_ERROR, Toast.LENGTH_LONG).show();
-//                            }
-//                        }
-//
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Call<ResponseBody> call, Throwable t) {
-//                        Toast.makeText(QuestionDetailActivity.this, ToastMsg.NETWORK_ERROR + " : " + t.getMessage(), Toast.LENGTH_LONG).show();
-//                        dialog.dismiss();
-//                    }
-//                });
-//
-//            }
-//            else {
-//                if (!mediaPlayer.isPlaying()) {
-//                    mediaPlayer.start();
-//                }
-//            }
-        }
-    };
+        });
+    }
 
     private void commentRequest(int praise) {
 
