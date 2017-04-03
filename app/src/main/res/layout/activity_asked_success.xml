@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
-    tools:context="com.xuewen.xuewen.AskedSuccessActivity">
+    tools:context="com.xuewen.xuewen.QuestionAskSuccessActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"

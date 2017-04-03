@@ -1,8 +1,6 @@
 package com.xuewen.fragment;
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,10 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
-import com.xuewen.adapter.AboutMeQuestionListAskAdapter;
+import com.xuewen.adapter.MineAnswersAdapter;
 import com.xuewen.bean.UUidBean;
+import com.xuewen.xuewen.QuestionAnswerActivity;
 import com.xuewen.xuewen.QuestionDetailActivity;
 import com.xuewen.xuewen.R;
 
@@ -23,36 +21,38 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class AboutMeFragmentTwo extends Fragment {
+public class MineSubFragmentOne extends Fragment {
 
-    public List<UUidBean.Asked> dataList = new ArrayList<>();
+    public List<UUidBean.Answer> dataList = new ArrayList<>();
 
-    public AboutMeQuestionListAskAdapter dataListAdapter;
+    public MineAnswersAdapter dataListAdapter;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_about_me_fragment_two, container, false);
-        ListView dataListView = (ListView) rootView.findViewById(R.id.aboutMe_ask_list);
+        View rootView = inflater.inflate(R.layout.fragment_about_me_fragment_one, container, false);
+        ListView dataListView = (ListView) rootView.findViewById(R.id.aboutMe_answer_list);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             dataListView.setNestedScrollingEnabled(true);
         }
 
 
-        dataListAdapter = new AboutMeQuestionListAskAdapter(dataList, getActivity());
+        dataListAdapter = new MineAnswersAdapter(dataList, getActivity());
 
         dataListView.setAdapter(dataListAdapter);
         dataListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (((UUidBean.Asked) parent.getAdapter().getItem(position)).finished) {
-                    Intent intent = new Intent(getActivity(), QuestionDetailActivity.class);
-                    intent.putExtra("id", ((UUidBean.Asked) parent.getAdapter().getItem(position)).id);
+                if (!((UUidBean.Answer) parent.getAdapter().getItem(position)).finished) {
+                    Intent intent = new Intent(getActivity(), QuestionAnswerActivity.class);
+                    intent.putExtra("id", ((UUidBean.Answer) parent.getAdapter().getItem(position)).id);
                     startActivity(intent);
                 }
                 else {
-                    Toast.makeText(getActivity(), "TA还没有回答这个问题哦", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getActivity(), QuestionDetailActivity.class);
+                    intent.putExtra("id", ((UUidBean.Answer) parent.getAdapter().getItem(position)).id);
+                    startActivity(intent);
                 }
             }
         });

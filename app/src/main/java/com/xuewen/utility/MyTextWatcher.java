@@ -6,10 +6,6 @@ import android.text.TextWatcher;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.xuewen.xuewen.AskActivity;
-
-import org.w3c.dom.Text;
-
 /**
  * Created by Administrator on 2016/12/07.
  */

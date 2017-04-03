@@ -38,7 +38,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AskActivity extends AppCompatActivity {
+public class QuestionAskActivity extends AppCompatActivity {
 
     private int id;
 
@@ -119,7 +119,7 @@ public class AskActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 sendSendAskedRequestService(CurrentUser.userId, editText.getText().toString(), id);
-                Toast.makeText(AskActivity.this, "提问成功", Toast.LENGTH_SHORT).show();
+                Toast.makeText(QuestionAskActivity.this, "提问成功", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -134,7 +134,7 @@ public class AskActivity extends AppCompatActivity {
 
         id = getIntent().getIntExtra("id", -1);
         if (id == -1) {
-            Toast.makeText(AskActivity.this, ToastMsg.APPLICATION_ERROR, Toast.LENGTH_LONG).show();
+            Toast.makeText(QuestionAskActivity.this, ToastMsg.APPLICATION_ERROR, Toast.LENGTH_LONG).show();
             finish();
             return;
         }
@@ -182,7 +182,7 @@ public class AskActivity extends AppCompatActivity {
     private void sendSendAskedRequestService(int asker_id, String  description, int answerer_id) {
 
         if (Validate.isExistEmpty(editText)) {
-            ToastMsg.showTips(AskActivity.this, ToastMsg.ARG_INVALID_EMPTY);
+            ToastMsg.showTips(QuestionAskActivity.this, ToastMsg.ARG_INVALID_EMPTY);
             return;
         }
 
@@ -191,21 +191,21 @@ public class AskActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<QResult> call, Response<QResult> response) {
                 if (!response.isSuccessful()) {
-                    Toast.makeText(AskActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
+                    Toast.makeText(QuestionAskActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
                     return;
                 }
                 if (response.body().status != 200) {
-                    Toast.makeText(AskActivity.this, response.body().errmsg, Toast.LENGTH_LONG).show();
+                    Toast.makeText(QuestionAskActivity.this, response.body().errmsg, Toast.LENGTH_LONG).show();
                     return;
                 }
-                //Toast.makeText(AskActivity.this, response.body().toString(), Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(AskActivity.this, AskedSuccessActivity.class);
+                //Toast.makeText(QuestionAskActivity.this, response.body().toString(), Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(QuestionAskActivity.this, QuestionAskSuccessActivity.class);
                 startActivity(intent);
                 finish();
             }
             @Override
             public void onFailure(Call<QResult> call, Throwable t) {
-                Toast.makeText(AskActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(QuestionAskActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -216,13 +216,13 @@ public class AskActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<UUidIResult> call, Response<UUidIResult> response) {
                 if (!response.isSuccessful()) {
-                    Toast.makeText(AskActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
+                    Toast.makeText(QuestionAskActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
                     refresh.setRefreshing(false);
                     main_content.setVisibility(View.VISIBLE);
                     return;
                 }
                 if (response.body().status != 200) {
-                    Toast.makeText(AskActivity.this, response.body().errmsg, Toast.LENGTH_LONG).show();
+                    Toast.makeText(QuestionAskActivity.this, response.body().errmsg, Toast.LENGTH_LONG).show();
                     refresh.setRefreshing(false);
                     main_content.setVisibility(View.VISIBLE);
                     return;
@@ -235,7 +235,7 @@ public class AskActivity extends AppCompatActivity {
             }
             @Override
             public void onFailure(Call<UUidIResult> call, Throwable t) {
-                Toast.makeText(AskActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(QuestionAskActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_LONG).show();
                 refresh.setRefreshing(false);
                 main_content.setVisibility(View.VISIBLE);
             }
@@ -258,12 +258,12 @@ public class AskActivity extends AppCompatActivity {
 
         followedAndAnswerSituation.setText(data.followedNum + "人关注, 回答了" + data.ansNum + "个问题");
 
-        final QuestionsListAdapter adapter = new QuestionsListAdapter(data.answers, AskActivity.this);
+        final QuestionsListAdapter adapter = new QuestionsListAdapter(data.answers, QuestionAskActivity.this);
         questionListView.setAdapter(adapter);
         questionListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(AskActivity.this, QuestionDetailActivity.class);
+                Intent intent = new Intent(QuestionAskActivity.this, QuestionDetailActivity.class);
                 intent.putExtra("id", ((QRBean) parent.getAdapter().getItem(position)).id);
                 startActivity(intent);
             }

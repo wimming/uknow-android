@@ -64,7 +64,7 @@ public class UsersSearchActivity extends AppCompatActivity {
         resultListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(UsersSearchActivity.this, AskActivity.class);
+                Intent intent = new Intent(UsersSearchActivity.this, QuestionAskActivity.class);
                 intent.putExtra("id", ((UUidFARBean) parent.getAdapter().getItem(position)).id);
                 startActivity(intent);
 

@@ -183,10 +183,10 @@ public class MineFragment extends Fragment {
         status.setText(data.status);
         followedNum.setText(data.followedNum+"人关注");
 
-        BaseAdapter answerAdapter = ((AboutMeFragmentOne)((AskAndAnswerAdapter)viewPager.getAdapter()).aboutMeFragmentOne).dataListAdapter;
-        BaseAdapter askAdapter = ((AboutMeFragmentTwo)((AskAndAnswerAdapter)viewPager.getAdapter()).aboutMeFragmentTwo).dataListAdapter;
-        List<UUidBean.Answer> answerList = ((AboutMeFragmentOne)((AskAndAnswerAdapter)viewPager.getAdapter()).aboutMeFragmentOne).dataList;
-        List<UUidBean.Asked> askedList = ((AboutMeFragmentTwo)((AskAndAnswerAdapter)viewPager.getAdapter()).aboutMeFragmentTwo).dataList;
+        BaseAdapter answerAdapter = ((MineSubFragmentOne)((AskAndAnswerAdapter)viewPager.getAdapter()).aboutMeFragmentOne).dataListAdapter;
+        BaseAdapter askAdapter = ((MineSubFragmentTwo)((AskAndAnswerAdapter)viewPager.getAdapter()).aboutMeFragmentTwo).dataListAdapter;
+        List<UUidBean.Answer> answerList = ((MineSubFragmentOne)((AskAndAnswerAdapter)viewPager.getAdapter()).aboutMeFragmentOne).dataList;
+        List<UUidBean.Asked> askedList = ((MineSubFragmentTwo)((AskAndAnswerAdapter)viewPager.getAdapter()).aboutMeFragmentTwo).dataList;
 
         if (data.answer != null && data.asked != null) {
             answerList.clear();
@@ -212,8 +212,8 @@ public class MineFragment extends Fragment {
 
         public AskAndAnswerAdapter(FragmentManager fm) {
             super(fm);
-            aboutMeFragmentOne = new AboutMeFragmentOne();
-            aboutMeFragmentTwo = new AboutMeFragmentTwo();
+            aboutMeFragmentOne = new MineSubFragmentOne();
+            aboutMeFragmentTwo = new MineSubFragmentTwo();
         }
 
         @Override
@@ -221,13 +221,13 @@ public class MineFragment extends Fragment {
 
             if (position == 0) {
                 if (aboutMeFragmentOne == null) {
-                    aboutMeFragmentOne = new AboutMeFragmentOne();
+                    aboutMeFragmentOne = new MineSubFragmentOne();
                 }
                 return aboutMeFragmentOne;
             }
             else if (position == 1) {
                 if (aboutMeFragmentTwo == null) {
-                    aboutMeFragmentTwo = new AboutMeFragmentTwo();
+                    aboutMeFragmentTwo = new MineSubFragmentTwo();
                 }
                 return aboutMeFragmentTwo;
             }

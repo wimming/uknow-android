@@ -17,7 +17,7 @@ import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.xuewen.bean.QRBean;
 import com.xuewen.utility.GlobalUtil;
-import com.xuewen.xuewen.AskActivity;
+import com.xuewen.xuewen.QuestionAskActivity;
 import com.xuewen.xuewen.QuestionDetailActivity;
 import com.xuewen.xuewen.R;
 
@@ -164,7 +164,7 @@ public class QuestionsListAdapter extends BaseAdapter {
     private View.OnClickListener onAnswererAvatarUrlClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(context, AskActivity.class);
+            Intent intent = new Intent(context, QuestionAskActivity.class);
             intent.putExtra("id", ((QRBean)getItem((int)view.getTag())).answerer_id);
             context.startActivity(intent);
         }

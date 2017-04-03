@@ -1,6 +1,5 @@
 package com.xuewen.xuewen;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -10,7 +9,7 @@ import android.widget.Toast;
 
 import com.xuewen.utility.ToastMsg;
 
-public class AnswerSuccessActivity extends AppCompatActivity {
+public class QuestionAnswerSuccessActivity extends AppCompatActivity {
 
     private int id;
     @Override
@@ -20,7 +19,7 @@ public class AnswerSuccessActivity extends AppCompatActivity {
 
         id = getIntent().getIntExtra("id", -1);
         if (id == -1) {
-            Toast.makeText(AnswerSuccessActivity.this, ToastMsg.APPLICATION_ERROR, Toast.LENGTH_LONG).show();
+            Toast.makeText(QuestionAnswerSuccessActivity.this, ToastMsg.APPLICATION_ERROR, Toast.LENGTH_LONG).show();
             finish();
             return;
         }
@@ -39,7 +38,7 @@ public class AnswerSuccessActivity extends AppCompatActivity {
         checkQuestionDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(AnswerSuccessActivity.this, ProfileActivity.class);
+//                Intent intent = new Intent(QuestionAnswerSuccessActivity.this, ProfileActivity.class);
 //                intent.putExtra("id", id);
 //                startActivity(intent);
                 finish();

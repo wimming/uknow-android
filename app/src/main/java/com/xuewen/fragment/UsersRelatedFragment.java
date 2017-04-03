@@ -18,7 +18,7 @@ import com.xuewen.networkservice.ApiService;
 import com.xuewen.networkservice.UUidFARResult;
 import com.xuewen.utility.CurrentUser;
 import com.xuewen.utility.ToastMsg;
-import com.xuewen.xuewen.AskActivity;
+import com.xuewen.xuewen.QuestionAskActivity;
 import com.xuewen.xuewen.MainActivity;
 import com.xuewen.xuewen.R;
 import com.xuewen.xuewen.UsersSearchActivity;
@@ -37,7 +37,7 @@ import retrofit2.Response;
  * Created by ym on 16-10-23.
  */
 
-public class UsersSearchFragment extends Fragment {
+public class UsersRelatedFragment extends Fragment {
 
     private List<UUidFARBean> dataList = new ArrayList<>();
     private DatabaseHelper databaseHelper;
@@ -71,7 +71,7 @@ public class UsersSearchFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getActivity(), AskActivity.class);
+                Intent intent = new Intent(getActivity(), QuestionAskActivity.class);
                 intent.putExtra("id", ((UUidFARBean) parent.getAdapter().getItem(position)).id);
                 startActivity(intent);
             }

@@ -8,7 +8,6 @@ import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
@@ -19,19 +18,14 @@ import android.widget.Toast;
 import com.iflytek.cloud.SpeechRecognizer;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xuewen.bean.QQidBean;
-import com.xuewen.bean.QRBean;
-import com.xuewen.networkservice.APITestActivity;
 import com.xuewen.networkservice.ApiService;
 import com.xuewen.networkservice.QQidAResult;
 import com.xuewen.networkservice.QQidResult;
-import com.xuewen.networkservice.UUidIResult;
 import com.xuewen.utility.CurrentUser;
 import com.xuewen.utility.GlobalUtil;
 import com.xuewen.utility.ListenHelper;
 import com.xuewen.utility.MediaHelper;
 import com.xuewen.utility.ToastMsg;
-
-import org.w3c.dom.Text;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -46,7 +40,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AnswerQuestionActivity extends AppCompatActivity {
+public class QuestionAnswerActivity extends AppCompatActivity {
 
     final static  String voice_length_show_text0 = "录音最长2分钟";
     final  static  String voice_status_show_text0 = "点击按钮开始";
@@ -88,11 +82,11 @@ public class AnswerQuestionActivity extends AppCompatActivity {
     @OnClick(R.id.send_recorded)
     void onClick() {
         if (filePath == null) {
-            Toast.makeText(AnswerQuestionActivity.this, "ni ha mei you lu yin", Toast.LENGTH_SHORT).show();
+            Toast.makeText(QuestionAnswerActivity.this, "ni ha mei you lu yin", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        final ProgressDialog dialog = ProgressDialog.show(AnswerQuestionActivity.this, "", "语音文件发送中...");
+        final ProgressDialog dialog = ProgressDialog.show(QuestionAnswerActivity.this, "", "语音文件发送中...");
 
         ApiService apiService = ApiService.retrofit.create(ApiService.class);
 
@@ -110,20 +104,20 @@ public class AnswerQuestionActivity extends AppCompatActivity {
             public void onResponse(Call<QQidAResult> call, Response<QQidAResult> response) {
                 dialog.dismiss();
                 if (!response.isSuccessful()) {
-                    Toast.makeText(AnswerQuestionActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
+                    Toast.makeText(QuestionAnswerActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
                     return;
                 }
                 if (response.body().status != 200) {
-                    Toast.makeText(AnswerQuestionActivity.this, response.body().errmsg, Toast.LENGTH_LONG).show();
+                    Toast.makeText(QuestionAnswerActivity.this, response.body().errmsg, Toast.LENGTH_LONG).show();
                     return;
                 }
-                //Toast.makeText(AnswerQuestionActivity.this, response.body().toString(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(QuestionAnswerActivity.this, response.body().toString(), Toast.LENGTH_SHORT).show();
                 mIat.cancel();
                 mIat.destroy();
                 handler_countdown.removeCallbacks(r);
                 playHandler.removeCallbacks(playRunnable);
-                Intent intent = new Intent(AnswerQuestionActivity.this, AnswerSuccessActivity.class);
-//                Intent intent = new Intent(AnswerQuestionActivity.this, QuestionDetailActivity.class);
+                Intent intent = new Intent(QuestionAnswerActivity.this, QuestionAnswerSuccessActivity.class);
+//                Intent intent = new Intent(QuestionAnswerActivity.this, QuestionDetailActivity.class);
                 intent.putExtra("id", id);
                 startActivity(intent);
                 finish();
@@ -131,7 +125,7 @@ public class AnswerQuestionActivity extends AppCompatActivity {
             }
             @Override
             public void onFailure(Call<QQidAResult> call, Throwable t) {
-                Toast.makeText(AnswerQuestionActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(QuestionAnswerActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_LONG).show();
                 dialog.dismiss();
             }
         });
@@ -204,7 +198,7 @@ public class AnswerQuestionActivity extends AppCompatActivity {
 
         id = getIntent().getIntExtra("id", -1);
         if (id == -1) {
-            Toast.makeText(AnswerQuestionActivity.this, ToastMsg.APPLICATION_ERROR, Toast.LENGTH_LONG).show();
+            Toast.makeText(QuestionAnswerActivity.this, ToastMsg.APPLICATION_ERROR, Toast.LENGTH_LONG).show();
             finish();
             return;
         }
@@ -253,13 +247,13 @@ public class AnswerQuestionActivity extends AppCompatActivity {
                     transToStatus1();
                     handler_countdown.post(r);
 
-                    mIat =  ListenHelper.setOnResultListenerWithNoDialog(AnswerQuestionActivity.this, new ListenHelper.OnResultListener() {
+                    mIat =  ListenHelper.setOnResultListenerWithNoDialog(QuestionAnswerActivity.this, new ListenHelper.OnResultListener() {
 
                         //成功后回调
                         @Override
                         public void onResult(String fileId, String result) {
-//                        ListenHelper.showTip(AnswerQuestionActivity.this, result);
-//                        ListenHelper.showTip(AnswerQuestionActivity.this, ListenHelper.getListenerPath(fileId));
+//                        ListenHelper.showTip(QuestionAnswerActivity.this, result);
+//                        ListenHelper.showTip(QuestionAnswerActivity.this, ListenHelper.getListenerPath(fileId));
 //                        voice_length_show.setText(result);
                             filePath = ListenHelper.getListenerPath(fileId);
                             //进入 状态2
@@ -279,7 +273,7 @@ public class AnswerQuestionActivity extends AppCompatActivity {
                         //失败后回调
                         @Override
                         public void onError(String errorMsg) {
-                            ListenHelper.showTip(AnswerQuestionActivity.this, errorMsg);
+                            ListenHelper.showTip(QuestionAnswerActivity.this, errorMsg);
                             speak.setImageResource(R.drawable.microphone);
 
                             page_state = PAGE_STATE.STATE0;
@@ -297,8 +291,8 @@ public class AnswerQuestionActivity extends AppCompatActivity {
                         //这里的话 不设置进入 STATE2 是否进入由 讯飞的回调函数决定
                         //讯飞回调函数 OnError有个延迟 所以需要给用户提示一下
                         speak.setImageResource(R.drawable.microphone);
-                        Toast.makeText(AnswerQuestionActivity.this, "分析中", Toast.LENGTH_SHORT).show();
-//                        ListenHelper.showTip(AnswerQuestionActivity.this, "分析中");
+                        Toast.makeText(QuestionAnswerActivity.this, "分析中", Toast.LENGTH_SHORT).show();
+//                        ListenHelper.showTip(QuestionAnswerActivity.this, "分析中");
 
                     }
                     return;
@@ -429,11 +423,11 @@ public class AnswerQuestionActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<QQidResult> call, Response<QQidResult> response) {
                 if (!response.isSuccessful()) {
-                    Toast.makeText(AnswerQuestionActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
+                    Toast.makeText(QuestionAnswerActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
                     return;
                 }
                 if (response.body().status != 200) {
-                    Toast.makeText(AnswerQuestionActivity.this, response.body().errmsg, Toast.LENGTH_LONG).show();
+                    Toast.makeText(QuestionAnswerActivity.this, response.body().errmsg, Toast.LENGTH_LONG).show();
                     return;
                 }
                 renderView(response.body().data);
@@ -443,7 +437,7 @@ public class AnswerQuestionActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<QQidResult> call, Throwable t) {
-                Toast.makeText(AnswerQuestionActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(QuestionAnswerActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }

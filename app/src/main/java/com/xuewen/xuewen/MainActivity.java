@@ -18,7 +18,7 @@ import com.xuewen.bean.UUidBean;
 import com.xuewen.bean.UUidFARBean;
 import com.xuewen.fragment.MineFragment;
 import com.xuewen.fragment.QuestionsRcmdFragment;
-import com.xuewen.fragment.UsersSearchFragment;
+import com.xuewen.fragment.UsersRelatedFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -154,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
             }
             else if (position == 1) {
                 if (searchingFragment == null) {
-                    searchingFragment = new UsersSearchFragment();
+                    searchingFragment = new UsersRelatedFragment();
                 }
                 return searchingFragment;
             }
