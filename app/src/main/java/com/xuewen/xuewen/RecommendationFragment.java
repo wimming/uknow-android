@@ -131,8 +131,6 @@ public class RecommendationFragment extends Fragment {
                     refresh.setRefreshing(false);
                     return;
                 }
-//                Toast.makeText(getActivity(), ((ActivityManager) getActivity().getSystemService(ACTIVITY_SERVICE)).getLargeMemoryClass()+"", Toast.LENGTH_SHORT).show();
-//                Toast.makeText(getActivity(), ((ActivityManager) getActivity().getSystemService(ACTIVITY_SERVICE)).getMemoryClass()+"", Toast.LENGTH_SHORT).show();
 //                Toast.makeText(getActivity(), "Ques Request success.", Toast.LENGTH_SHORT).show();
                 dataList.clear();
                 dataList.addAll(response.body().data);
