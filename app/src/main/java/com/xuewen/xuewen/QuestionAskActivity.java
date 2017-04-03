@@ -100,7 +100,7 @@ public class QuestionAskActivity extends AppCompatActivity {
 //            }
 //        });
 
-//        refresh.setEnabled(false);  // 不做刷新
+        refresh.setEnabled(false);  // 不做刷新
         main_content.setVisibility(View.GONE);
 
         editText.addTextChangedListener(new MyTextWatcher(this, 60, textView));
@@ -270,7 +270,7 @@ public class QuestionAskActivity extends AppCompatActivity {
                     return;
                 }
                 if (response.body().status != 200) {
-                    apiServiceRequestResultHandler.onSuccess(response.body().data);
+                    apiServiceRequestResultHandler.onError(response.body().errmsg);
                     return;
                 }
                 apiServiceRequestResultHandler.onSuccess(response.body().data);

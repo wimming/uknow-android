@@ -31,10 +31,10 @@ import retrofit2.Response;
 
 public class LoginInfoActivity extends AppCompatActivity {
 
-    private static  final  String[] schools_Data = {"中山大学", "清华大学", "北京大学"};
-    private static  final  String[] major_Data = {"软件工程", "计算机科学"};
-    private static final String[] years_Data = {"入学年份", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015"};
-    private static final  String[] education_Data = {"本科生", "硕士生", "博士生"};
+    private static final String[] schools_data = {"中山大学", "清华大学", "北京大学"};
+    private static final String[] major_data = {"软件工程", "计算机科学"};
+    private static final String[] years_data = {"2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015"};
+    private static final String[] education_data = {"本科生", "硕士生", "博士生"};
 
     @BindView(R.id.username) EditText username;
     @BindView(R.id.description) EditText description;
@@ -51,7 +51,7 @@ public class LoginInfoActivity extends AppCompatActivity {
     @BindView(R.id.confirmBtn) Button confirmBtn;
 
     private ArrayAdapter<String> major_auto_complete_adapter;
-    private ArrayAdapter<String> school_auto_complete_adaper;
+    private ArrayAdapter<String> school_auto_complete_adapter;
 
     private ArrayAdapter<String>  years_adapter;
     private ArrayAdapter<String> education_adapter;
@@ -63,15 +63,15 @@ public class LoginInfoActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-        //autocomplemeet
-        major_auto_complete_adapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, major_Data);
-        school_auto_complete_adaper = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, schools_Data);
-        school_auto_complete.setAdapter(school_auto_complete_adaper);
+        // auto complement
+        major_auto_complete_adapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, major_data);
+        school_auto_complete_adapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, schools_data);
+        school_auto_complete.setAdapter(school_auto_complete_adapter);
         major_auto_complete.setAdapter(major_auto_complete_adapter);
 
-        //spin
-        years_adapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, years_Data);
-        education_adapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, education_Data);
+        // spinner
+        years_adapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, years_data);
+        education_adapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, education_data);
 
         years_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         education_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -86,7 +86,6 @@ public class LoginInfoActivity extends AppCompatActivity {
         });
 
     }
-
 
     private void patchModifyUserInfoService(int uid) {
 

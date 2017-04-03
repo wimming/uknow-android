@@ -179,6 +179,7 @@ public class ProfileActivity extends AppCompatActivity {
                 }
 
                 ToastMsg.showTips(ProfileActivity.this, ToastMsg.MODIFY_SUCCESS);
+                finish();
             }
 
             @Override
