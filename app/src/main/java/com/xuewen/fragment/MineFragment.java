@@ -25,9 +25,9 @@ import com.xuewen.utility.CurrentUser;
 import com.xuewen.utility.GlobalUtil;
 import com.xuewen.utility.ToastMsg;
 import com.xuewen.xuewen.MainActivity;
-import com.xuewen.xuewen.ModifyInfoActivity;
-import com.xuewen.xuewen.R;
 import com.xuewen.xuewen.ProfileActivity;
+import com.xuewen.xuewen.R;
+import com.xuewen.xuewen.SettingActivity;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -80,7 +80,7 @@ public class MineFragment extends Fragment {
         aboutme_iv_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), ModifyInfoActivity.class);
+                Intent intent = new Intent(getActivity(), ProfileActivity.class);
                 startActivity(intent);
             }
         });
@@ -88,7 +88,7 @@ public class MineFragment extends Fragment {
         aboutme_iv_setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), ProfileActivity.class);
+                Intent intent = new Intent(getActivity(), SettingActivity.class);
                 startActivity(intent);
             }
         });

@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="0dp"
-    tools:context="com.xuewen.xuewen.ModifyInfoActivity">
+    tools:context="com.xuewen.xuewen.ProfileActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"

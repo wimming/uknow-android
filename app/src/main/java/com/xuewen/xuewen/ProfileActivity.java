@@ -1,57 +1,67 @@
 package com.xuewen.xuewen;
 
-import android.content.Intent;
-import android.content.SharedPreferences;
+import android.app.ProgressDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.xuewen.bean.UUidBean;
 import com.xuewen.networkservice.ApiService;
-import com.xuewen.networkservice.LogoutResult;
+import com.xuewen.networkservice.UUidResult;
+import com.xuewen.utility.CurrentUser;
+import com.xuewen.utility.GlobalUtil;
+import com.xuewen.utility.MyTextWatcher;
 import com.xuewen.utility.ToastMsg;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.xuewen.utility.Validate;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
-
 public class ProfileActivity extends AppCompatActivity {
 
-//    @BindView(R.id.listView) ListView listView;
+    @BindView(R.id.avatar)
+    ImageView avatar;
 
-    private static  final String[] textData = {"使用帮助","关于学问", "意见反馈", "版本更新"};
+    @BindView(R.id.username)
+    EditText username;
+    @BindView(R.id.usernameTextInfo)
+    TextView usernameTextInfo;
+    @BindView(R.id.status)
+    EditText status;
+    @BindView(R.id.statusTextInfo)
+    TextView statusTextInfo;
+    @BindView(R.id.description)
+    EditText description;
+    @BindView(R.id.descriptionTextInfo)
+    TextView descriptionTextInfo;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.confirm)
+    ImageView confirm;
+    @BindView(R.id.visibilityController)
+    LinearLayout visibilityController;
 
-    @BindView(R.id.logoutBtn)
-    Button logoutBtn;
+    private ProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_setting);
+        setContentView(R.layout.activity_modify_info);
 
         ButterKnife.bind(this);
 
-        ListView listView = (ListView) findViewById(R.id.listView);
-        List<Map<String, String>> list_data = new ArrayList<Map<String, String>>();
-        for (int i = 0; i < textData.length; i++) {
-            Map<String, String> tempMap = new HashMap<String, String>();
-            tempMap.put("textview", textData[i]);
-            list_data.add(tempMap);
-        }
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.back);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,26 +70,105 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-        SimpleAdapter simpleAdapter = new SimpleAdapter(this, list_data,
-                R.layout.activity_setting_item, new String[] {"textview"}, new int[] {R.id.textview});
+        visibilityController.setVisibility(View.GONE);
+        dialog = new ProgressDialog(this);
+        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        dialog.show();
 
-        listView.setAdapter(simpleAdapter);
-
-        logoutBtn.setOnClickListener(new View.OnClickListener() {
+        confirm.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                logout();
+            public void onClick(View v) {
+                patchModifyUserInfoService(CurrentUser.userId);
             }
         });
 
+        renderView(CurrentUser.userId);
+        username.addTextChangedListener(new MyTextWatcher(this, 10, usernameTextInfo));
+        status.addTextChangedListener(new MyTextWatcher(this, 20, statusTextInfo));
+        description.addTextChangedListener(new MyTextWatcher(this, 50, descriptionTextInfo));
+
     }
 
-    private void logout() {
+
+    private void renderView(int uid) {
+
         ApiService apiService = ApiService.retrofit.create(ApiService.class);
-        Call<LogoutResult> call = apiService.requestLogout();
-        call.enqueue(new Callback<LogoutResult>() {
+        Call<UUidResult> call = apiService.requestUUid(uid);
+        call.enqueue(new Callback<UUidResult>() {
             @Override
-            public void onResponse(Call<LogoutResult> call, Response<LogoutResult> response) {
+            public void onResponse(Call<UUidResult> call, Response<UUidResult> response) {
+
+                if (!response.isSuccessful()) {
+                    Toast.makeText(ProfileActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
+                    dialog.dismiss();
+                    visibilityController.setVisibility(View.VISIBLE);
+                    return;
+                }
+                if (response.body().status != 200) {
+                    Toast.makeText(ProfileActivity.this, response.body().errmsg, Toast.LENGTH_LONG).show();
+                    dialog.dismiss();
+                    visibilityController.setVisibility(View.VISIBLE);
+                    return;
+                }
+                //Toast.makeText(ProfileActivity.this, response.body().toString(), Toast.LENGTH_SHORT).show();
+                UUidBean bean = response.body().data;
+                username.setText(bean.username);
+                status.setText(bean.status);
+                description.setText(bean.description);
+                ImageLoader.getInstance().displayImage(GlobalUtil.getInstance().baseAvatarUrl+bean.avatarUrl, avatar, GlobalUtil.getInstance().circleBitmapOptions);
+                dialog.dismiss();
+                visibilityController.setVisibility(View.VISIBLE);
+
+            }
+            @Override
+            public void onFailure(Call<UUidResult> call, Throwable t) {
+                dialog.dismiss();
+                visibilityController.setVisibility(View.VISIBLE);
+                Toast.makeText(ProfileActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+
+    private void patchModifyUserInfoService(int uid) {
+
+        if (Validate.isExistEmpty(username, status, description)) {
+            Toast.makeText(ProfileActivity.this, ToastMsg.ARG_INVALID_EMPTY, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        String usernameString = username.getText().toString();
+        RequestBody username = RequestBody.create(MediaType.parse("multipart/form-data"), usernameString);
+        String statusString = status.getText().toString();
+        RequestBody status = RequestBody.create(MediaType.parse("multipart/form-data"), statusString);
+        String descriptionString = description.getText().toString();
+        RequestBody description = RequestBody.create(MediaType.parse("multipart/form-data"), descriptionString);
+        String schoolString = "中山大学";
+        RequestBody school = RequestBody.create(MediaType.parse("multipart/form-data"), schoolString);
+        String majorString = "软件工程";
+        RequestBody major = RequestBody.create(MediaType.parse("multipart/form-data"), majorString);
+        String gradeString = "2014本科生";
+        RequestBody grade = RequestBody.create(MediaType.parse("multipart/form-data"), gradeString);
+
+        //File file = new File(getExternalFilesDir(null)+"/test.jpg");
+        //RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+        //MultipartBody.Part body = MultipartBody.Part.createFormData("avatar", file.getName(), requestBody);
+
+        // 执行请求
+        ApiService apiService = ApiService.retrofit.create(ApiService.class);
+        Call<UUidResult> call = apiService.requestUUid(
+                uid,
+                username,
+                status,
+                description,
+                school,
+                major,
+                grade,
+                null
+        );
+        call.enqueue(new Callback<UUidResult>() {
+            @Override
+            public void onResponse(Call<UUidResult> call, Response<UUidResult> response) {
                 if (!response.isSuccessful()) {
                     Toast.makeText(ProfileActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
                     return;
@@ -89,21 +178,11 @@ public class ProfileActivity extends AppCompatActivity {
                     return;
                 }
 
-                SharedPreferences.Editor editor = getSharedPreferences("login_info", MODE_PRIVATE).edit();
-                editor.putInt("user_id", -1);
-                editor.putString("token", "");
-                editor.commit();
-
-                Intent intent = new Intent(ProfileActivity.this, EntryActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-
-                Toast.makeText(ProfileActivity.this, "退出成功", Toast.LENGTH_LONG).show();
-
+                ToastMsg.showTips(ProfileActivity.this, ToastMsg.MODIFY_SUCCESS);
             }
 
             @Override
-            public void onFailure(Call<LogoutResult> call, Throwable t) {
+            public void onFailure(Call<UUidResult> call, Throwable t) {
                 Toast.makeText(ProfileActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });

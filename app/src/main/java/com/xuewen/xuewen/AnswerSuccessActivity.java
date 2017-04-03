@@ -39,7 +39,7 @@ public class AnswerSuccessActivity extends AppCompatActivity {
         checkQuestionDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(AnswerSuccessActivity.this, ModifyInfoActivity.class);
+//                Intent intent = new Intent(AnswerSuccessActivity.this, ProfileActivity.class);
 //                intent.putExtra("id", id);
 //                startActivity(intent);
                 finish();

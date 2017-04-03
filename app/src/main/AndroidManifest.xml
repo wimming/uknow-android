@@ -55,9 +55,9 @@
         </activity>
 
         <activity android:name=".QuestionDetailActivity" />
-        <activity android:name=".ModifyInfoActivity" />
-        <activity android:name=".AskActivity" />
         <activity android:name=".ProfileActivity" />
+        <activity android:name=".AskActivity" />
+        <activity android:name=".SettingActivity" />
         <activity android:name=".AnswerQuestionActivity" />
         <activity android:name=".AskedSuccessActivity" />
         <activity android:name=".AnswerSuccessActivity" />
