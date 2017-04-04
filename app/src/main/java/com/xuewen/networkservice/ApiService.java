@@ -79,8 +79,6 @@ public interface ApiService {
     @PATCH("api/users/{user_id}/perfect")
     @Multipart
     Call<UUidPResult> requestUUidP(@Path("user_id") int uid,
-                                   @Part("username") RequestBody username,
-                                   @Part("description") RequestBody description,
                                    @Part("school") RequestBody school,
                                    @Part("major") RequestBody major,
                                    @Part("grade") RequestBody grade);

@@ -9,6 +9,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.xuewen.networkservice.ApiService;
@@ -28,15 +29,14 @@ import retrofit2.Response;
 
 public class LoginInfoActivity extends AppCompatActivity {
 
-    @BindView(R.id.username) EditText username;
-    @BindView(R.id.description) EditText description;
-
     @BindView(R.id.year) Spinner year;
     @BindView(R.id.education) Spinner education;
 
     @BindView(R.id.school_auto_complete) AutoCompleteTextView school_auto_complete;
     @BindView(R.id.major_auto_complete) AutoCompleteTextView major_auto_complete;
-    @BindView(R.id.confirmBtn) Button confirmBtn;
+
+    @BindView(R.id.confirm)
+    TextView confirm;
 
     private ArrayAdapter<String> major_auto_complete_adapter;
     private ArrayAdapter<String> school_auto_complete_adapter;
@@ -67,7 +67,7 @@ public class LoginInfoActivity extends AppCompatActivity {
         year.setAdapter(year_adapter);
         education.setAdapter(education_adapter);
 
-        confirmBtn.setOnClickListener(new View.OnClickListener() {
+        confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 patchModifyUserInfoService(CurrentUser.userId);
@@ -79,8 +79,6 @@ public class LoginInfoActivity extends AppCompatActivity {
     private void patchModifyUserInfoService(int uid) {
 
         if (!Validator.validateNoEmpty(
-                username.getText().toString(),
-                description.getText().toString(),
                 school_auto_complete.getText().toString(),
                 major_auto_complete.getText().toString(),
                 year.getSelectedItem().toString(),
@@ -91,10 +89,6 @@ public class LoginInfoActivity extends AppCompatActivity {
             return;
         }
 
-        String usernameString = username.getText().toString();
-        RequestBody username = RequestBody.create(MediaType.parse("multipart/form-data"), usernameString);
-        String descriptionString = description.getText().toString();
-        RequestBody description = RequestBody.create(MediaType.parse("multipart/form-data"), descriptionString);
         String schoolString = school_auto_complete.getText().toString();
         RequestBody school = RequestBody.create(MediaType.parse("multipart/form-data"), schoolString);
         String majorString = major_auto_complete.getText().toString();
@@ -106,8 +100,6 @@ public class LoginInfoActivity extends AppCompatActivity {
         ApiService apiService = ApiService.retrofit.create(ApiService.class);
         Call<UUidPResult> call = apiService.requestUUidP(
                 uid,
-                username,
-                description,
                 school,
                 major,
                 grade

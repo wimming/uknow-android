@@ -3,6 +3,9 @@ package com.xuewen.utility;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
+
+import java.io.InputStream;
 
 /**
  * Created by huangyuming on 17-4-4.
@@ -24,6 +27,22 @@ public class BitmapDecoder {
         // Decode bitmap with inSampleSize set
         options.inJustDecodeBounds = false;
         return BitmapFactory.decodeResource(res, resId, options);
+    }
+
+    public static Bitmap decodeSampledBitmapFromInputStream(InputStream inputStream,
+                                                    int reqWidth, int reqHeight) {
+
+        // First decode with inJustDecodeBounds=true to check dimensions
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeStream(inputStream, null, options);
+
+        // Calculate inSampleSize
+        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
+
+        // Decode bitmap with inSampleSize set
+        options.inJustDecodeBounds = false;
+        return BitmapFactory.decodeStream(inputStream, null, options);
     }
 
     public static int calculateInSampleSize(

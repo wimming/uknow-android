@@ -22,6 +22,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xuewen.bean.UUidBean;
 import com.xuewen.networkservice.ApiService;
 import com.xuewen.networkservice.UUidResult;
+import com.xuewen.utility.BitmapDecoder;
 import com.xuewen.utility.CurrentUser;
 import com.xuewen.utility.FileIOUtils;
 import com.xuewen.utility.GlobalUtil;
@@ -30,6 +31,7 @@ import com.xuewen.utility.StatisticStorage;
 import com.xuewen.utility.ToastMsg;
 import com.xuewen.utility.TextViewValidator;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -302,13 +304,25 @@ public class ProfileActivity extends AppCompatActivity {
             body = null;
         }
         else {
-            InputStream inputStream = null;
             try {
-                inputStream = getContentResolver().openInputStream(avatarUri);
-                RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), FileIOUtils.readBytes(inputStream));
-                body = MultipartBody.Part.createFormData("avatar", "avatar.jpg", requestBody);
+
+                InputStream inputStream = getContentResolver().openInputStream(avatarUri);
+                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                bitmap = Bitmap.createScaledBitmap(bitmap, 100, 100, false);
+
+                // Convert bitmap to byte array
+                ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
+                byte [] bytes = bos.toByteArray();
+
+                RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), bytes);
+                body = MultipartBody.Part.createFormData("avatar", "avatar", requestBody);
+
+//                InputStream inputStream = getContentResolver().openInputStream(avatarUri);
+//                RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), FileIOUtils.readBytes(inputStream));
+//                body = MultipartBody.Part.createFormData("avatar", "avatar", requestBody);
             } catch (IOException e) {
-                Toast.makeText(ProfileActivity.this, ToastMsg.FILE_OPERATION_ERROR, Toast.LENGTH_SHORT).show();
+                Toast.makeText(ProfileActivity.this, ToastMsg.FILE_OPERATION_ERROR+"，头像上传失败", Toast.LENGTH_SHORT).show();
                 e.printStackTrace();
                 body = null;
             }

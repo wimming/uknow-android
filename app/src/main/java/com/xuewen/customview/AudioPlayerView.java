@@ -129,6 +129,7 @@ public class AudioPlayerView extends LinearLayout {
             @Override
             public boolean onError(MediaPlayer mp, int what, int extra) {
                 Log.e("TAG", "onError === what:  " + what + " extra: " + extra);
+                progressDialog.dismiss();
                 return false;
             }
         });
