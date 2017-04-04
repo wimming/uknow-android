@@ -15,7 +15,6 @@
         android:layout_marginBottom="@dimen/base_margin">
         <ImageView
             android:id="@+id/answerer_avatarUrl"
-            android:src="@drawable/avatar"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginRight="@dimen/base_margin"/>
