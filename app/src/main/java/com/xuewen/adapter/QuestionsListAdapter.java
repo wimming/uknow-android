@@ -110,37 +110,39 @@ public class QuestionsListAdapter extends BaseAdapter {
         viewHolder.answerer_description.setText(list.get(position).answerer_username+" | "+list.get(position).answerer_status+"。"+list.get(position).answerer_description);
         viewHolder.listen.setText(list.get(position).audioSeconds+"''");
         viewHolder.review.setText(list.get(position).listeningNum+"人听过，"+list.get(position).praiseNum+"人觉得好");
-
         ImageLoader.getInstance().displayImage(GlobalUtil.getInstance().baseAvatarUrl + list.get(position).answerer_avatarUrl,
                 viewHolder.answerer_avatarUrl,
-                GlobalUtil.getInstance().circleBitmapOptions,
-                new ImageLoadingListener() {
-                    @Override
-                    public void onLoadingStarted(String imageUri, View view) {
+                GlobalUtil.getInstance().circleBitmapOptions);
 
-                    }
-
-                    @Override
-                    public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-
-                    }
-
-                    @Override
-                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                        if (imageUri.equals(view.getTag())) {
-                            ((ImageView)view).setImageBitmap(loadedImage);
-                        }
-                    }
-
-                    @Override
-                    public void onLoadingCancelled(String imageUri, View view) {
-
-                    }
-                });
+//        ImageLoader.getInstance().displayImage(GlobalUtil.getInstance().baseAvatarUrl + list.get(position).answerer_avatarUrl,
+//                viewHolder.answerer_avatarUrl,
+//                GlobalUtil.getInstance().circleBitmapOptions,
+//                new ImageLoadingListener() {
+//                    @Override
+//                    public void onLoadingStarted(String imageUri, View view) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+//                        if (imageUri.equals(view.getTag())) {
+//                            ((ImageView)view).setImageBitmap(loadedImage);
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onLoadingCancelled(String imageUri, View view) {
+//
+//                    }
+//                });
 
         viewHolder.listen.setTag(position);
         viewHolder.answerer_avatarUrl.setTag(position);
-        viewHolder.answerer_avatarUrl.setTag(list.get(position).answerer_avatarUrl);
 
         return view;
     }

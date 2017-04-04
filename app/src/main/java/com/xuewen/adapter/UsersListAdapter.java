@@ -1,7 +1,10 @@
 package com.xuewen.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,9 +14,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.xuewen.bean.UUidFARBean;
 import com.xuewen.networkservice.ApiService;
 import com.xuewen.networkservice.UUidFResult;
+import com.xuewen.utility.BitmapDecoder;
 import com.xuewen.utility.CurrentUser;
 import com.xuewen.utility.GlobalUtil;
 import com.xuewen.utility.ToastMsg;
@@ -33,9 +39,13 @@ public class UsersListAdapter extends BaseAdapter{
     private List<UUidFARBean> list;
     private Context context;
 
+    private Bitmap defaultAvatar;
+
     public UsersListAdapter(List<UUidFARBean> list, Context context) {
         this.list = list;
         this.context = context;
+
+        defaultAvatar = BitmapDecoder.decodeSampledBitmapFromResource(context.getResources(), R.drawable.avatar, 100, 100);
     }
 
     @Override
@@ -79,7 +89,40 @@ public class UsersListAdapter extends BaseAdapter{
         viewHolder.username.setText(list.get(position).username);
         viewHolder.status.setText(list.get(position).status);
         viewHolder.description.setText(list.get(position).description);
-        ImageLoader.getInstance().displayImage(GlobalUtil.getInstance().baseAvatarUrl+list.get(position).avatarUrl, viewHolder.avatarUrl, GlobalUtil.getInstance().circleBitmapOptions);
+//        ImageLoader.getInstance().displayImage(GlobalUtil.getInstance().baseAvatarUrl+list.get(position).avatarUrl, viewHolder.avatarUrl, GlobalUtil.getInstance().circleBitmapOptions);
+
+        ImageLoader.getInstance().displayImage(GlobalUtil.getInstance().baseAvatarUrl + list.get(position).avatarUrl,
+                viewHolder.avatarUrl,
+                GlobalUtil.getInstance().circleBitmapOptions,
+                new ImageLoadingListener() {
+                    @Override
+                    public void onLoadingStarted(String imageUri, View view) {
+                        Log.e("UIL", "onLoadingStarted");
+                    }
+
+                    @Override
+                    public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                        Log.e("UIL", "onLoadingFailed");
+                        if (imageUri.equals(view.getTag())) {
+                            ((ImageView)view).setImageBitmap(defaultAvatar);
+                        }
+                    }
+
+                    @Override
+                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                        Log.e("UIL", "onLoadingComplete");
+//                        if (imageUri.equals(view.getTag())) {
+//                            ((ImageView)view).setImageBitmap(loadedImage);
+//                        }
+                    }
+
+                    @Override
+                    public void onLoadingCancelled(String imageUri, View view) {
+                        Log.e("UIL", "onLoadingCancelled");
+                    }
+                });
+
+        viewHolder.avatarUrl.setTag(GlobalUtil.getInstance().baseAvatarUrl+list.get(position).avatarUrl);
 
         // 渲染层已经做了渲染判断 点击只需更改数据即可 无需再次渲染
         if (list.get(position).followed == 0) {
