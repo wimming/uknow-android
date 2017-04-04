@@ -81,7 +81,9 @@ public class QuestionsSearchActivity extends AppCompatActivity {
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                retrieveQuestionsAndRender(searchView.getQuery().toString());
+                if (!searchView.getQuery().toString().isEmpty()) {
+                    retrieveQuestionsAndRender(searchView.getQuery().toString());
+                }
             }
         });
 
@@ -104,14 +106,18 @@ public class QuestionsSearchActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextSubmit(String query) {
 //                Toast.makeText(QuestionsSearchActivity.this, query, Toast.LENGTH_SHORT).show();
-                retrieveQuestionsAndRender(query);
+                if (!query.isEmpty()) {
+                    retrieveQuestionsAndRender(query);
+                }
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
 //                Toast.makeText(QuestionsSearchActivity.this, newText, Toast.LENGTH_SHORT).show();
-                retrieveQuestionsAndRender(newText);
+                if (!newText.isEmpty()) {
+                    retrieveQuestionsAndRender(newText);
+                }
                 return false;
             }
         });
