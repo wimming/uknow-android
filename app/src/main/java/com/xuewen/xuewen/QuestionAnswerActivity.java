@@ -42,11 +42,11 @@ import retrofit2.Response;
 
 public class QuestionAnswerActivity extends AppCompatActivity {
 
-    final static  String voice_length_show_text0 = "录音最长2分钟";
-    final  static  String voice_status_show_text0 = "点击按钮开始";
-    final  static  String voice_status_show_text1 = "点击按钮结束";
-    final  static  String voice_status_show_text2 = "点击按钮试听";
-    final  static  int RECOND_LENGTH = 120000;
+    final static String voice_length_show_text0 = "录音最长2分钟";
+    final static String voice_status_show_text0 = "点击按钮开始";
+    final static String voice_status_show_text1 = "点击按钮结束";
+    final static String voice_status_show_text2 = "点击按钮试听";
+    final static int RECORD_LENGTH = 120000;
 
     private int ACTUAL_RECORD_LENGTH = 2; //至少1s
 
@@ -133,11 +133,10 @@ public class QuestionAnswerActivity extends AppCompatActivity {
 
     String filePath = null;
     private SimpleDateFormat time = new SimpleDateFormat("mm:ss");
-    private int recordLength = RECOND_LENGTH; //2分钟
+    private int recordLength = RECORD_LENGTH; //2分钟
 
     Handler handler_countdown = new Handler();
     Runnable r = new Runnable() {
-
         @Override
         public void run() {
             if (recordLength > 0) {
@@ -149,7 +148,6 @@ public class QuestionAnswerActivity extends AppCompatActivity {
     };
 
     SpeechRecognizer mIat = null;
-
 
     enum STATE {
         IDLE,
@@ -211,7 +209,7 @@ public class QuestionAnswerActivity extends AppCompatActivity {
             }
         });
 
-        //这个的refresh只是为了缓存加载的一种方案 直接把refresh设置为 height = matchparent 就不用同时控制 内容和 refresh
+        // 这个的refresh只是为了缓存加载的一种方案 直接把refresh设置为 height = matchparent 就不用同时控制 内容和 refresh
         // 注意的是 refresh里面必须有 子控件 它才有效果
         refresh.setColorSchemeResources(android.R.color.holo_blue_bright, android.R.color.holo_green_light, android.R.color.holo_orange_light);
         refresh.setVisibility(View.VISIBLE);
@@ -301,7 +299,6 @@ public class QuestionAnswerActivity extends AppCompatActivity {
 
                     if (filePath != null) {
 
-
                         // 状态机为  idle -> play -> pause(这个一可能为自己点击的  一方面可能系统自动完成的) -play
                         // 系统自动完成播放的 需要我们在回调中设置等待状态  这里之前有个bug
                         // 注意 系统自动完成的无需设置为idle 因为无需重复加载同一个资源 让media play重新播放即可
@@ -357,62 +354,7 @@ public class QuestionAnswerActivity extends AppCompatActivity {
             }
         });
 
-
-
     }
-
-    //0 hide else show
-    private void buttonsShowORHide(int num) {
-
-        if (num  == 0) {
-            re_recorded.setVisibility(View.GONE);
-            send_recorded.setVisibility(View.GONE);
-        } else {
-            re_recorded.setVisibility(View.VISIBLE);
-            send_recorded.setVisibility(View.VISIBLE);
-        }
-    }
-
-    private void transToStatus0 () {
-
-//        ListenHelper.clearPlay();
-//        mediaHelper.stop();
-
-        if (state == STATE.PLAYING){
-            mediaHelper.pause();
-        }
-
-        state = STATE.IDLE;
-        speak.setTag("0");
-        speak.setImageResource(R.drawable.microphone);
-        recordLength = RECOND_LENGTH;
-        voice_length_show.setText(voice_length_show_text0);
-        voice_status_show.setText(voice_status_show_text0);
-        buttonsShowORHide(0);
-    }
-
-    private void transToStatus1() {
-        speak.setImageResource(R.drawable.playing);
-        voice_status_show.setText(voice_status_show_text1);
-        buttonsShowORHide(0);
-    }
-
-    private void transToStatus2 () {
-        speak.setImageResource(R.drawable.stop);
-        voice_status_show.setText(voice_status_show_text2);
-        buttonsShowORHide(1);
-    }
-
-
-
-    private void renderView(QQidBean data) {
-
-        ImageLoader.getInstance().displayImage(GlobalUtil.getInstance().baseAvatarUrl+data.asker_avatarUrl, asker_avatarUrl, GlobalUtil.getInstance().circleBitmapOptions);
-        asker_username.setText(data.asker_username);
-        askDate.setText(data.askDate);
-        description.setText(data.description);
-    }
-
 
     private void requestData(int qid) {
 
@@ -441,4 +383,55 @@ public class QuestionAnswerActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void renderView(QQidBean data) {
+
+        ImageLoader.getInstance().displayImage(GlobalUtil.getInstance().baseAvatarUrl+data.asker_avatarUrl, asker_avatarUrl, GlobalUtil.getInstance().circleBitmapOptions);
+        asker_username.setText(data.asker_username);
+        askDate.setText(data.askDate);
+        description.setText(data.description);
+    }
+
+    //0 hide else show
+    private void buttonsShowORHide(int num) {
+
+        if (num  == 0) {
+            re_recorded.setVisibility(View.GONE);
+            send_recorded.setVisibility(View.GONE);
+        } else {
+            re_recorded.setVisibility(View.VISIBLE);
+            send_recorded.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void transToStatus0 () {
+
+//        ListenHelper.clearPlay();
+//        mediaHelper.stop();
+
+        if (state == STATE.PLAYING){
+            mediaHelper.pause();
+        }
+
+        state = STATE.IDLE;
+        speak.setTag("0");
+        speak.setImageResource(R.drawable.microphone);
+        recordLength = RECORD_LENGTH;
+        voice_length_show.setText(voice_length_show_text0);
+        voice_status_show.setText(voice_status_show_text0);
+        buttonsShowORHide(0);
+    }
+
+    private void transToStatus1() {
+        speak.setImageResource(R.drawable.playing);
+        voice_status_show.setText(voice_status_show_text1);
+        buttonsShowORHide(0);
+    }
+
+    private void transToStatus2 () {
+        speak.setImageResource(R.drawable.stop);
+        voice_status_show.setText(voice_status_show_text2);
+        buttonsShowORHide(1);
+    }
+
 }

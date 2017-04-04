@@ -82,7 +82,8 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-        renderView(CurrentUser.userId);
+        requestAndRender(CurrentUser.userId);
+
         username.addTextChangedListener(new MyTextWatcher(this, 10, usernameTextInfo));
         status.addTextChangedListener(new MyTextWatcher(this, 20, statusTextInfo));
         description.addTextChangedListener(new MyTextWatcher(this, 50, descriptionTextInfo));
@@ -90,7 +91,7 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
 
-    private void renderView(int uid) {
+    private void requestAndRender(int uid) {
 
         ApiService apiService = ApiService.retrofit.create(ApiService.class);
         Call<UUidResult> call = apiService.requestUUid(uid);
@@ -101,15 +102,14 @@ public class ProfileActivity extends AppCompatActivity {
                 if (!response.isSuccessful()) {
                     Toast.makeText(ProfileActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
                     dialog.dismiss();
-                    visibilityController.setVisibility(View.VISIBLE);
                     return;
                 }
                 if (response.body().status != 200) {
                     Toast.makeText(ProfileActivity.this, response.body().errmsg, Toast.LENGTH_LONG).show();
                     dialog.dismiss();
-                    visibilityController.setVisibility(View.VISIBLE);
                     return;
                 }
+
                 //Toast.makeText(ProfileActivity.this, response.body().toString(), Toast.LENGTH_SHORT).show();
                 UUidBean bean = response.body().data;
                 username.setText(bean.username);

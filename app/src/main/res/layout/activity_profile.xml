@@ -296,13 +296,13 @@
                         android:text=">" />
                 </TableRow>
             </TableLayout>
+            <View
+                android:background="#FFCCCCCC"
+                android:layout_width="match_parent"
+                android:layout_height="1dp" />
+
         </LinearLayout>
 
     </ScrollView>
-
-    <View
-        android:background="#FFCCCCCC"
-        android:layout_width="match_parent"
-        android:layout_height="1dp" />
 
 </LinearLayout>

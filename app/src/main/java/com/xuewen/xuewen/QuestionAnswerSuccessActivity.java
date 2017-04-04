@@ -33,7 +33,6 @@ public class QuestionAnswerSuccessActivity extends AppCompatActivity {
             }
         });
 
-
         TextView checkQuestionDetail = (TextView) findViewById(R.id.checkQuestionDetail);
         checkQuestionDetail.setOnClickListener(new View.OnClickListener() {
             @Override
