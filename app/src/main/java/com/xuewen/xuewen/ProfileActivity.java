@@ -1,5 +1,7 @@
 package com.xuewen.xuewen;
 
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -85,6 +87,8 @@ public class ProfileActivity extends AppCompatActivity {
 
     private Uri avatarUri;
 
+    private Dialog dialog;
+
     @OnClick(R.id.schoolRow)
     void schoolClick() {
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(ProfileActivity.this, android.R.layout.select_dialog_singlechoice);
@@ -160,6 +164,8 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
 
         ButterKnife.bind(this);
+
+        dialog = new ProgressDialog(ProfileActivity.this);
 
         toolbar.setNavigationIcon(R.drawable.back);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -307,12 +313,17 @@ public class ProfileActivity extends AppCompatActivity {
             try {
 
                 InputStream inputStream = getContentResolver().openInputStream(avatarUri);
-                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-                bitmap = Bitmap.createScaledBitmap(bitmap, 100, 100, false);
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                Bitmap bitmap = BitmapFactory.decodeStream(inputStream, null, options);
+                int longer = options.outWidth > options.outHeight ? options.outWidth : options.outHeight;
+                if (longer > 1080) {
+                    double scale = 1080 / (double) longer;
+                    bitmap = Bitmap.createScaledBitmap(bitmap, (int) (options.outWidth * scale), (int) (options.outHeight * scale), false);
+                }
 
                 // Convert bitmap to byte array
                 ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100 /*ignored for PNG*/, bos);
                 byte [] bytes = bos.toByteArray();
 
                 RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), bytes);
@@ -321,6 +332,9 @@ public class ProfileActivity extends AppCompatActivity {
 //                InputStream inputStream = getContentResolver().openInputStream(avatarUri);
 //                RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), FileIOUtils.readBytes(inputStream));
 //                body = MultipartBody.Part.createFormData("avatar", "avatar", requestBody);
+
+                dialog.show();
+
             } catch (IOException e) {
                 Toast.makeText(ProfileActivity.this, ToastMsg.FILE_OPERATION_ERROR+"，头像上传失败", Toast.LENGTH_SHORT).show();
                 e.printStackTrace();
@@ -345,12 +359,16 @@ public class ProfileActivity extends AppCompatActivity {
             public void onResponse(Call<UUidResult> call, Response<UUidResult> response) {
                 if (!response.isSuccessful()) {
                     Toast.makeText(ProfileActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
                     return;
                 }
                 if (response.body().status != 200) {
                     Toast.makeText(ProfileActivity.this, response.body().errmsg, Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
                     return;
                 }
+
+                dialog.dismiss();
 
                 ToastMsg.showTips(ProfileActivity.this, ToastMsg.MODIFY_SUCCESS);
                 MainActivity.getDataKeeper().mineCached = false;
@@ -360,6 +378,7 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<UUidResult> call, Throwable t) {
                 Toast.makeText(ProfileActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
             }
         });
     }
