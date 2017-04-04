@@ -104,7 +104,7 @@ public class QuestionDetailActivity extends AppCompatActivity {
         // retrieve data
         id = getIntent().getIntExtra("id", -1);
         if (id == -1) {
-            Toast.makeText(QuestionDetailActivity.this, ToastMsg.APPLICATION_ERROR, Toast.LENGTH_LONG).show();
+            Toast.makeText(QuestionDetailActivity.this, ToastMsg.APPLICATION_ERROR, Toast.LENGTH_SHORT).show();
             finish();
             return;
         }
@@ -138,12 +138,12 @@ public class QuestionDetailActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<QQidResult> call, Response<QQidResult> response) {
                 if (!response.isSuccessful()) {
-                    Toast.makeText(QuestionDetailActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
+                    Toast.makeText(QuestionDetailActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_SHORT).show();
                     refresh.setRefreshing(false);
                     return;
                 }
                 if (response.body().status != 200) {
-                    Toast.makeText(QuestionDetailActivity.this, response.body().errmsg, Toast.LENGTH_LONG).show();
+                    Toast.makeText(QuestionDetailActivity.this, response.body().errmsg, Toast.LENGTH_SHORT).show();
                     refresh.setRefreshing(false);
                     return;
                 }
@@ -156,7 +156,7 @@ public class QuestionDetailActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<QQidResult> call, Throwable t) {
-                Toast.makeText(QuestionDetailActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(QuestionDetailActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_SHORT).show();
                 refresh.setRefreshing(false);
             }
         });
@@ -194,21 +194,21 @@ public class QuestionDetailActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<QQidCResult> call, Response<QQidCResult> response) {
                 if (!response.isSuccessful()) {
-                    Toast.makeText(QuestionDetailActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
+                    Toast.makeText(QuestionDetailActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (response.body().status != 200) {
-                    Toast.makeText(QuestionDetailActivity.this, response.body().errmsg, Toast.LENGTH_LONG).show();
+                    Toast.makeText(QuestionDetailActivity.this, response.body().errmsg, Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                Toast.makeText(QuestionDetailActivity.this, "评价成功", Toast.LENGTH_LONG).show();
+                Toast.makeText(QuestionDetailActivity.this, "评价成功", Toast.LENGTH_SHORT).show();
                 commentLayout.setVisibility(View.INVISIBLE);
             }
 
             @Override
             public void onFailure(Call<QQidCResult> call, Throwable t) {
-                Toast.makeText(QuestionDetailActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(QuestionDetailActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -130,12 +130,12 @@ public class UsersRelatedFragment extends Fragment {
             @Override
             public void onResponse(Call<UUidFARResult> call, Response<UUidFARResult> response) {
                 if (!response.isSuccessful()) {
-                    Toast.makeText(getActivity(), ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), ToastMsg.SERVER_ERROR, Toast.LENGTH_SHORT).show();
                     refresh.setRefreshing(false);
                     return;
                 }
                 if (response.body().status != 200) {
-                    Toast.makeText(getActivity(), response.body().errmsg, Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), response.body().errmsg, Toast.LENGTH_SHORT).show();
                     refresh.setRefreshing(false);
                     return;
                 }
@@ -161,7 +161,7 @@ public class UsersRelatedFragment extends Fragment {
             }
             @Override
             public void onFailure(Call<UUidFARResult> call, Throwable t) {
-                Toast.makeText(getActivity(), ToastMsg.NETWORK_ERROR + " : " + t.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), ToastMsg.NETWORK_ERROR + " : " + t.getMessage(), Toast.LENGTH_SHORT).show();
                 refresh.setRefreshing(false);
             }
         });
@@ -176,13 +176,13 @@ public class UsersRelatedFragment extends Fragment {
 //            @Override
 //            public void onResponse(Call<UUidFARResult> call, Response<UUidFARResult> response) {
 //                if (!response.isSuccessful()) {
-//                    Toast.makeText(getActivity(), ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
+//                    Toast.makeText(getActivity(), ToastMsg.SERVER_ERROR, Toast.LENGTH_SHORT).show();
 //                    updateFromDB();
 //                    refresh.setRefreshing(false);
 //                    return;
 //                }
 //                if (response.body().status != 200) {
-//                    Toast.makeText(getActivity(), response.body().errmsg, Toast.LENGTH_LONG).show();
+//                    Toast.makeText(getActivity(), response.body().errmsg, Toast.LENGTH_SHORT).show();
 //                    updateFromDB();
 //                    refresh.setRefreshing(false);
 //                    return;
@@ -207,7 +207,7 @@ public class UsersRelatedFragment extends Fragment {
 //
 //            @Override
 //            public void onFailure(Call<UUidFARResult> call, Throwable t) {
-//                Toast.makeText(getActivity(), ToastMsg.NETWORK_ERROR + " : " + t.getMessage(), Toast.LENGTH_LONG).show();
+//                Toast.makeText(getActivity(), ToastMsg.NETWORK_ERROR + " : " + t.getMessage(), Toast.LENGTH_SHORT).show();
 //                updateFromDB();
 //                refresh.setRefreshing(false);
 //            }

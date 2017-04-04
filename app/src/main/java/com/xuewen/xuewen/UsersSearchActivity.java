@@ -107,12 +107,12 @@ public class UsersSearchActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<UFResult> call, Response<UFResult> response) {
                 if (!response.isSuccessful()) {
-                    Toast.makeText(UsersSearchActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
+                    Toast.makeText(UsersSearchActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_SHORT).show();
                     refresh.setRefreshing(false);
                     return;
                 }
                 if (response.body().status != 200) {
-                    Toast.makeText(UsersSearchActivity.this, response.body().errmsg, Toast.LENGTH_LONG).show();
+                    Toast.makeText(UsersSearchActivity.this, response.body().errmsg, Toast.LENGTH_SHORT).show();
                     refresh.setRefreshing(false);
                     return;
                 }
@@ -126,7 +126,7 @@ public class UsersSearchActivity extends AppCompatActivity {
             }
             @Override
             public void onFailure(Call<UFResult> call, Throwable t) {
-                Toast.makeText(UsersSearchActivity.this, ToastMsg.NETWORK_ERROR + " : " + t.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(UsersSearchActivity.this, ToastMsg.NETWORK_ERROR + " : " + t.getMessage(), Toast.LENGTH_SHORT).show();
                 refresh.setRefreshing(false);
             }
         });

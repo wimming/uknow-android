@@ -48,7 +48,7 @@ public class ListenHelper {
 //                String result = parseResult(results);
                 finalResults += parseResult(results);
                 if (isLast) {
-                    Toast.makeText(context, finalResults, Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, finalResults, Toast.LENGTH_SHORT).show();
                     finalResults = "";
                 }
             }
@@ -90,7 +90,7 @@ public class ListenHelper {
 
     //信息输出
     public static void showTip(Context context, String str) {
-        Toast.makeText(context, str, Toast.LENGTH_LONG).show();
+        Toast.makeText(context, str, Toast.LENGTH_SHORT).show();
     }
 
     //因为listen接收数据异步，所以定义一个监听回调形式接口

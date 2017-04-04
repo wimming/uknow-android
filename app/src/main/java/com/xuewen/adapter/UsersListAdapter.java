@@ -165,11 +165,11 @@ public class UsersListAdapter extends BaseAdapter{
                     @Override
                     public void onResponse(Call<UUidFResult> call, Response<UUidFResult> response) {
                         if (!response.isSuccessful()) {
-                            Toast.makeText(context, ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
+                            Toast.makeText(context, ToastMsg.SERVER_ERROR, Toast.LENGTH_SHORT).show();
                             return;
                         }
                         if (response.body().status != 200) {
-                            Toast.makeText(context, response.body().errmsg, Toast.LENGTH_LONG).show();
+                            Toast.makeText(context, response.body().errmsg, Toast.LENGTH_SHORT).show();
                             return;
                         }
 
@@ -181,7 +181,7 @@ public class UsersListAdapter extends BaseAdapter{
                     }
                     @Override
                     public void onFailure(Call<UUidFResult> call, Throwable t) {
-                        Toast.makeText(context, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
 

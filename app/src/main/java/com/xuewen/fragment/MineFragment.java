@@ -142,11 +142,11 @@ public class MineFragment extends Fragment {
             @Override
             public void onResponse(Call<UUidResult> call, Response<UUidResult> response) {
                 if (!response.isSuccessful()) {
-                    Toast.makeText(getActivity(), ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), ToastMsg.SERVER_ERROR, Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (response.body().status != 200) {
-                    Toast.makeText(getActivity(), response.body().errmsg, Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), response.body().errmsg, Toast.LENGTH_SHORT).show();
                     return;
                 }
 //                Toast.makeText(getActivity(), "prof Request success.", Toast.LENGTH_SHORT).show();
@@ -171,7 +171,7 @@ public class MineFragment extends Fragment {
 
             @Override
             public void onFailure(Call<UUidResult> call, Throwable t) {
-                Toast.makeText(getActivity(), ToastMsg.NETWORK_ERROR + " : " + t.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), ToastMsg.NETWORK_ERROR + " : " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -61,11 +61,11 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
             @Override
             public void onResponse(Call<WXLoginResult> call, Response<WXLoginResult> response) {
                 if (!response.isSuccessful()) {
-                    Toast.makeText(WXEntryActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
+                    Toast.makeText(WXEntryActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (response.body().status != 200) {
-                    Toast.makeText(WXEntryActivity.this, response.body().errmsg, Toast.LENGTH_LONG).show();
+                    Toast.makeText(WXEntryActivity.this, response.body().errmsg, Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(WXEntryActivity.this, LoginActivity.class));
                     return;
                 }
@@ -94,7 +94,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
             }
             @Override
             public void onFailure(Call<WXLoginResult> call, Throwable t) {
-                Toast.makeText(WXEntryActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(WXEntryActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 

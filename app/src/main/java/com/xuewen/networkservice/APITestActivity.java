@@ -59,18 +59,18 @@ public class APITestActivity extends Activity {
                     @Override
                     public void onResponse(Call<QRResult> call, Response<QRResult> response) {
                         if (!response.isSuccessful()) {
-                            Toast.makeText(APITestActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
+                            Toast.makeText(APITestActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_SHORT).show();
                             return;
                         }
                         if (response.body().status != 200) {
-                            Toast.makeText(APITestActivity.this, response.body().errmsg, Toast.LENGTH_LONG).show();
+                            Toast.makeText(APITestActivity.this, response.body().errmsg, Toast.LENGTH_SHORT).show();
                             return;
                         }
                         Toast.makeText(APITestActivity.this, response.body().toString(), Toast.LENGTH_SHORT).show();
                     }
                     @Override
                     public void onFailure(Call<QRResult> call, Throwable t) {
-                        Toast.makeText(APITestActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(APITestActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -80,18 +80,18 @@ public class APITestActivity extends Activity {
                     @Override
                     public void onResponse(Call<QQidResult> call, Response<QQidResult> response) {
                         if (!response.isSuccessful()) {
-                            Toast.makeText(APITestActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
+                            Toast.makeText(APITestActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_SHORT).show();
                             return;
                         }
                         if (response.body().status != 200) {
-                            Toast.makeText(APITestActivity.this, response.body().errmsg, Toast.LENGTH_LONG).show();
+                            Toast.makeText(APITestActivity.this, response.body().errmsg, Toast.LENGTH_SHORT).show();
                             return;
                         }
                         Toast.makeText(APITestActivity.this, response.body().toString(), Toast.LENGTH_SHORT).show();
                     }
                     @Override
                     public void onFailure(Call<QQidResult> call, Throwable t) {
-                        Toast.makeText(APITestActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(APITestActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -101,18 +101,18 @@ public class APITestActivity extends Activity {
                     @Override
                     public void onResponse(Call<UUidIResult> call, Response<UUidIResult> response) {
                         if (!response.isSuccessful()) {
-                            Toast.makeText(APITestActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
+                            Toast.makeText(APITestActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_SHORT).show();
                             return;
                         }
                         if (response.body().status != 200) {
-                            Toast.makeText(APITestActivity.this, response.body().errmsg, Toast.LENGTH_LONG).show();
+                            Toast.makeText(APITestActivity.this, response.body().errmsg, Toast.LENGTH_SHORT).show();
                             return;
                         }
                         Toast.makeText(APITestActivity.this, response.body().toString(), Toast.LENGTH_SHORT).show();
                     }
                     @Override
                     public void onFailure(Call<UUidIResult> call, Throwable t) {
-                        Toast.makeText(APITestActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(APITestActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -122,18 +122,18 @@ public class APITestActivity extends Activity {
                     @Override
                     public void onResponse(Call<QQidLResult> call, Response<QQidLResult> response) {
                         if (!response.isSuccessful()) {
-                            Toast.makeText(APITestActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
+                            Toast.makeText(APITestActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_SHORT).show();
                             return;
                         }
                         if (response.body().status != 200) {
-                            Toast.makeText(APITestActivity.this, response.body().errmsg, Toast.LENGTH_LONG).show();
+                            Toast.makeText(APITestActivity.this, response.body().errmsg, Toast.LENGTH_SHORT).show();
                             return;
                         }
                         Toast.makeText(APITestActivity.this, response.body().toString(), Toast.LENGTH_SHORT).show();
                     }
                     @Override
                     public void onFailure(Call<QQidLResult> call, Throwable t) {
-                        Toast.makeText(APITestActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(APITestActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -143,18 +143,18 @@ public class APITestActivity extends Activity {
                     @Override
                     public void onResponse(Call<QQidCResult> call, Response<QQidCResult> response) {
                         if (!response.isSuccessful()) {
-                            Toast.makeText(APITestActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
+                            Toast.makeText(APITestActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_SHORT).show();
                             return;
                         }
                         if (response.body().status != 200) {
-                            Toast.makeText(APITestActivity.this, response.body().errmsg, Toast.LENGTH_LONG).show();
+                            Toast.makeText(APITestActivity.this, response.body().errmsg, Toast.LENGTH_SHORT).show();
                             return;
                         }
                         Toast.makeText(APITestActivity.this, response.body().toString(), Toast.LENGTH_SHORT).show();
                     }
                     @Override
                     public void onFailure(Call<QQidCResult> call, Throwable t) {
-                        Toast.makeText(APITestActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(APITestActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -164,18 +164,18 @@ public class APITestActivity extends Activity {
                     @Override
                     public void onResponse(Call<QFResult> call, Response<QFResult> response) {
                         if (!response.isSuccessful()) {
-                            Toast.makeText(APITestActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
+                            Toast.makeText(APITestActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_SHORT).show();
                             return;
                         }
                         if (response.body().status != 200) {
-                            Toast.makeText(APITestActivity.this, response.body().errmsg, Toast.LENGTH_LONG).show();
+                            Toast.makeText(APITestActivity.this, response.body().errmsg, Toast.LENGTH_SHORT).show();
                             return;
                         }
                         Toast.makeText(APITestActivity.this, response.body().toString(), Toast.LENGTH_SHORT).show();
                     }
                     @Override
                     public void onFailure(Call<QFResult> call, Throwable t) {
-                        Toast.makeText(APITestActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(APITestActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -185,18 +185,18 @@ public class APITestActivity extends Activity {
                     @Override
                     public void onResponse(Call<UUidFResult> call, Response<UUidFResult> response) {
                         if (!response.isSuccessful()) {
-                            Toast.makeText(APITestActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
+                            Toast.makeText(APITestActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_SHORT).show();
                             return;
                         }
                         if (response.body().status != 200) {
-                            Toast.makeText(APITestActivity.this, response.body().errmsg, Toast.LENGTH_LONG).show();
+                            Toast.makeText(APITestActivity.this, response.body().errmsg, Toast.LENGTH_SHORT).show();
                             return;
                         }
                         Toast.makeText(APITestActivity.this, response.body().toString(), Toast.LENGTH_SHORT).show();
                     }
                     @Override
                     public void onFailure(Call<UUidFResult> call, Throwable t) {
-                        Toast.makeText(APITestActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(APITestActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -207,18 +207,18 @@ public class APITestActivity extends Activity {
                     @Override
                     public void onResponse(Call<UUidRResult> call, Response<UUidRResult> response) {
                         if (!response.isSuccessful()) {
-                            Toast.makeText(APITestActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
+                            Toast.makeText(APITestActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_SHORT).show();
                             return;
                         }
                         if (response.body().status != 200) {
-                            Toast.makeText(APITestActivity.this, response.body().errmsg, Toast.LENGTH_LONG).show();
+                            Toast.makeText(APITestActivity.this, response.body().errmsg, Toast.LENGTH_SHORT).show();
                             return;
                         }
                         Toast.makeText(APITestActivity.this, response.body().toString(), Toast.LENGTH_SHORT).show();
                     }
                     @Override
                     public void onFailure(Call<UUidRResult> call, Throwable t) {
-                        Toast.makeText(APITestActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(APITestActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -229,18 +229,18 @@ public class APITestActivity extends Activity {
                     @Override
                     public void onResponse(Call<UFResult> call, Response<UFResult> response) {
                         if (!response.isSuccessful()) {
-                            Toast.makeText(APITestActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
+                            Toast.makeText(APITestActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_SHORT).show();
                             return;
                         }
                         if (response.body().status != 200) {
-                            Toast.makeText(APITestActivity.this, response.body().errmsg, Toast.LENGTH_LONG).show();
+                            Toast.makeText(APITestActivity.this, response.body().errmsg, Toast.LENGTH_SHORT).show();
                             return;
                         }
                         Toast.makeText(APITestActivity.this, response.body().toString(), Toast.LENGTH_SHORT).show();
                     }
                     @Override
                     public void onFailure(Call<UFResult> call, Throwable t) {
-                        Toast.makeText(APITestActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(APITestActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -251,18 +251,18 @@ public class APITestActivity extends Activity {
                     @Override
                     public void onResponse(Call<QResult> call, Response<QResult> response) {
                         if (!response.isSuccessful()) {
-                            Toast.makeText(APITestActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
+                            Toast.makeText(APITestActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_SHORT).show();
                             return;
                         }
                         if (response.body().status != 200) {
-                            Toast.makeText(APITestActivity.this, response.body().errmsg, Toast.LENGTH_LONG).show();
+                            Toast.makeText(APITestActivity.this, response.body().errmsg, Toast.LENGTH_SHORT).show();
                             return;
                         }
                         Toast.makeText(APITestActivity.this, response.body().toString(), Toast.LENGTH_SHORT).show();
                     }
                     @Override
                     public void onFailure(Call<QResult> call, Throwable t) {
-                        Toast.makeText(APITestActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(APITestActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -273,18 +273,18 @@ public class APITestActivity extends Activity {
                     @Override
                     public void onResponse(Call<UUidResult> call, Response<UUidResult> response) {
                         if (!response.isSuccessful()) {
-                            Toast.makeText(APITestActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
+                            Toast.makeText(APITestActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_SHORT).show();
                             return;
                         }
                         if (response.body().status != 200) {
-                            Toast.makeText(APITestActivity.this, response.body().errmsg, Toast.LENGTH_LONG).show();
+                            Toast.makeText(APITestActivity.this, response.body().errmsg, Toast.LENGTH_SHORT).show();
                             return;
                         }
                         Toast.makeText(APITestActivity.this, response.body().toString(), Toast.LENGTH_SHORT).show();
                     }
                     @Override
                     public void onFailure(Call<UUidResult> call, Throwable t) {
-                        Toast.makeText(APITestActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(APITestActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -302,18 +302,18 @@ public class APITestActivity extends Activity {
                     @Override
                     public void onResponse(Call<UUidResult> call, Response<UUidResult> response) {
                         if (!response.isSuccessful()) {
-                            Toast.makeText(APITestActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
+                            Toast.makeText(APITestActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_SHORT).show();
                             return;
                         }
                         if (response.body().status != 200) {
-                            Toast.makeText(APITestActivity.this, response.body().errmsg, Toast.LENGTH_LONG).show();
+                            Toast.makeText(APITestActivity.this, response.body().errmsg, Toast.LENGTH_SHORT).show();
                             return;
                         }
                         Toast.makeText(APITestActivity.this, response.body().toString(), Toast.LENGTH_SHORT).show();
                     }
                     @Override
                     public void onFailure(Call<UUidResult> call, Throwable t) {
-                        Toast.makeText(APITestActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(APITestActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -327,18 +327,18 @@ public class APITestActivity extends Activity {
                     @Override
                     public void onResponse(Call<QQidAResult> call, Response<QQidAResult> response) {
                         if (!response.isSuccessful()) {
-                            Toast.makeText(APITestActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
+                            Toast.makeText(APITestActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_SHORT).show();
                             return;
                         }
                         if (response.body().status != 200) {
-                            Toast.makeText(APITestActivity.this, response.body().errmsg, Toast.LENGTH_LONG).show();
+                            Toast.makeText(APITestActivity.this, response.body().errmsg, Toast.LENGTH_SHORT).show();
                             return;
                         }
                         Toast.makeText(APITestActivity.this, response.body().toString(), Toast.LENGTH_SHORT).show();
                     }
                     @Override
                     public void onFailure(Call<QQidAResult> call, Throwable t) {
-                        Toast.makeText(APITestActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(APITestActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -349,18 +349,18 @@ public class APITestActivity extends Activity {
                     @Override
                     public void onResponse(Call<UUidFResult> call, Response<UUidFResult> response) {
                         if (!response.isSuccessful()) {
-                            Toast.makeText(APITestActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
+                            Toast.makeText(APITestActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_SHORT).show();
                             return;
                         }
                         if (response.body().status != 200) {
-                            Toast.makeText(APITestActivity.this, response.body().errmsg, Toast.LENGTH_LONG).show();
+                            Toast.makeText(APITestActivity.this, response.body().errmsg, Toast.LENGTH_SHORT).show();
                             return;
                         }
                         Toast.makeText(APITestActivity.this, response.body().toString(), Toast.LENGTH_SHORT).show();
                     }
                     @Override
                     public void onFailure(Call<UUidFResult> call, Throwable t) {
-                        Toast.makeText(APITestActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(APITestActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
             }

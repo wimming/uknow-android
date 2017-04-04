@@ -81,11 +81,11 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<LogoutResult> call, Response<LogoutResult> response) {
                 if (!response.isSuccessful()) {
-                    Toast.makeText(SettingActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
+                    Toast.makeText(SettingActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (response.body().status != 200) {
-                    Toast.makeText(SettingActivity.this, response.body().errmsg, Toast.LENGTH_LONG).show();
+                    Toast.makeText(SettingActivity.this, response.body().errmsg, Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -98,13 +98,13 @@ public class SettingActivity extends AppCompatActivity {
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
 
-                Toast.makeText(SettingActivity.this, "退出成功", Toast.LENGTH_LONG).show();
+                Toast.makeText(SettingActivity.this, "退出成功", Toast.LENGTH_SHORT).show();
 
             }
 
             @Override
             public void onFailure(Call<LogoutResult> call, Throwable t) {
-                Toast.makeText(SettingActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(SettingActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

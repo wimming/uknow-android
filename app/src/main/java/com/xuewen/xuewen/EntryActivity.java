@@ -39,11 +39,11 @@ public class EntryActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<TKLoginResult> call, Response<TKLoginResult> response) {
                     if (!response.isSuccessful()) {
-                        Toast.makeText(EntryActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
+                        Toast.makeText(EntryActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_SHORT).show();
                         return;
                     }
                     if (response.body().status != 200) {
-                        Toast.makeText(EntryActivity.this, response.body().errmsg, Toast.LENGTH_LONG).show();
+                        Toast.makeText(EntryActivity.this, response.body().errmsg, Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(EntryActivity.this, LoginActivity.class));
                         return;
                     }
@@ -63,7 +63,7 @@ public class EntryActivity extends AppCompatActivity {
                 }
                 @Override
                 public void onFailure(Call<TKLoginResult> call, Throwable t) {
-                    Toast.makeText(EntryActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(EntryActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
         }

@@ -116,11 +116,11 @@ public class LoginInfoActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<UUidPResult> call, Response<UUidPResult> response) {
                 if (!response.isSuccessful()) {
-                    Toast.makeText(LoginInfoActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginInfoActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (response.body().status != 200) {
-                    Toast.makeText(LoginInfoActivity.this, response.body().errmsg, Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginInfoActivity.this, response.body().errmsg, Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -130,7 +130,7 @@ public class LoginInfoActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<UUidPResult> call, Throwable t) {
-                Toast.makeText(LoginInfoActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(LoginInfoActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 

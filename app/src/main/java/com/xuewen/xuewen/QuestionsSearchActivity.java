@@ -132,12 +132,12 @@ public class QuestionsSearchActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<QFResult> call, Response<QFResult> response) {
                 if (!response.isSuccessful()) {
-                    Toast.makeText(QuestionsSearchActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
+                    Toast.makeText(QuestionsSearchActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_SHORT).show();
                     refresh.setRefreshing(false);
                     return;
                 }
                 if (response.body().status != 200) {
-                    Toast.makeText(QuestionsSearchActivity.this, response.body().errmsg, Toast.LENGTH_LONG).show();
+                    Toast.makeText(QuestionsSearchActivity.this, response.body().errmsg, Toast.LENGTH_SHORT).show();
                     refresh.setRefreshing(false);
                     return;
                 }
@@ -152,7 +152,7 @@ public class QuestionsSearchActivity extends AppCompatActivity {
             }
             @Override
             public void onFailure(Call<QFResult> call, Throwable t) {
-                Toast.makeText(QuestionsSearchActivity.this, ToastMsg.NETWORK_ERROR + " : " + t.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(QuestionsSearchActivity.this, ToastMsg.NETWORK_ERROR + " : " + t.getMessage(), Toast.LENGTH_SHORT).show();
                 refresh.setRefreshing(false);
             }
         });

@@ -156,7 +156,7 @@ public class QuestionAskActivity extends AppCompatActivity {
         // retrieve data
         id = getIntent().getIntExtra("id", -1);
         if (id == -1) {
-            Toast.makeText(QuestionAskActivity.this, ToastMsg.APPLICATION_ERROR, Toast.LENGTH_LONG).show();
+            Toast.makeText(QuestionAskActivity.this, ToastMsg.APPLICATION_ERROR, Toast.LENGTH_SHORT).show();
             finish();
             return;
         }
@@ -177,13 +177,13 @@ public class QuestionAskActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<UUidIResult> call, Response<UUidIResult> response) {
                 if (!response.isSuccessful()) {
-                    Toast.makeText(QuestionAskActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
+                    Toast.makeText(QuestionAskActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_SHORT).show();
                     refresh.setRefreshing(false);
 //                    main_content.setVisibility(View.VISIBLE);
                     return;
                 }
                 if (response.body().status != 200) {
-                    Toast.makeText(QuestionAskActivity.this, response.body().errmsg, Toast.LENGTH_LONG).show();
+                    Toast.makeText(QuestionAskActivity.this, response.body().errmsg, Toast.LENGTH_SHORT).show();
                     refresh.setRefreshing(false);
 //                    main_content.setVisibility(View.VISIBLE);
                     return;
@@ -196,7 +196,7 @@ public class QuestionAskActivity extends AppCompatActivity {
             }
             @Override
             public void onFailure(Call<UUidIResult> call, Throwable t) {
-                Toast.makeText(QuestionAskActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(QuestionAskActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_SHORT).show();
                 refresh.setRefreshing(false);
 //                main_content.setVisibility(View.VISIBLE);
             }
@@ -243,11 +243,11 @@ public class QuestionAskActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<QResult> call, Response<QResult> response) {
                 if (!response.isSuccessful()) {
-                    Toast.makeText(QuestionAskActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
+                    Toast.makeText(QuestionAskActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (response.body().status != 200) {
-                    Toast.makeText(QuestionAskActivity.this, response.body().errmsg, Toast.LENGTH_LONG).show();
+                    Toast.makeText(QuestionAskActivity.this, response.body().errmsg, Toast.LENGTH_SHORT).show();
                     return;
                 }
                 //Toast.makeText(QuestionAskActivity.this, response.body().toString(), Toast.LENGTH_SHORT).show();
@@ -257,7 +257,7 @@ public class QuestionAskActivity extends AppCompatActivity {
             }
             @Override
             public void onFailure(Call<QResult> call, Throwable t) {
-                Toast.makeText(QuestionAskActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(QuestionAskActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

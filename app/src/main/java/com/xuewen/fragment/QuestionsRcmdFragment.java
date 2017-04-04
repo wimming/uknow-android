@@ -129,12 +129,12 @@ public class QuestionsRcmdFragment extends Fragment {
             @Override
             public void onResponse(Call<QRResult> call, Response<QRResult> response) {
                 if (!response.isSuccessful()) {
-                    Toast.makeText(getActivity(), ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), ToastMsg.SERVER_ERROR, Toast.LENGTH_SHORT).show();
                     refresh.setRefreshing(false);
                     return;
                 }
                 if (response.body().status != 200) {
-                    Toast.makeText(getActivity(), response.body().errmsg, Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), response.body().errmsg, Toast.LENGTH_SHORT).show();
                     refresh.setRefreshing(false);
                     return;
                 }
@@ -159,7 +159,7 @@ public class QuestionsRcmdFragment extends Fragment {
             }
             @Override
             public void onFailure(Call<QRResult> call, Throwable t) {
-                Toast.makeText(getActivity(), ToastMsg.NETWORK_ERROR + " : " + t.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), ToastMsg.NETWORK_ERROR + " : " + t.getMessage(), Toast.LENGTH_SHORT).show();
                 refresh.setRefreshing(false);
             }
         });
@@ -175,14 +175,14 @@ public class QuestionsRcmdFragment extends Fragment {
 //            @Override
 //            public void onResponse(Call<QRResult> call, Response<QRResult> response) {
 //                if (!response.isSuccessful()) {
-//                    //Toast.makeText(getActivity(), ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
+//                    //Toast.makeText(getActivity(), ToastMsg.SERVER_ERROR, Toast.LENGTH_SHORT).show();
 //                    updateFromDB();
 //                    refresh.setRefreshing(false);
 //                    return;
 //                }
 //
 //                if (response.body().status != 200) {
-//                    Toast.makeText(getActivity(), response.body().errmsg, Toast.LENGTH_LONG).show();
+//                    Toast.makeText(getActivity(), response.body().errmsg, Toast.LENGTH_SHORT).show();
 //                    updateFromDB();
 //                    refresh.setRefreshing(false);
 //                    return;
@@ -206,7 +206,7 @@ public class QuestionsRcmdFragment extends Fragment {
 //
 //            @Override
 //            public void onFailure(Call<QRResult> call, Throwable t) {
-//                Toast.makeText(getActivity(), ToastMsg.NETWORK_ERROR + " : " + t.getMessage(), Toast.LENGTH_LONG).show();
+//                Toast.makeText(getActivity(), ToastMsg.NETWORK_ERROR + " : " + t.getMessage(), Toast.LENGTH_SHORT).show();
 //                updateFromDB();
 //                refresh.setRefreshing(false);
 //            }

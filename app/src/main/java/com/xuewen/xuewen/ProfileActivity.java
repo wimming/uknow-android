@@ -184,11 +184,11 @@ public class ProfileActivity extends AppCompatActivity {
             public void onResponse(Call<UUidResult> call, Response<UUidResult> response) {
 
                 if (!response.isSuccessful()) {
-                    Toast.makeText(ProfileActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
+                    Toast.makeText(ProfileActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (response.body().status != 200) {
-                    Toast.makeText(ProfileActivity.this, response.body().errmsg, Toast.LENGTH_LONG).show();
+                    Toast.makeText(ProfileActivity.this, response.body().errmsg, Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -225,7 +225,7 @@ public class ProfileActivity extends AppCompatActivity {
             }
             @Override
             public void onFailure(Call<UUidResult> call, Throwable t) {
-                Toast.makeText(ProfileActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(ProfileActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -271,11 +271,11 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<UUidResult> call, Response<UUidResult> response) {
                 if (!response.isSuccessful()) {
-                    Toast.makeText(ProfileActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
+                    Toast.makeText(ProfileActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (response.body().status != 200) {
-                    Toast.makeText(ProfileActivity.this, response.body().errmsg, Toast.LENGTH_LONG).show();
+                    Toast.makeText(ProfileActivity.this, response.body().errmsg, Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -286,7 +286,7 @@ public class ProfileActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<UUidResult> call, Throwable t) {
-                Toast.makeText(ProfileActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(ProfileActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
