@@ -16,6 +16,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.xuewen.bean.QRBean;
+import com.xuewen.utility.BitmapDecoder;
 import com.xuewen.utility.GlobalUtil;
 import com.xuewen.xuewen.QuestionAskActivity;
 import com.xuewen.xuewen.QuestionDetailActivity;
@@ -32,11 +33,15 @@ public class QuestionsListAdapter extends BaseAdapter {
     private List<QRBean> list;
     private Context context;
 
+    private Bitmap defaultAvatar;
+
     LruCache<String, Bitmap> mCaches;
 
     public QuestionsListAdapter(List<QRBean> list, Context context) {
         this.list = list;
         this.context = context;
+
+        defaultAvatar = BitmapDecoder.decodeSampledBitmapFromResource(context.getResources(), R.drawable.avatar, 100, 100);
 
         //下面是建立缓存
         int maxMemory = (int) Runtime.getRuntime().maxMemory();  //运行时最大内存
@@ -110,6 +115,7 @@ public class QuestionsListAdapter extends BaseAdapter {
         viewHolder.answerer_description.setText(list.get(position).answerer_username+" | "+list.get(position).answerer_status+"。"+list.get(position).answerer_description);
         viewHolder.listen.setText(list.get(position).audioSeconds+"''");
         viewHolder.review.setText(list.get(position).listeningNum+"人听过，"+list.get(position).praiseNum+"人觉得好");
+        viewHolder.answerer_avatarUrl.setImageBitmap(defaultAvatar);
         ImageLoader.getInstance().displayImage(GlobalUtil.getInstance().baseAvatarUrl + list.get(position).answerer_avatarUrl,
                 viewHolder.answerer_avatarUrl,
                 GlobalUtil.getInstance().circleBitmapOptions);
@@ -140,6 +146,8 @@ public class QuestionsListAdapter extends BaseAdapter {
 //
 //                    }
 //                });
+
+//        viewHolder.answerer_avatarUrl.setTag(GlobalUtil.getInstance().baseAvatarUrl+list.get(position).answerer_avatarUrl);
 
         viewHolder.listen.setTag(position);
         viewHolder.answerer_avatarUrl.setTag(position);
