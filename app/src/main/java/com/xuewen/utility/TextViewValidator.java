@@ -8,7 +8,7 @@ import android.widget.TextView;
  * Created by Administrator on 2016/12/07.
  */
 
-public class Validate {
+public class TextViewValidator {
 
     //可以传入多个 edittext textview  存在为空 返回true  不存在 返回false
     public static boolean isExistEmpty(TextView... textViews) {

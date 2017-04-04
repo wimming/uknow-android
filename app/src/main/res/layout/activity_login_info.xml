@@ -68,7 +68,7 @@
                 <!--android:layout_width="wrap_content"-->
                 <!--android:layout_height="wrap_content" />-->
             <Spinner
-                android:id="@+id/years"
+                android:id="@+id/year"
                 android:textAlignment="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />

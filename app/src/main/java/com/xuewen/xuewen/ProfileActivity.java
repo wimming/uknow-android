@@ -1,10 +1,12 @@
 package com.xuewen.xuewen;
 
-import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -18,11 +20,13 @@ import com.xuewen.networkservice.UUidResult;
 import com.xuewen.utility.CurrentUser;
 import com.xuewen.utility.GlobalUtil;
 import com.xuewen.utility.MyTextWatcher;
+import com.xuewen.utility.StatisticStorage;
 import com.xuewen.utility.ToastMsg;
-import com.xuewen.utility.Validate;
+import com.xuewen.utility.TextViewValidator;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -31,27 +35,106 @@ import retrofit2.Response;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    @BindView(R.id.avatar)
-    ImageView avatar;
-
-    @BindView(R.id.username)
-    EditText username;
-    @BindView(R.id.usernameTextInfo)
-    TextView usernameTextInfo;
-    @BindView(R.id.status)
-    EditText status;
-    @BindView(R.id.statusTextInfo)
-    TextView statusTextInfo;
-    @BindView(R.id.description)
-    EditText description;
-    @BindView(R.id.descriptionTextInfo)
-    TextView descriptionTextInfo;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+
+    @BindView(R.id.avatar)
+    ImageView avatar;
+    @BindView(R.id.username)
+    EditText username;
+    @BindView(R.id.status)
+    EditText status;
+    @BindView(R.id.description)
+    EditText description;
+    @BindView(R.id.school)
+    TextView school;
+    @BindView(R.id.major)
+    TextView major;
+    @BindView(R.id.grade)
+    TextView grade;
+
+    @BindView(R.id.usernameTextInfo)
+    TextView usernameTextInfo;
+    @BindView(R.id.statusTextInfo)
+    TextView statusTextInfo;
+    @BindView(R.id.descriptionTextInfo)
+    TextView descriptionTextInfo;
+
     @BindView(R.id.confirm)
     ImageView confirm;
     @BindView(R.id.visibilityController)
     LinearLayout visibilityController;
+
+    private StatisticStorage statisticStorage = new StatisticStorage();
+
+    @OnClick(R.id.schoolRow)
+    void schoolClick() {
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(ProfileActivity.this, android.R.layout.select_dialog_singlechoice);
+        for (int i = 0; i < statisticStorage.schoolsData.length; ++i) {
+            arrayAdapter.add(statisticStorage.schoolsData[i]);
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(ProfileActivity.this);
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        })
+        .setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String strName = arrayAdapter.getItem(which);
+                school.setText(strName);
+            }
+        }).create().show();
+    }
+    @OnClick(R.id.majorRow)
+    void majorClick() {
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(ProfileActivity.this, android.R.layout.select_dialog_singlechoice);
+        for (int i = 0; i < statisticStorage.majorData.length; ++i) {
+            arrayAdapter.add(statisticStorage.majorData[i]);
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(ProfileActivity.this);
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        })
+        .setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String strName = arrayAdapter.getItem(which);
+                major.setText(strName);
+            }
+        }).create().show();
+    }
+    @OnClick(R.id.gradeRow)
+    void gradeClick() {
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(ProfileActivity.this, android.R.layout.select_dialog_singlechoice);
+        for (int i = 0; i < statisticStorage.yearData.length; ++i) {
+            arrayAdapter.add(statisticStorage.yearData[i]);
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(ProfileActivity.this);
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        })
+        .setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String strName = arrayAdapter.getItem(which);
+                grade.setText(strName);
+            }
+        }).create().show();
+    }
+
+//    private List<Map<String, String>> dataSource = new ArrayList<Map<String, String>>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +167,11 @@ public class ProfileActivity extends AppCompatActivity {
         status.addTextChangedListener(new MyTextWatcher(this, 20, statusTextInfo));
         description.addTextChangedListener(new MyTextWatcher(this, 50, descriptionTextInfo));
 
+//        ListView listView = (ListView) findViewById(R.id.settingList);
+//        SimpleAdapter simpleAdapter = new SimpleAdapter(this, dataSource,
+//                R.layout.activity_profile_item, new String[] {"label", "content", "arr"}, new int[] {R.id.label, R.id.content, R.id.arr});
+//        listView.setAdapter(simpleAdapter);
+
     }
 
 
@@ -110,6 +198,27 @@ public class ProfileActivity extends AppCompatActivity {
                 status.setText(bean.status);
                 description.setText(bean.description);
                 ImageLoader.getInstance().displayImage(GlobalUtil.getInstance().baseAvatarUrl+bean.avatarUrl, avatar, GlobalUtil.getInstance().circleBitmapOptions);
+                school.setText(bean.school);
+                major.setText(bean.major);
+                grade.setText(bean.grade);
+
+//                dataSource.clear();
+//                Map<String, String> map;
+//                map = new HashMap<>();
+//                map.put("label", "学校");
+//                map.put("content", bean.school);
+//                map.put("arr", ">");
+//                dataSource.add(map);
+//                map = new HashMap<>();
+//                map.put("label", "专业");
+//                map.put("content", bean.major);
+//                map.put("arr", ">");
+//                dataSource.add(map);
+//                map = new HashMap<>();
+//                map.put("label", "年级");
+//                map.put("content", bean.grade);
+//                map.put("arr", ">");
+//                dataSource.add(map);
 
                 visibilityController.setVisibility(View.VISIBLE);
 
@@ -124,7 +233,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void patchModifyUserInfoService(int uid) {
 
-        if (Validate.isExistEmpty(username, status, description)) {
+        if (TextViewValidator.isExistEmpty(username, status, description, school, major, grade)) {
             Toast.makeText(ProfileActivity.this, ToastMsg.ARG_INVALID_EMPTY, Toast.LENGTH_SHORT).show();
             return;
         }
@@ -135,11 +244,11 @@ public class ProfileActivity extends AppCompatActivity {
         RequestBody status = RequestBody.create(MediaType.parse("multipart/form-data"), statusString);
         String descriptionString = description.getText().toString();
         RequestBody description = RequestBody.create(MediaType.parse("multipart/form-data"), descriptionString);
-        String schoolString = "中山大学";
+        String schoolString = school.getText().toString();
         RequestBody school = RequestBody.create(MediaType.parse("multipart/form-data"), schoolString);
-        String majorString = "软件工程";
+        String majorString = major.getText().toString();
         RequestBody major = RequestBody.create(MediaType.parse("multipart/form-data"), majorString);
-        String gradeString = "2014本科生";
+        String gradeString = grade.getText().toString();
         RequestBody grade = RequestBody.create(MediaType.parse("multipart/form-data"), gradeString);
 
         //File file = new File(getExternalFilesDir(null)+"/test.jpg");

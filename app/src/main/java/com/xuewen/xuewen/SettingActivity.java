@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.xuewen.networkservice.ApiService;
@@ -32,10 +33,10 @@ public class SettingActivity extends AppCompatActivity {
 
 //    @BindView(R.id.listView) ListView listView;
 
-    private static  final String[] textData = {"使用帮助","关于学问", "意见反馈", "版本更新"};
+    private static final String [] textData = {"使用帮助","关于学问", "意见反馈", "版本更新"};
 
-    @BindView(R.id.logoutBtn)
-    Button logoutBtn;
+    @BindView(R.id.logout)
+    TextView logout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,13 +45,6 @@ public class SettingActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-        ListView listView = (ListView) findViewById(R.id.listView);
-        List<Map<String, String>> list_data = new ArrayList<Map<String, String>>();
-        for (int i = 0; i < textData.length; i++) {
-            Map<String, String> tempMap = new HashMap<String, String>();
-            tempMap.put("textview", textData[i]);
-            list_data.add(tempMap);
-        }
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.back);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -60,12 +54,18 @@ public class SettingActivity extends AppCompatActivity {
             }
         });
 
+        ListView listView = (ListView) findViewById(R.id.listView);
+        List<Map<String, String>> list_data = new ArrayList<Map<String, String>>();
+        for (int i = 0; i < textData.length; i++) {
+            Map<String, String> tempMap = new HashMap<String, String>();
+            tempMap.put("textview", textData[i]);
+            list_data.add(tempMap);
+        }
         SimpleAdapter simpleAdapter = new SimpleAdapter(this, list_data,
                 R.layout.activity_setting_item, new String[] {"textview"}, new int[] {R.id.textview});
-
         listView.setAdapter(simpleAdapter);
 
-        logoutBtn.setOnClickListener(new View.OnClickListener() {
+        logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 logout();

@@ -30,7 +30,7 @@ import com.xuewen.utility.CurrentUser;
 import com.xuewen.utility.GlobalUtil;
 import com.xuewen.utility.MyTextWatcher;
 import com.xuewen.utility.ToastMsg;
-import com.xuewen.utility.Validate;
+import com.xuewen.utility.TextViewValidator;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -233,7 +233,7 @@ public class QuestionAskActivity extends AppCompatActivity {
 
     private void sendSendAskedRequestService(int asker_id, String  description, int answerer_id) {
 
-        if (Validate.isExistEmpty(editText)) {
+        if (TextViewValidator.isExistEmpty(editText)) {
             ToastMsg.showTips(QuestionAskActivity.this, ToastMsg.ARG_INVALID_EMPTY);
             return;
         }
