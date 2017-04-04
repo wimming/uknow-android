@@ -27,8 +27,13 @@ import com.xuewen.utility.ListenHelper;
 import com.xuewen.utility.MediaHelper;
 import com.xuewen.utility.ToastMsg;
 
+import org.ocpsoft.prettytime.PrettyTime;
+
 import java.io.File;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -397,8 +402,18 @@ public class QuestionAnswerActivity extends AppCompatActivity {
 
         ImageLoader.getInstance().displayImage(GlobalUtil.getInstance().baseAvatarUrl+data.asker_avatarUrl, asker_avatarUrl, GlobalUtil.getInstance().circleBitmapOptions);
         asker_username.setText(data.asker_username);
-        askDate.setText(data.askDate);
         description.setText(data.description);
+
+        try {
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:m:s");
+            Date date = format.parse(data.askDate);
+            PrettyTime prettyTime = new PrettyTime(new Locale("ZH_CN"));
+            askDate.setText(prettyTime.format(date));
+        } catch (ParseException e) {
+            askDate.setText("未知时间");
+            e.printStackTrace();
+        }
+
     }
 
     //0 hide else show

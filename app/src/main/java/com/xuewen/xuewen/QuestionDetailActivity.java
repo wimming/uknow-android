@@ -29,11 +29,17 @@ import com.xuewen.utility.FileWriter;
 import com.xuewen.utility.GlobalUtil;
 import com.xuewen.utility.ToastMsg;
 
+import org.ocpsoft.prettytime.PrettyTime;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -166,7 +172,6 @@ public class QuestionDetailActivity extends AppCompatActivity {
     private void renderView(final QQidBean data) {
         ImageLoader.getInstance().displayImage(GlobalUtil.getInstance().baseAvatarUrl+data.asker_avatarUrl, asker_avatarUrl, GlobalUtil.getInstance().circleBitmapOptions);
         asker_username.setText(data.asker_username);
-        askDate.setText(data.askDate);
         description.setText(data.description);
         ImageLoader.getInstance().displayImage(GlobalUtil.getInstance().baseAvatarUrl+data.answerer_avatarUrl, answerer_avatarUrl, GlobalUtil.getInstance().circleBitmapOptions);
         answerer_username.setText(data.answerer_username);
@@ -183,6 +188,16 @@ public class QuestionDetailActivity extends AppCompatActivity {
                 }
             }
         });
+
+        try {
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:m:s");
+            Date date = format.parse(data.askDate);
+            PrettyTime prettyTime = new PrettyTime(new Locale("ZH_CN"));
+            askDate.setText(prettyTime.format(date));
+        } catch (ParseException e) {
+            askDate.setText("未知时间");
+            e.printStackTrace();
+        }
     }
 
     private void commentRequest(int praise) {
