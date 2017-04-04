@@ -32,7 +32,7 @@ public class MyTextWatcher implements TextWatcher{
     public void onTextChanged(CharSequence s, int start, int before, int count) {
 
         if (s.length() == length) {
-            Toast.makeText(context, "最多编辑" + length + "个", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "最多输入" + length + "个字", Toast.LENGTH_LONG).show();
         }
         textView.setText(s.length() + "/" + length);
     }

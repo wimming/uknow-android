@@ -76,40 +76,42 @@
                 android:layout_height="@dimen/base_small_margin"/>
 
             <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
                 android:paddingTop="@dimen/base_margin"
                 android:paddingBottom="@dimen/base_margin"
                 android:paddingLeft="@dimen/base_margin"
-                android:paddingRight="@dimen/base_margin"
-                android:layout_width="match_parent"
-                android:layout_height="70dp">
+                android:paddingRight="@dimen/base_margin" >
                 <TextView
+                    android:text="昵称"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentLeft="true"
-                    android:text="昵称"
-                    android:textSize="@dimen/base_medium_font"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:textSize="@dimen/base_medium_font" />
 
                 <TextView
                     android:id="@+id/usernameTextInfo"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentRight="true"
                     android:text="2/10"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true" />
 
                 <EditText
                     android:id="@+id/username"
                     android:text="张三"
-                    android:maxLength="10"
-                    android:background="@null"
-                    android:textSize="@dimen/base_medium_font"
-                    android:textColor="@color/black_color"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true" />
+                    android:layout_alignParentStart="true"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:maxLength="10"
+                    android:background="@null"
+                    android:textSize="@dimen/base_medium_font"
+                    android:textColor="@color/black_color" />
             </RelativeLayout>
 
             <View
@@ -118,43 +120,46 @@
                 android:layout_height="@dimen/base_small_margin"/>
 
             <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
                 android:paddingTop="@dimen/base_margin"
                 android:paddingBottom="@dimen/base_margin"
                 android:paddingLeft="@dimen/base_margin"
-                android:paddingRight="@dimen/base_margin"
-                android:layout_width="match_parent"
-                android:layout_height="70dp">
+                android:paddingRight="@dimen/base_margin" >
                 <TextView
+                    android:text="身份"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentLeft="true"
-                    android:text="身份"
-                    android:textSize="@dimen/base_medium_font"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:textSize="@dimen/base_medium_font" />
                 <EditText
                     android:id="@+id/status"
-                    android:maxLength="20"
+                    android:text="中山大学软件学院学生"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentLeft="true"
-                    android:text="中山大学软件学院学生"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:maxLength="20"
                     android:background="@null"
                     android:textSize="@dimen/base_medium_font"
-                    android:textColor="@color/black_color"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:textColor="@color/black_color" />
                 <TextView
                     android:id="@+id/statusTextInfo"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentRight="true"
                     android:text="2/20"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true" />
             </RelativeLayout>
 
             <View
                 android:background="#E6E6E6"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/base_small_margin"/>
+
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
@@ -165,20 +170,21 @@
                 android:paddingBottom="@dimen/base_margin">
                 <TextView
                     android:text="简介"
-                    android:textSize="@dimen/base_medium_font"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/base_margin"/>
+                    android:layout_marginBottom="@dimen/base_margin"
+                    android:textSize="@dimen/base_medium_font" />
                 <EditText
                     android:id="@+id/description"
-                    android:maxLength="50"
                     android:text="爱好产品，曾在腾讯工作，对软件编写，电子有一定的了解，从事软件行业好多年"
-                    android:textColor="@color/black_color"
-                    android:background="@null"
-                    android:textSize="@dimen/base_medium_font"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/base_margin"/>
+                    android:layout_marginBottom="@dimen/base_margin"
+                    android:inputType="textMultiLine"
+                    android:maxLength="50"
+                    android:textColor="@color/black_color"
+                    android:background="@null"
+                    android:textSize="@dimen/base_medium_font" />
                 <TextView
                     android:id="@+id/descriptionTextInfo"
                     android:text="49/50"
@@ -186,6 +192,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
+
             <View
                 android:background="#E6E6E6"
                 android:layout_width="match_parent"
