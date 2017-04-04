@@ -8,14 +8,15 @@
     android:layout_height="match_parent"
     android:paddingLeft="@dimen/base_margin"
     android:paddingRight="@dimen/base_margin"
+    android:background="@color/white_color"
     tools:context="com.xuewen.xuewen.LoginInfoActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
         app:elevation="0dp"
-        android:background="@color/white_color"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
         android:theme="@style/AppTheme.AppBarOverlay">
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
