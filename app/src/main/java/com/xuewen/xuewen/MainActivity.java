@@ -189,17 +189,17 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private DataKeeper dataKeeper = new DataKeeper();
-    public DataKeeper getDataKeeper() {
+    private static DataKeeper dataKeeper = new DataKeeper();
+    public static DataKeeper getDataKeeper() {
         return dataKeeper;
     }
-    public class DataKeeper {
+    public static class DataKeeper {
         public List<QRBean> questionsList = new ArrayList<>();
         public List<UUidFARBean> usersList = new ArrayList<>();
-        public UUidBean mime;
+        public UUidBean mine;
         public boolean questionsCached = false;
         public boolean usersCached = false;
-        public boolean mimeCached = false;
+        public boolean mineCached = false;
     }
 
 }

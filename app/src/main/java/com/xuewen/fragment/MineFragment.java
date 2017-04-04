@@ -93,9 +93,16 @@ public class MineFragment extends Fragment {
             }
         });
 
+        return rootView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
         // database service -> network service(不可见、开始刷新 -> 加载成功 -> 可见、结束刷新) -> write back to database
         // 内存中无数据，请求数据并缓存
-        if (!((MainActivity)getActivity()).getDataKeeper().mimeCached) {
+        if (!MainActivity.getDataKeeper().mineCached) {
 
             // database service
             databaseHelper = DatabaseHelper.getHelper(getActivity());
@@ -123,12 +130,11 @@ public class MineFragment extends Fragment {
         // 内存中有数据，直接用
         else {
 
-            data = ((MainActivity)getActivity()).getDataKeeper().mime;
+            data = MainActivity.getDataKeeper().mine;
             renderView(data);
 
         }
 
-        return rootView;
     }
 
     private void requestAndRender() {
@@ -156,8 +162,8 @@ public class MineFragment extends Fragment {
 //                    networkLock = true;
 
                 // 缓存至内存
-                ((MainActivity)getActivity()).getDataKeeper().mime = response.body().data;
-                ((MainActivity)getActivity()).getDataKeeper().mimeCached = true;
+                MainActivity.getDataKeeper().mine = response.body().data;
+                MainActivity.getDataKeeper().mineCached = true;
 
                 // write back to database
                 try {

@@ -84,9 +84,16 @@ public class UsersRelatedFragment extends Fragment {
             }
         });
 
+        return rootView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
         // database service -> network service(开始刷新 -> 加载成功 -> 结束刷新) -> write back to database
         // 内存中无数据，请求数据并缓存
-        if (!((MainActivity)getActivity()).getDataKeeper().usersCached) {
+        if (!MainActivity.getDataKeeper().usersCached) {
 
             // database service
             databaseHelper = DatabaseHelper.getHelper(getActivity());
@@ -108,12 +115,11 @@ public class UsersRelatedFragment extends Fragment {
         else {
 
             dataList.clear();
-            dataList.addAll(((MainActivity)getActivity()).getDataKeeper().usersList);
+            dataList.addAll(MainActivity.getDataKeeper().usersList);
             adapter.notifyDataSetChanged();
 
         }
 
-        return rootView;
     }
 
     private void requestAndRender() {
@@ -141,9 +147,9 @@ public class UsersRelatedFragment extends Fragment {
 //                networkLock = true;
 
                 // 缓存至内存
-                ((MainActivity)getActivity()).getDataKeeper().usersList.clear();
-                ((MainActivity)getActivity()).getDataKeeper().usersList.addAll(response.body().data);
-                ((MainActivity)getActivity()).getDataKeeper().usersCached = true;
+                MainActivity.getDataKeeper().usersList.clear();
+                MainActivity.getDataKeeper().usersList.addAll(response.body().data);
+                MainActivity.getDataKeeper().usersCached = true;
 
                 // write back to database
                 try {

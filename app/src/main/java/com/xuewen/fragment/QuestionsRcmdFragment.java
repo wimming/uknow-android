@@ -83,9 +83,16 @@ public class QuestionsRcmdFragment extends Fragment {
             }
         });
 
+        return rootView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
         // database service -> network service(开始刷新 -> 加载成功 -> 结束刷新) -> write back to database
         // 内存中无数据，请求数据并缓存
-        if (!((MainActivity)getActivity()).getDataKeeper().questionsCached) {
+        if (!MainActivity.getDataKeeper().questionsCached) {
 
             // database service
             databaseHelper = DatabaseHelper.getHelper(getActivity());
@@ -107,12 +114,11 @@ public class QuestionsRcmdFragment extends Fragment {
         else {
 
             dataList.clear();
-            dataList.addAll(((MainActivity)getActivity()).getDataKeeper().questionsList);
+            dataList.addAll(MainActivity.getDataKeeper().questionsList);
             adapter.notifyDataSetChanged();
 
         }
 
-        return rootView;
     }
 
     private void requestAndRender() {
@@ -139,9 +145,9 @@ public class QuestionsRcmdFragment extends Fragment {
                 refresh.setRefreshing(false);
 
                 // 缓存至内存
-                ((MainActivity)getActivity()).getDataKeeper().questionsList.clear();
-                ((MainActivity)getActivity()).getDataKeeper().questionsList.addAll(response.body().data);
-                ((MainActivity)getActivity()).getDataKeeper().questionsCached = true;
+                MainActivity.getDataKeeper().questionsList.clear();
+                MainActivity.getDataKeeper().questionsList.addAll(response.body().data);
+                MainActivity.getDataKeeper().questionsCached = true;
 
                 // write back to database
                 try {

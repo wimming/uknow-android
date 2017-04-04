@@ -129,6 +129,7 @@ public class QuestionAskActivity extends AppCompatActivity {
                     sendFollowsService(CurrentUser.userId, id, new ApiServiceRequestResultHandler() {
                         @Override
                         public void onSuccess(Object dataBean) {
+                            MainActivity.getDataKeeper().usersCached = false;
                             renderFollowedButton();
                         }
 
@@ -142,6 +143,7 @@ public class QuestionAskActivity extends AppCompatActivity {
                     sendUnFollowsService(CurrentUser.userId, id, new ApiServiceRequestResultHandler() {
                         @Override
                         public void onSuccess(Object dataBean) {
+                            MainActivity.getDataKeeper().usersCached = false;
                             renderUnfollowedButton();
                         }
 
