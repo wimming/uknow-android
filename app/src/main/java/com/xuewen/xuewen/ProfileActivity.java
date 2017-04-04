@@ -160,6 +160,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         // retrieve data
         // 不可见 -> 加载成功 -> 可见
+        confirm.setVisibility(View.GONE);
         visibilityController.setVisibility(View.INVISIBLE);
         requestAndRender(CurrentUser.userId);
 
@@ -220,6 +221,7 @@ public class ProfileActivity extends AppCompatActivity {
 //                map.put("arr", ">");
 //                dataSource.add(map);
 
+                confirm.setVisibility(View.VISIBLE);
                 visibilityController.setVisibility(View.VISIBLE);
 
             }
