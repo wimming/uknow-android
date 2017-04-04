@@ -39,15 +39,8 @@
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/refresh"
         android:background="@android:color/white"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        </View>
-    </android.support.v4.widget.SwipeRefreshLayout>
-
     <LinearLayout
         android:id="@+id/visibilityController"
         android:orientation="vertical"
@@ -167,5 +160,7 @@
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </LinearLayout>

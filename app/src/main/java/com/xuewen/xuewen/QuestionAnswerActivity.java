@@ -66,7 +66,6 @@ public class QuestionAnswerActivity extends AppCompatActivity {
     @BindView(R.id.visibilityController)
     LinearLayout visibilityController;
 
-
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.speak)
@@ -209,13 +208,20 @@ public class QuestionAnswerActivity extends AppCompatActivity {
             }
         });
 
-        // 这个的refresh只是为了缓存加载的一种方案 直接把refresh设置为 height = matchparent 就不用同时控制 内容和 refresh
-        // 注意的是 refresh里面必须有 子控件 它才有效果
         refresh.setColorSchemeResources(android.R.color.holo_blue_bright, android.R.color.holo_green_light, android.R.color.holo_orange_light);
-        refresh.setVisibility(View.VISIBLE);
-        refresh.setRefreshing(true);
 
-        requestData(id);
+        // 此方案有缺陷，不采用之
+//        // 这个的refresh只是为了缓存加载的一种方案 直接把refresh设置为 height = matchparent 就不用同时控制 内容和 refresh
+//        // 注意的是 refresh里面必须有 子控件 它才有效果
+//        refresh.setVisibility(View.VISIBLE);
+//        refresh.setRefreshing(true);
+
+        // retrieve data
+        // 开始刷新 -> 加载 -> 结束刷新
+        // 不可见 -> 加载成功 -> 可见
+        visibilityController.setVisibility(View.INVISIBLE);
+        refresh.setEnabled(false);  // 阻止手动刷新
+        requestAndRender();
 
 
 
@@ -356,8 +362,8 @@ public class QuestionAnswerActivity extends AppCompatActivity {
 
     }
 
-    private void requestData(int qid) {
-
+    private void requestAndRender() {
+        refresh.setRefreshing(true);
         ApiService apiService = ApiService.retrofit.create(ApiService.class);
         Call<QQidResult> call = apiService.requestQQid(id, CurrentUser.userId);
 
@@ -366,20 +372,23 @@ public class QuestionAnswerActivity extends AppCompatActivity {
             public void onResponse(Call<QQidResult> call, Response<QQidResult> response) {
                 if (!response.isSuccessful()) {
                     Toast.makeText(QuestionAnswerActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
+                    refresh.setRefreshing(false);
                     return;
                 }
                 if (response.body().status != 200) {
                     Toast.makeText(QuestionAnswerActivity.this, response.body().errmsg, Toast.LENGTH_LONG).show();
+                    refresh.setRefreshing(false);
                     return;
                 }
                 renderView(response.body().data);
-                refresh.setVisibility(View.GONE);
+                visibilityController.setVisibility(View.VISIBLE);
                 refresh.setRefreshing(false);
             }
 
             @Override
             public void onFailure(Call<QQidResult> call, Throwable t) {
                 Toast.makeText(QuestionAnswerActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_LONG).show();
+                refresh.setRefreshing(false);
             }
         });
     }

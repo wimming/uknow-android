@@ -64,7 +64,7 @@ public class UsersRelatedFragment extends Fragment {
             }
         });
 
-        final ListView listView = (ListView) rootView.findViewById(R.id.listView);
+        ListView listView = (ListView) rootView.findViewById(R.id.listView);
         adapter = new UsersListAdapter(dataList, getActivity());
         listView.setAdapter(adapter);
 
@@ -106,8 +106,8 @@ public class UsersRelatedFragment extends Fragment {
                 e.printStackTrace();
             }
 
-            // network service
-            // 开始刷新 -> 加载成功 -> 结束刷新
+            // retrieve data
+            // 开始刷新 -> 加载 -> 结束刷新
             requestAndRender();
 
         }

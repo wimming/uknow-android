@@ -99,9 +99,6 @@ public class QuestionAskActivity extends AppCompatActivity {
 //            }
 //        });
 
-        refresh.setEnabled(false);  // 不做刷新
-        main_content.setVisibility(View.GONE);
-
         editText.addTextChangedListener(new MyTextWatcher(this, 60, textView));
 
         toolbar.setNavigationIcon(R.drawable.back);
@@ -164,11 +161,16 @@ public class QuestionAskActivity extends AppCompatActivity {
             return;
         }
 
-        requestData(id);
+        // retrieve data
+        // 开始刷新 -> 加载 -> 结束刷新
+        // 不可见 -> 加载成功 -> 可见
+        main_content.setVisibility(View.INVISIBLE);
+        refresh.setEnabled(false);  // 阻止手动刷新
+        requestAndRender(id);
 
     }
 
-    private void requestData(int uid) {
+    private void requestAndRender(int uid) {
         refresh.setRefreshing(true);
         Call<UUidIResult> call = apiService.requestUUidI(uid, CurrentUser.userId);
         call.enqueue(new Callback<UUidIResult>() {

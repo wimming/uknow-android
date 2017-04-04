@@ -101,10 +101,6 @@ public class QuestionDetailActivity extends AppCompatActivity {
             }
         });
 
-        // 不可见、开始刷新 -> 加载成功 -> 可见、结束刷新
-        refresh.setEnabled(false);  // 不做刷新
-        visibilityController.setVisibility(View.GONE);
-
         // retrieve data
         id = getIntent().getIntExtra("id", -1);
         if (id == -1) {
@@ -113,7 +109,12 @@ public class QuestionDetailActivity extends AppCompatActivity {
             return;
         }
 
-        requestData(id);
+        // retrieve data
+        // 开始刷新 -> 加载 -> 结束刷新
+        // 不可见 -> 加载成功 -> 可见
+        visibilityController.setVisibility(View.INVISIBLE);
+        refresh.setEnabled(false);  // 阻止手动刷新
+        requestAndRender(id);
 
     }
 
@@ -128,7 +129,7 @@ public class QuestionDetailActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-    private void requestData(int id) {
+    private void requestAndRender(int id) {
         refresh.setRefreshing(true);
         ApiService apiService = ApiService.retrofit.create(ApiService.class);
         Call<QQidResult> call = apiService.requestQQid(id, CurrentUser.userId);

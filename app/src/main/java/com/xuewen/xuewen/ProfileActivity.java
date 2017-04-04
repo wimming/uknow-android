@@ -53,8 +53,6 @@ public class ProfileActivity extends AppCompatActivity {
     @BindView(R.id.visibilityController)
     LinearLayout visibilityController;
 
-    private ProgressDialog dialog;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,11 +68,6 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-        visibilityController.setVisibility(View.GONE);
-        dialog = new ProgressDialog(this);
-        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        dialog.show();
-
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,6 +75,9 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
+        // retrieve data
+        // 不可见 -> 加载成功 -> 可见
+        visibilityController.setVisibility(View.INVISIBLE);
         requestAndRender(CurrentUser.userId);
 
         username.addTextChangedListener(new MyTextWatcher(this, 10, usernameTextInfo));
@@ -101,12 +97,10 @@ public class ProfileActivity extends AppCompatActivity {
 
                 if (!response.isSuccessful()) {
                     Toast.makeText(ProfileActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_LONG).show();
-                    dialog.dismiss();
                     return;
                 }
                 if (response.body().status != 200) {
                     Toast.makeText(ProfileActivity.this, response.body().errmsg, Toast.LENGTH_LONG).show();
-                    dialog.dismiss();
                     return;
                 }
 
@@ -116,14 +110,12 @@ public class ProfileActivity extends AppCompatActivity {
                 status.setText(bean.status);
                 description.setText(bean.description);
                 ImageLoader.getInstance().displayImage(GlobalUtil.getInstance().baseAvatarUrl+bean.avatarUrl, avatar, GlobalUtil.getInstance().circleBitmapOptions);
-                dialog.dismiss();
+
                 visibilityController.setVisibility(View.VISIBLE);
 
             }
             @Override
             public void onFailure(Call<UUidResult> call, Throwable t) {
-                dialog.dismiss();
-                visibilityController.setVisibility(View.VISIBLE);
                 Toast.makeText(ProfileActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });

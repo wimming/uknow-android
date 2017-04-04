@@ -39,9 +39,9 @@ import retrofit2.Response;
 public class QuestionsRcmdFragment extends Fragment {
 
     private List<QRBean> dataList = new ArrayList<>();
-    private DatabaseHelper databaseHelper;
-//    private boolean networkLock = false;
     private QuestionsListAdapter adapter;
+
+    private DatabaseHelper databaseHelper;
 
     @BindView(R.id.refresh) SwipeRefreshLayout refresh;
     @BindView(R.id.searchBtn) View searchBtn;
@@ -53,8 +53,8 @@ public class QuestionsRcmdFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_questions_rcmd, container, false);
         ButterKnife.bind(this, rootView);
         databaseHelper = DatabaseHelper.getHelper(getActivity());
-        refresh.setColorSchemeResources(android.R.color.holo_blue_bright, android.R.color.holo_green_light, android.R.color.holo_orange_light);
 
+        refresh.setColorSchemeResources(android.R.color.holo_blue_bright, android.R.color.holo_green_light, android.R.color.holo_orange_light);
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -62,7 +62,7 @@ public class QuestionsRcmdFragment extends Fragment {
             }
         });
 
-        final ListView listView = (ListView) rootView.findViewById(R.id.listView);
+        ListView listView = (ListView) rootView.findViewById(R.id.listView);
         adapter = new QuestionsListAdapter(dataList, getActivity());
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -105,8 +105,8 @@ public class QuestionsRcmdFragment extends Fragment {
                 e.printStackTrace();
             }
 
-            // network service
-            // 开始刷新 -> 加载成功 -> 结束刷新
+            // retrieve data
+            // 开始刷新 -> 加载 -> 结束刷新
             requestAndRender();
 
         }

@@ -46,7 +46,6 @@ public class MineFragment extends Fragment {
 
     private UUidBean data;
     private DatabaseHelper databaseHelper;
-//    private boolean networkLock = false;
 
     @BindView(R.id.avatarUrl) ImageView avatarUrl;
     @BindView(R.id.followedNum) TextView followedNum;
@@ -57,7 +56,6 @@ public class MineFragment extends Fragment {
     @BindView(R.id.aboutme_iv_setting) ImageView aboutme_iv_setting;
 
     @BindView(R.id.appbar) AppBarLayout appbar;
-//    @BindView(R.id.refresh) SwipeRefreshLayout refresh;
 
     private ViewPager viewPager;
     private TabLayout tabLayout;
@@ -120,11 +118,10 @@ public class MineFragment extends Fragment {
                 e.printStackTrace();
             }
 
-            // network service
-            // 不可见、开始刷新 -> 加载成功 -> 可见、结束刷新
-            appbar.setVisibility(View.GONE);
+            // retrieve data
+            // 不可见 -> 加载成功 -> 可见
+            appbar.setVisibility(View.INVISIBLE);
             requestAndRender();
-//            refresh.setRefreshing(true);
 
         }
         // 内存中有数据，直接用
@@ -138,7 +135,6 @@ public class MineFragment extends Fragment {
     }
 
     private void requestAndRender() {
-//        refresh.setRefreshing(true);
         ApiService apiService = ApiService.retrofit.create(ApiService.class);
         Call<UUidResult> call = apiService.requestUUid(CurrentUser.userId);
 
@@ -159,7 +155,6 @@ public class MineFragment extends Fragment {
                 appbar.setVisibility(View.VISIBLE);
 
                 data = response.body().data;
-//                    networkLock = true;
 
                 // 缓存至内存
                 MainActivity.getDataKeeper().mine = response.body().data;
