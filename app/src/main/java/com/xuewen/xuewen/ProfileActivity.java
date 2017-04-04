@@ -1,6 +1,10 @@
 package com.xuewen.xuewen;
 
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,21 +17,29 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.j256.ormlite.misc.IOUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xuewen.bean.UUidBean;
 import com.xuewen.networkservice.ApiService;
 import com.xuewen.networkservice.UUidResult;
 import com.xuewen.utility.CurrentUser;
+import com.xuewen.utility.FileIOUtils;
 import com.xuewen.utility.GlobalUtil;
 import com.xuewen.utility.MyTextWatcher;
 import com.xuewen.utility.StatisticStorage;
 import com.xuewen.utility.ToastMsg;
 import com.xuewen.utility.TextViewValidator;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -65,7 +77,11 @@ public class ProfileActivity extends AppCompatActivity {
     @BindView(R.id.visibilityController)
     LinearLayout visibilityController;
 
+    private final int PICK_PHOTO_FOR_AVATAR = 0;
+
     private StatisticStorage statisticStorage = new StatisticStorage();
+
+    private Uri avatarUri;
 
     @OnClick(R.id.schoolRow)
     void schoolClick() {
@@ -168,6 +184,15 @@ public class ProfileActivity extends AppCompatActivity {
         status.addTextChangedListener(new MyTextWatcher(this, 20, statusTextInfo));
         description.addTextChangedListener(new MyTextWatcher(this, 50, descriptionTextInfo));
 
+        avatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.setType("image/*");
+                startActivityForResult(intent, PICK_PHOTO_FOR_AVATAR);
+            }
+        });
+
 //        ListView listView = (ListView) findViewById(R.id.settingList);
 //        SimpleAdapter simpleAdapter = new SimpleAdapter(this, dataSource,
 //                R.layout.activity_profile_item, new String[] {"label", "content", "arr"}, new int[] {R.id.label, R.id.content, R.id.arr});
@@ -175,6 +200,25 @@ public class ProfileActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_PHOTO_FOR_AVATAR && resultCode == RESULT_OK) {
+            if (data == null) {
+                return;
+            }
+//            try {
+//                InputStream inputStream = getContentResolver().openInputStream(data.getData());
+//                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+//                avatar.setImageBitmap(bitmap);
+//            } catch (FileNotFoundException e) {
+//                Toast.makeText(ProfileActivity.this, ToastMsg.FILE_OPERATION_ERROR, Toast.LENGTH_SHORT).show();
+//                e.printStackTrace();
+//            }
+            ImageLoader.getInstance().displayImage(data.getData().toString(), avatar, GlobalUtil.getInstance().circleBitmapOptions);
+            avatarUri = data.getData();
+        }
+    }
 
     private void requestAndRender(int uid) {
 
@@ -253,9 +297,22 @@ public class ProfileActivity extends AppCompatActivity {
         String gradeString = grade.getText().toString();
         RequestBody grade = RequestBody.create(MediaType.parse("multipart/form-data"), gradeString);
 
-        //File file = new File(getExternalFilesDir(null)+"/test.jpg");
-        //RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-        //MultipartBody.Part body = MultipartBody.Part.createFormData("avatar", file.getName(), requestBody);
+        MultipartBody.Part body;
+        if (avatarUri == null)  {
+            body = null;
+        }
+        else {
+            InputStream inputStream = null;
+            try {
+                inputStream = getContentResolver().openInputStream(avatarUri);
+                RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), FileIOUtils.readBytes(inputStream));
+                body = MultipartBody.Part.createFormData("avatar", "avatar.jpg", requestBody);
+            } catch (IOException e) {
+                Toast.makeText(ProfileActivity.this, ToastMsg.FILE_OPERATION_ERROR, Toast.LENGTH_SHORT).show();
+                e.printStackTrace();
+                body = null;
+            }
+        }
 
         // 执行请求
         ApiService apiService = ApiService.retrofit.create(ApiService.class);
@@ -267,7 +324,7 @@ public class ProfileActivity extends AppCompatActivity {
                 school,
                 major,
                 grade,
-                null
+                body
         );
         call.enqueue(new Callback<UUidResult>() {
             @Override
