@@ -55,7 +55,9 @@ public class UsersSearchActivity extends AppCompatActivity {
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                retrieveUsersAndRender(searchView.getQuery().toString());
+                if (!searchView.getQuery().toString().isEmpty()) {
+                    retrieveUsersAndRender(searchView.getQuery().toString());
+                }
             }
         });
 
@@ -79,14 +81,18 @@ public class UsersSearchActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextSubmit(String query) {
 //                Toast.makeText(UsersSearchActivity.this, query, Toast.LENGTH_SHORT).show();
-                retrieveUsersAndRender(query);
+                if (!query.isEmpty()) {
+                    retrieveUsersAndRender(query);
+                }
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
 //                Toast.makeText(UsersSearchActivity.this, newText, Toast.LENGTH_SHORT).show();
-                retrieveUsersAndRender(newText);
+                if (!newText.isEmpty()) {
+                    retrieveUsersAndRender(newText);
+                }
                 return false;
             }
         });
@@ -114,6 +120,9 @@ public class UsersSearchActivity extends AppCompatActivity {
                 resultList.addAll(response.body().data);
                 resultAdapter.notifyDataSetChanged();
                 refresh.setRefreshing(false);
+                if (response.body().data.size() == 0) {
+                    Toast.makeText(UsersSearchActivity.this, ToastMsg.EMPTY_RESULT, Toast.LENGTH_SHORT).show();
+                }
             }
             @Override
             public void onFailure(Call<UFResult> call, Throwable t) {

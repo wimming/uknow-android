@@ -18,6 +18,8 @@ public class ToastMsg {
 
     public static final String LOGIN_FAILED = "登录失败";
 
+    public static final String EMPTY_RESULT = "无结果";
+
     public static void showTips(Context context, String message) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
     }

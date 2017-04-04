@@ -145,6 +145,9 @@ public class QuestionsSearchActivity extends AppCompatActivity {
                 resultList.addAll(response.body().data);
                 resultAdapter.notifyDataSetChanged();
                 refresh.setRefreshing(false);
+                if (response.body().data.size() == 0) {
+                    Toast.makeText(QuestionsSearchActivity.this, ToastMsg.EMPTY_RESULT, Toast.LENGTH_SHORT).show();
+                }
 
             }
             @Override
