@@ -184,7 +184,7 @@ public class UsersListAdapter extends BaseAdapter{
                     }
                     @Override
                     public void onFailure(Call<UUidFResult> call, Throwable t) {
-                        Toast.makeText(context, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, ToastMsg.NETWORK_ERROR, Toast.LENGTH_SHORT).show();
                     }
                 });
 

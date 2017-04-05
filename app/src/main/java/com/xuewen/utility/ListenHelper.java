@@ -55,7 +55,7 @@ public class ListenHelper {
 
             @Override
             public void onError(SpeechError error) {
-                showTip(context, error.getPlainDescription(true));
+                Toast.makeText(context, error.getPlainDescription(true), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -63,7 +63,7 @@ public class ListenHelper {
     }
 
     //解析结果
-    private static  String  parseResult(RecognizerResult results) {
+    private static String parseResult(RecognizerResult results) {
         // 用HashMap存储听写结果
         HashMap<String, String> mIatResults = new LinkedHashMap<String, String>();
         String text = JsonParser.parseIatResult(results.getResultString());
@@ -86,11 +86,6 @@ public class ListenHelper {
             resultBuffer.append(mIatResults.get(key));
         }
         return resultBuffer.toString();
-    }
-
-    //信息输出
-    public static void showTip(Context context, String str) {
-        Toast.makeText(context, str, Toast.LENGTH_SHORT).show();
     }
 
     //因为listen接收数据异步，所以定义一个监听回调形式接口
@@ -128,7 +123,7 @@ public class ListenHelper {
 
             @Override
             public void onError(SpeechError error) {
-                showTip(context, error.getPlainDescription(true));
+                Toast.makeText(context, error.getPlainDescription(true), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -230,7 +225,6 @@ public class ListenHelper {
 
             @Override
             public void onError(SpeechError speechError) {
-//                showTip(context, speechError.getPlainDescription(true));
                 onResultListener.onError(speechError.getPlainDescription(true));
             }
 

@@ -105,7 +105,6 @@ public class QuestionsSearchActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-//                Toast.makeText(QuestionsSearchActivity.this, query, Toast.LENGTH_SHORT).show();
                 if (!query.isEmpty()) {
                     retrieveQuestionsAndRender(query);
                 }
@@ -114,7 +113,6 @@ public class QuestionsSearchActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-//                Toast.makeText(QuestionsSearchActivity.this, newText, Toast.LENGTH_SHORT).show();
                 if (!newText.isEmpty()) {
                     retrieveQuestionsAndRender(newText);
                 }
@@ -152,7 +150,7 @@ public class QuestionsSearchActivity extends AppCompatActivity {
             }
             @Override
             public void onFailure(Call<QFResult> call, Throwable t) {
-                Toast.makeText(QuestionsSearchActivity.this, ToastMsg.NETWORK_ERROR + " : " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(QuestionsSearchActivity.this, ToastMsg.NETWORK_ERROR, Toast.LENGTH_SHORT).show();
                 refresh.setRefreshing(false);
             }
         });

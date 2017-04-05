@@ -245,7 +245,6 @@ public class ProfileActivity extends AppCompatActivity {
                     return;
                 }
 
-                //Toast.makeText(ProfileActivity.this, response.body().toString(), Toast.LENGTH_SHORT).show();
                 UUidBean bean = response.body().data;
                 username.setText(bean.username);
                 status.setText(bean.status);
@@ -279,7 +278,7 @@ public class ProfileActivity extends AppCompatActivity {
             }
             @Override
             public void onFailure(Call<UUidResult> call, Throwable t) {
-                Toast.makeText(ProfileActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(ProfileActivity.this, ToastMsg.NETWORK_ERROR, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -288,7 +287,7 @@ public class ProfileActivity extends AppCompatActivity {
     private void patchModifyUserInfoService(int uid) {
 
         if (TextViewValidator.isExistEmpty(username, status, description, school, major, grade)) {
-            Toast.makeText(ProfileActivity.this, ToastMsg.ARG_INVALID_EMPTY, Toast.LENGTH_SHORT).show();
+            Toast.makeText(ProfileActivity.this, ToastMsg.INVALID_ARG_EMPTY, Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -370,14 +369,14 @@ public class ProfileActivity extends AppCompatActivity {
 
                 dialog.dismiss();
 
-                ToastMsg.showTips(ProfileActivity.this, ToastMsg.MODIFY_SUCCESS);
+                Toast.makeText(ProfileActivity.this, ToastMsg.MODIFY_SUCCESS, Toast.LENGTH_SHORT).show();
                 MainActivity.getDataKeeper().mineCached = false;
                 finish();
             }
 
             @Override
             public void onFailure(Call<UUidResult> call, Throwable t) {
-                Toast.makeText(ProfileActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(ProfileActivity.this, ToastMsg.NETWORK_ERROR, Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
             }
         });

@@ -86,7 +86,7 @@ public class QuestionAnswerActivity extends AppCompatActivity {
     @OnClick(R.id.send_recorded)
     void onClick() {
         if (filePath == null) {
-            Toast.makeText(QuestionAnswerActivity.this, "ni ha mei you lu yin", Toast.LENGTH_SHORT).show();
+            Toast.makeText(QuestionAnswerActivity.this, ToastMsg.EMPTY_RECORD, Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -115,7 +115,7 @@ public class QuestionAnswerActivity extends AppCompatActivity {
                     Toast.makeText(QuestionAnswerActivity.this, response.body().errmsg, Toast.LENGTH_SHORT).show();
                     return;
                 }
-                //Toast.makeText(QuestionAnswerActivity.this, response.body().toString(), Toast.LENGTH_SHORT).show();
+
                 mIat.cancel();
                 mIat.destroy();
                 handler_countdown.removeCallbacks(r);
@@ -129,7 +129,7 @@ public class QuestionAnswerActivity extends AppCompatActivity {
             }
             @Override
             public void onFailure(Call<QQidAResult> call, Throwable t) {
-                Toast.makeText(QuestionAnswerActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(QuestionAnswerActivity.this, ToastMsg.NETWORK_ERROR, Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
             }
         });
@@ -282,7 +282,8 @@ public class QuestionAnswerActivity extends AppCompatActivity {
                         //失败后回调
                         @Override
                         public void onError(String errorMsg) {
-                            ListenHelper.showTip(QuestionAnswerActivity.this, errorMsg);
+                            Toast.makeText(QuestionAnswerActivity.this, ToastMsg.RECORD_FAILED, Toast.LENGTH_SHORT).show();
+
                             speak.setImageResource(R.drawable.microphone);
 
                             page_state = PAGE_STATE.STATE0;
@@ -301,7 +302,6 @@ public class QuestionAnswerActivity extends AppCompatActivity {
                         //讯飞回调函数 OnError有个延迟 所以需要给用户提示一下
                         speak.setImageResource(R.drawable.microphone);
                         Toast.makeText(QuestionAnswerActivity.this, "分析中", Toast.LENGTH_SHORT).show();
-//                        ListenHelper.showTip(QuestionAnswerActivity.this, "分析中");
 
                     }
                     return;
@@ -392,7 +392,7 @@ public class QuestionAnswerActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<QQidResult> call, Throwable t) {
-                Toast.makeText(QuestionAnswerActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(QuestionAnswerActivity.this, ToastMsg.NETWORK_ERROR, Toast.LENGTH_SHORT).show();
                 refresh.setRefreshing(false);
             }
         });

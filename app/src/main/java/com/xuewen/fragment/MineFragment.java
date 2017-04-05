@@ -149,7 +149,7 @@ public class MineFragment extends Fragment {
                     Toast.makeText(getActivity(), response.body().errmsg, Toast.LENGTH_SHORT).show();
                     return;
                 }
-//                Toast.makeText(getActivity(), "prof Request success.", Toast.LENGTH_SHORT).show();
+
                 renderView(response.body().data);
 
                 appbar.setVisibility(View.VISIBLE);
@@ -171,7 +171,7 @@ public class MineFragment extends Fragment {
 
             @Override
             public void onFailure(Call<UUidResult> call, Throwable t) {
-                Toast.makeText(getActivity(), ToastMsg.NETWORK_ERROR + " : " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), ToastMsg.NETWORK_ERROR, Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -162,7 +162,7 @@ public class QuestionDetailActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<QQidResult> call, Throwable t) {
-                Toast.makeText(QuestionDetailActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(QuestionDetailActivity.this, ToastMsg.NETWORK_ERROR, Toast.LENGTH_SHORT).show();
                 refresh.setRefreshing(false);
             }
         });
@@ -217,13 +217,13 @@ public class QuestionDetailActivity extends AppCompatActivity {
                     return;
                 }
 
-                Toast.makeText(QuestionDetailActivity.this, "评价成功", Toast.LENGTH_SHORT).show();
+                Toast.makeText(QuestionDetailActivity.this, ToastMsg.COMMENT_SUCCESS, Toast.LENGTH_SHORT).show();
                 commentLayout.setVisibility(View.INVISIBLE);
             }
 
             @Override
             public void onFailure(Call<QQidCResult> call, Throwable t) {
-                Toast.makeText(QuestionDetailActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(QuestionDetailActivity.this, ToastMsg.NETWORK_ERROR, Toast.LENGTH_SHORT).show();
             }
         });
     }

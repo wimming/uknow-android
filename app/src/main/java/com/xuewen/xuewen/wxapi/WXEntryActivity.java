@@ -82,12 +82,10 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
 
                 if (response.body().data.isNew == 0) {
                     Intent intent = new Intent(WXEntryActivity.this, MainActivity.class);
-//                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                 }
                 else {
                     Intent intent = new Intent(WXEntryActivity.this, LoginInfoActivity.class);
-//                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                 }
 

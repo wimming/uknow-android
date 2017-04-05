@@ -161,7 +161,7 @@ public class UsersRelatedFragment extends Fragment {
             }
             @Override
             public void onFailure(Call<UUidFARResult> call, Throwable t) {
-                Toast.makeText(getActivity(), ToastMsg.NETWORK_ERROR + " : " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), ToastMsg.NETWORK_ERROR, Toast.LENGTH_SHORT).show();
                 refresh.setRefreshing(false);
             }
         });
@@ -207,7 +207,7 @@ public class UsersRelatedFragment extends Fragment {
 //
 //            @Override
 //            public void onFailure(Call<UUidFARResult> call, Throwable t) {
-//                Toast.makeText(getActivity(), ToastMsg.NETWORK_ERROR + " : " + t.getMessage(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), ToastMsg.NETWORK_ERROR, Toast.LENGTH_SHORT).show();
 //                updateFromDB();
 //                refresh.setRefreshing(false);
 //            }

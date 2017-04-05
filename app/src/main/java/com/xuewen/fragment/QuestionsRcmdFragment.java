@@ -159,7 +159,7 @@ public class QuestionsRcmdFragment extends Fragment {
             }
             @Override
             public void onFailure(Call<QRResult> call, Throwable t) {
-                Toast.makeText(getActivity(), ToastMsg.NETWORK_ERROR + " : " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), ToastMsg.NETWORK_ERROR, Toast.LENGTH_SHORT).show();
                 refresh.setRefreshing(false);
             }
         });
@@ -206,7 +206,7 @@ public class QuestionsRcmdFragment extends Fragment {
 //
 //            @Override
 //            public void onFailure(Call<QRResult> call, Throwable t) {
-//                Toast.makeText(getActivity(), ToastMsg.NETWORK_ERROR + " : " + t.getMessage(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), ToastMsg.NETWORK_ERROR, Toast.LENGTH_SHORT).show();
 //                updateFromDB();
 //                refresh.setRefreshing(false);
 //            }

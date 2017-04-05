@@ -85,7 +85,7 @@ public class LoginInfoActivity extends AppCompatActivity {
                 education.getSelectedItem().toString()
                 )) {
 
-            Toast.makeText(LoginInfoActivity.this, ToastMsg.ARG_INVALID_EMPTY, Toast.LENGTH_SHORT).show();
+            Toast.makeText(LoginInfoActivity.this, ToastMsg.INVALID_ARG_EMPTY, Toast.LENGTH_SHORT).show();
             return;
         }
 

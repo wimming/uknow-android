@@ -70,7 +70,7 @@ public class APITestActivity extends Activity {
                     }
                     @Override
                     public void onFailure(Call<QRResult> call, Throwable t) {
-                        Toast.makeText(APITestActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(APITestActivity.this, ToastMsg.NETWORK_ERROR, Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -91,7 +91,7 @@ public class APITestActivity extends Activity {
                     }
                     @Override
                     public void onFailure(Call<QQidResult> call, Throwable t) {
-                        Toast.makeText(APITestActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(APITestActivity.this, ToastMsg.NETWORK_ERROR, Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -112,7 +112,7 @@ public class APITestActivity extends Activity {
                     }
                     @Override
                     public void onFailure(Call<UUidIResult> call, Throwable t) {
-                        Toast.makeText(APITestActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(APITestActivity.this, ToastMsg.NETWORK_ERROR, Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -133,7 +133,7 @@ public class APITestActivity extends Activity {
                     }
                     @Override
                     public void onFailure(Call<QQidLResult> call, Throwable t) {
-                        Toast.makeText(APITestActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(APITestActivity.this, ToastMsg.NETWORK_ERROR, Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -154,7 +154,7 @@ public class APITestActivity extends Activity {
                     }
                     @Override
                     public void onFailure(Call<QQidCResult> call, Throwable t) {
-                        Toast.makeText(APITestActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(APITestActivity.this, ToastMsg.NETWORK_ERROR, Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -175,7 +175,7 @@ public class APITestActivity extends Activity {
                     }
                     @Override
                     public void onFailure(Call<QFResult> call, Throwable t) {
-                        Toast.makeText(APITestActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(APITestActivity.this, ToastMsg.NETWORK_ERROR, Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -196,7 +196,7 @@ public class APITestActivity extends Activity {
                     }
                     @Override
                     public void onFailure(Call<UUidFResult> call, Throwable t) {
-                        Toast.makeText(APITestActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(APITestActivity.this, ToastMsg.NETWORK_ERROR, Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -218,7 +218,7 @@ public class APITestActivity extends Activity {
                     }
                     @Override
                     public void onFailure(Call<UUidRResult> call, Throwable t) {
-                        Toast.makeText(APITestActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(APITestActivity.this, ToastMsg.NETWORK_ERROR, Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -240,7 +240,7 @@ public class APITestActivity extends Activity {
                     }
                     @Override
                     public void onFailure(Call<UFResult> call, Throwable t) {
-                        Toast.makeText(APITestActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(APITestActivity.this, ToastMsg.NETWORK_ERROR, Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -262,7 +262,7 @@ public class APITestActivity extends Activity {
                     }
                     @Override
                     public void onFailure(Call<QResult> call, Throwable t) {
-                        Toast.makeText(APITestActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(APITestActivity.this, ToastMsg.NETWORK_ERROR, Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -284,7 +284,7 @@ public class APITestActivity extends Activity {
                     }
                     @Override
                     public void onFailure(Call<UUidResult> call, Throwable t) {
-                        Toast.makeText(APITestActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(APITestActivity.this, ToastMsg.NETWORK_ERROR, Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -313,7 +313,7 @@ public class APITestActivity extends Activity {
                     }
                     @Override
                     public void onFailure(Call<UUidResult> call, Throwable t) {
-                        Toast.makeText(APITestActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(APITestActivity.this, ToastMsg.NETWORK_ERROR, Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -338,7 +338,7 @@ public class APITestActivity extends Activity {
                     }
                     @Override
                     public void onFailure(Call<QQidAResult> call, Throwable t) {
-                        Toast.makeText(APITestActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(APITestActivity.this, ToastMsg.NETWORK_ERROR, Toast.LENGTH_SHORT).show();
                     }
                 });
             }

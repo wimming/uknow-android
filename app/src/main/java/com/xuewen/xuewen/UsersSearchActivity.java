@@ -126,7 +126,7 @@ public class UsersSearchActivity extends AppCompatActivity {
             }
             @Override
             public void onFailure(Call<UFResult> call, Throwable t) {
-                Toast.makeText(UsersSearchActivity.this, ToastMsg.NETWORK_ERROR + " : " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(UsersSearchActivity.this, ToastMsg.NETWORK_ERROR, Toast.LENGTH_SHORT).show();
                 refresh.setRefreshing(false);
             }
         });

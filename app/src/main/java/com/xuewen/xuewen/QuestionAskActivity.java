@@ -92,7 +92,6 @@ public class QuestionAskActivity extends AppCompatActivity {
 //        refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 //            @Override
 //            public void onRefresh() {
-//                //Toast.makeText(getActivity(), "刷新一下", Toast.LENGTH_SHORT).show();
 //                refresh.setRefreshing(false);
 //                requestData(id);
 //
@@ -113,7 +112,7 @@ public class QuestionAskActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 sendSendAskedRequestService(CurrentUser.userId, editText.getText().toString(), id);
-                Toast.makeText(QuestionAskActivity.this, "提问成功", Toast.LENGTH_SHORT).show();
+                Toast.makeText(QuestionAskActivity.this, ToastMsg.ASK_SUCCESS, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -196,7 +195,7 @@ public class QuestionAskActivity extends AppCompatActivity {
             }
             @Override
             public void onFailure(Call<UUidIResult> call, Throwable t) {
-                Toast.makeText(QuestionAskActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(QuestionAskActivity.this, ToastMsg.NETWORK_ERROR, Toast.LENGTH_SHORT).show();
                 refresh.setRefreshing(false);
 //                main_content.setVisibility(View.VISIBLE);
             }
@@ -234,7 +233,7 @@ public class QuestionAskActivity extends AppCompatActivity {
     private void sendSendAskedRequestService(int asker_id, String  description, int answerer_id) {
 
         if (TextViewValidator.isExistEmpty(editText)) {
-            ToastMsg.showTips(QuestionAskActivity.this, ToastMsg.ARG_INVALID_EMPTY);
+            Toast.makeText(QuestionAskActivity.this, ToastMsg.INVALID_ARG_EMPTY, Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -250,14 +249,14 @@ public class QuestionAskActivity extends AppCompatActivity {
                     Toast.makeText(QuestionAskActivity.this, response.body().errmsg, Toast.LENGTH_SHORT).show();
                     return;
                 }
-                //Toast.makeText(QuestionAskActivity.this, response.body().toString(), Toast.LENGTH_SHORT).show();
+
                 Intent intent = new Intent(QuestionAskActivity.this, QuestionAskSuccessActivity.class);
                 startActivity(intent);
                 finish();
             }
             @Override
             public void onFailure(Call<QResult> call, Throwable t) {
-                Toast.makeText(QuestionAskActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(QuestionAskActivity.this, ToastMsg.NETWORK_ERROR, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -280,7 +279,7 @@ public class QuestionAskActivity extends AppCompatActivity {
             }
             @Override
             public void onFailure(Call<UUidFResult> call, Throwable t) {
-                apiServiceRequestResultHandler.onError(ToastMsg.NETWORK_ERROR+" : "+t.getMessage());
+                apiServiceRequestResultHandler.onError(ToastMsg.NETWORK_ERROR);
             }
         });
     }
@@ -303,7 +302,7 @@ public class QuestionAskActivity extends AppCompatActivity {
             }
             @Override
             public void onFailure(Call<UUidFResult> call, Throwable t) {
-                apiServiceRequestResultHandler.onError(ToastMsg.NETWORK_ERROR+" : "+t.getMessage());
+                apiServiceRequestResultHandler.onError(ToastMsg.NETWORK_ERROR);
             }
         });
     }
