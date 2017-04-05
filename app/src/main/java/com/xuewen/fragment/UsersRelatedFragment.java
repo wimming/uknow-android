@@ -45,7 +45,7 @@ public class UsersRelatedFragment extends Fragment {
     private UsersListAdapter adapter;
 
     @BindView(R.id.refresh) SwipeRefreshLayout refresh;
-    @BindView(R.id.searchBtn) View searchBtn;
+    @BindView(R.id.search) View search;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -77,7 +77,7 @@ public class UsersRelatedFragment extends Fragment {
             }
         });
 
-        searchBtn.setOnClickListener(new View.OnClickListener() {
+        search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getActivity(), UsersSearchActivity.class));

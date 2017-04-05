@@ -16,21 +16,30 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/base_toolbar_height"
+            app:contentInsetLeft="0dp"
+            app:contentInsetStart="0dp"
             app:layout_scrollFlags="scroll|enterAlways"
             app:popupTheme="@style/AppTheme.PopupOverlay">
+
+            <!--<android.support.v7.widget.SearchView-->
+            <!--android:id="@+id/searchView"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_marginTop="6dp"-->
+            <!--android:layout_marginBottom="6dp"-->
+            <!--android:layout_marginLeft="10dp"-->
+            <!--android:layout_marginRight="10dp"-->
+            <!--app:iconifiedByDefault="true"-->
+
+            <!--android:background="@drawable/search_background"-->
+            <!--android:queryHint="请输入搜索内容" />-->
 
             <android.support.v7.widget.SearchView
                 android:id="@+id/searchView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="6dp"
-                android:layout_marginBottom="6dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                app:iconifiedByDefault="true"
-
-                android:background="@drawable/search_background"
-                android:queryHint="请输入搜索内容" />
+                app:iconifiedByDefault="false"
+                app:queryHint="输入感兴趣的问题" />
 
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>

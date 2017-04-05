@@ -18,8 +18,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/base_toolbar_height"
-            app:layout_scrollFlags="scroll|enterAlways"
-            >
+            app:layout_scrollFlags="scroll|enterAlways">
             <TextView
                 android:text="问题详情"
                 android:textColor="@android:color/black"

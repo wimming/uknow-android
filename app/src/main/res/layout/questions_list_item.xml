@@ -38,23 +38,33 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/answerer_avatarUrl"
+        <FrameLayout
             android:layout_width="40dp"
-            android:layout_height="40dp" />
+            android:layout_height="40dp">
+            <ImageView
+                android:id="@+id/answerer_avatarUrl"
+                android:elevation="0dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp" />
+            <View
+                android:id="@+id/avatarClicker"
+                android:elevation="2dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp" />
+        </FrameLayout>
 
         <Button
             android:id="@+id/listen"
-            android:text="97''"
+            android:text="00''"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:background="@drawable/listen_view"
             android:layout_marginRight="40dp"
             android:layout_marginLeft="5dp"
             android:gravity="right|center"
             android:paddingRight="10dp"
-            android:layout_width="match_parent"
             android:textColor="@color/white_color"
-            android:textSize="@dimen/base_medium_font"
-            android:layout_height="match_parent" />
+            android:textSize="@dimen/base_medium_font" />
     </LinearLayout>
 
     <TextView

@@ -89,43 +89,40 @@ public class UsersListAdapter extends BaseAdapter{
         viewHolder.username.setText(list.get(position).username);
         viewHolder.status.setText(list.get(position).status);
         viewHolder.description.setText(list.get(position).description);
-        viewHolder.avatarUrl.setImageBitmap(defaultAvatar);
-        ImageLoader.getInstance().displayImage(GlobalUtil.getInstance().baseAvatarUrl+list.get(position).avatarUrl,
-                viewHolder.avatarUrl,
-                GlobalUtil.getInstance().circleBitmapOptions);
 
-//        ImageLoader.getInstance().displayImage(GlobalUtil.getInstance().baseAvatarUrl + list.get(position).avatarUrl,
-//                viewHolder.avatarUrl,
-//                GlobalUtil.getInstance().circleBitmapOptions,
-//                new ImageLoadingListener() {
-//                    @Override
-//                    public void onLoadingStarted(String imageUri, View view) {
-//                        Log.e("UIL", "onLoadingStarted");
-//                    }
-//
-//                    @Override
-//                    public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-//                        Log.e("UIL", "onLoadingFailed");
-//                        if (imageUri.equals(view.getTag())) {
-//                            ((ImageView)view).setImageBitmap(defaultAvatar);
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-//                        Log.e("UIL", "onLoadingComplete");
-////                        if (imageUri.equals(view.getTag())) {
-////                            ((ImageView)view).setImageBitmap(loadedImage);
-////                        }
-//                    }
-//
-//                    @Override
-//                    public void onLoadingCancelled(String imageUri, View view) {
-//                        Log.e("UIL", "onLoadingCancelled");
-//                    }
-//                });
+        if (viewHolder.avatarUrl.getTag() == null
+                ||
+                !viewHolder.avatarUrl.getTag().equals(GlobalUtil.getInstance().baseAvatarUrl+list.get(position).avatarUrl)) {
 
-//        viewHolder.avatarUrl.setTag(GlobalUtil.getInstance().baseAvatarUrl+list.get(position).avatarUrl);
+            viewHolder.avatarUrl.setImageBitmap(defaultAvatar);
+            ImageLoader.getInstance().displayImage(GlobalUtil.getInstance().baseAvatarUrl + list.get(position).avatarUrl,
+                    viewHolder.avatarUrl,
+                    GlobalUtil.getInstance().circleBitmapOptions,
+                    new ImageLoadingListener() {
+                        @Override
+                        public void onLoadingStarted(String imageUri, View view) {
+                            Log.e("UIL", "onLoadingStarted");
+                        }
+
+                        @Override
+                        public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                            Log.e("UIL", "onLoadingFailed");
+                        }
+
+                        @Override
+                        public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                            Log.e("UIL", "onLoadingComplete");
+                            view.setTag(imageUri);
+                        }
+
+                        @Override
+                        public void onLoadingCancelled(String imageUri, View view) {
+                            Log.e("UIL", "onLoadingCancelled");
+                        }
+                    });
+
+        }
+
 
         // 渲染层已经做了渲染判断 点击只需更改数据即可 无需再次渲染
         if (list.get(position).followed == 0) {

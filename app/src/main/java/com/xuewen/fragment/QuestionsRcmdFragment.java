@@ -44,7 +44,7 @@ public class QuestionsRcmdFragment extends Fragment {
     private DatabaseHelper databaseHelper;
 
     @BindView(R.id.refresh) SwipeRefreshLayout refresh;
-    @BindView(R.id.searchBtn) View searchBtn;
+    @BindView(R.id.search) View search;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -76,7 +76,7 @@ public class QuestionsRcmdFragment extends Fragment {
         });
 //        listView.setOnScrollListener(new PauseOnScrollListener(ImageLoader.getInstance(), true, true));
 
-        searchBtn.setOnClickListener(new View.OnClickListener() {
+        search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getActivity(), QuestionsSearchActivity.class));

@@ -11,6 +11,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
@@ -100,9 +101,10 @@ public class QuestionsListAdapter extends BaseAdapter {
             viewHolder.answerer_avatarUrl = (ImageView) view.findViewById(R.id.answerer_avatarUrl);
             viewHolder.listen = (Button) view.findViewById(R.id.listen);
             viewHolder.review = (TextView)view.findViewById(R.id.review);
+            viewHolder.avatarClicker = (View) view.findViewById(R.id.avatarClicker);
 
             viewHolder.listen.setOnClickListener(onListenClickListener);
-            viewHolder.answerer_avatarUrl.setOnClickListener(onAnswererAvatarUrlClickListener);
+            viewHolder.avatarClicker.setOnClickListener(onAnswererAvatarUrlClickListener);
 
             view.setTag(viewHolder);
         }
@@ -115,42 +117,41 @@ public class QuestionsListAdapter extends BaseAdapter {
         viewHolder.answerer_description.setText(list.get(position).answerer_username+" | "+list.get(position).answerer_status+"。"+list.get(position).answerer_description);
         viewHolder.listen.setText(list.get(position).audioSeconds+"''");
         viewHolder.review.setText(list.get(position).listeningNum+"人听过，"+list.get(position).praiseNum+"人觉得好");
-        viewHolder.answerer_avatarUrl.setImageBitmap(defaultAvatar);
-        ImageLoader.getInstance().displayImage(GlobalUtil.getInstance().baseAvatarUrl + list.get(position).answerer_avatarUrl,
-                viewHolder.answerer_avatarUrl,
-                GlobalUtil.getInstance().circleBitmapOptions);
-
-//        ImageLoader.getInstance().displayImage(GlobalUtil.getInstance().baseAvatarUrl + list.get(position).answerer_avatarUrl,
-//                viewHolder.answerer_avatarUrl,
-//                GlobalUtil.getInstance().circleBitmapOptions,
-//                new ImageLoadingListener() {
-//                    @Override
-//                    public void onLoadingStarted(String imageUri, View view) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-//                        if (imageUri.equals(view.getTag())) {
-//                            ((ImageView)view).setImageBitmap(loadedImage);
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onLoadingCancelled(String imageUri, View view) {
-//
-//                    }
-//                });
-
-//        viewHolder.answerer_avatarUrl.setTag(GlobalUtil.getInstance().baseAvatarUrl+list.get(position).answerer_avatarUrl);
 
         viewHolder.listen.setTag(position);
-        viewHolder.answerer_avatarUrl.setTag(position);
+        viewHolder.avatarClicker.setTag(position);
+
+        if (viewHolder.answerer_avatarUrl.getTag() == null
+                ||
+                !viewHolder.answerer_avatarUrl.getTag().equals(GlobalUtil.getInstance().baseAvatarUrl+list.get(position).answerer_avatarUrl)) {
+
+            viewHolder.answerer_avatarUrl.setImageBitmap(defaultAvatar);
+            ImageLoader.getInstance().displayImage(GlobalUtil.getInstance().baseAvatarUrl + list.get(position).answerer_avatarUrl,
+                    viewHolder.answerer_avatarUrl,
+                    GlobalUtil.getInstance().circleBitmapOptions,
+                    new ImageLoadingListener() {
+                        @Override
+                        public void onLoadingStarted(String imageUri, View view) {
+
+                        }
+
+                        @Override
+                        public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+
+                        }
+
+                        @Override
+                        public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                            view.setTag(imageUri);
+                        }
+
+                        @Override
+                        public void onLoadingCancelled(String imageUri, View view) {
+
+                        }
+                    });
+
+        }
 
         return view;
     }
@@ -161,6 +162,7 @@ public class QuestionsListAdapter extends BaseAdapter {
         public ImageView answerer_avatarUrl;
         public Button listen;
         public TextView review;
+        public View avatarClicker;
     }
 
     private View.OnClickListener onListenClickListener = new View.OnClickListener() {
@@ -175,6 +177,7 @@ public class QuestionsListAdapter extends BaseAdapter {
         @Override
         public void onClick(View view) {
             Intent intent = new Intent(context, QuestionAskActivity.class);
+            Toast.makeText(context, ((QRBean)getItem((int)view.getTag())).answerer_id+"", Toast.LENGTH_SHORT).show();
             intent.putExtra("id", ((QRBean)getItem((int)view.getTag())).answerer_id);
             context.startActivity(intent);
         }

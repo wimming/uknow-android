@@ -35,11 +35,25 @@
                 <!--android:background="@drawable/search_background"-->
                 <!--android:queryHint="请输入搜索内容" />-->
 
-            <ImageView
-                android:id="@+id/searchBtn"
-                android:background="@drawable/searchbar_peo"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent" />
+            <TextView
+                android:id="@+id/search"
+                android:text="搜索感兴趣的人"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:textColor="@color/heavy_gray_color"
+                android:textSize="@dimen/base_medium_font"
+                android:background="@drawable/search_background" />
+
+            <!--<ImageView-->
+            <!--android:id="@+id/search"-->
+            <!--android:background="@drawable/searchbar"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="match_parent" />-->
 
         </android.support.v7.widget.Toolbar>
         <View
