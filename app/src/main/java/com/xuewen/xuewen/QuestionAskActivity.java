@@ -250,9 +250,12 @@ public class QuestionAskActivity extends AppCompatActivity {
                     return;
                 }
 
+                MainActivity.getDataKeeper().mineCached = false;
+
                 Intent intent = new Intent(QuestionAskActivity.this, QuestionAskSuccessActivity.class);
                 startActivity(intent);
                 finish();
+
             }
             @Override
             public void onFailure(Call<QResult> call, Throwable t) {
@@ -318,7 +321,7 @@ public class QuestionAskActivity extends AppCompatActivity {
     private void renderUnfollowedButton() {
         followed.setText("+关注");
         followed.setBackgroundResource(R.drawable.follow_button);
-        followed.setTextColor(Color.GRAY);
+        followed.setTextColor(getResources().getColor(R.color.main_color));
     }
 
 }

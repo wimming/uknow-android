@@ -367,10 +367,12 @@ public class ProfileActivity extends AppCompatActivity {
                     return;
                 }
 
+                Toast.makeText(ProfileActivity.this, ToastMsg.MODIFY_SUCCESS, Toast.LENGTH_SHORT).show();
+
                 dialog.dismiss();
 
-                Toast.makeText(ProfileActivity.this, ToastMsg.MODIFY_SUCCESS, Toast.LENGTH_SHORT).show();
                 MainActivity.getDataKeeper().mineCached = false;
+
                 finish();
             }
 

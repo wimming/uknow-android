@@ -120,6 +120,9 @@ public class QuestionAnswerActivity extends AppCompatActivity {
                 mIat.destroy();
                 handler_countdown.removeCallbacks(r);
                 playHandler.removeCallbacks(playRunnable);
+
+                MainActivity.getDataKeeper().mineCached = false;
+
                 Intent intent = new Intent(QuestionAnswerActivity.this, QuestionAnswerSuccessActivity.class);
 //                Intent intent = new Intent(QuestionAnswerActivity.this, QuestionDetailActivity.class);
                 intent.putExtra("id", id);

@@ -219,6 +219,8 @@ public class QuestionDetailActivity extends AppCompatActivity {
 
                 Toast.makeText(QuestionDetailActivity.this, ToastMsg.COMMENT_SUCCESS, Toast.LENGTH_SHORT).show();
                 commentLayout.setVisibility(View.INVISIBLE);
+
+                MainActivity.getDataKeeper().mineCached = false;
             }
 
             @Override
