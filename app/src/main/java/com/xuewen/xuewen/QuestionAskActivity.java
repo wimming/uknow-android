@@ -209,7 +209,7 @@ public class QuestionAskActivity extends AppCompatActivity {
         description.setText(data.description);
         if (data.followed == 0) {
             followed.setText("+关注");
-            followed.setBackgroundResource(R.drawable.follow_button_main);
+            followed.setBackgroundResource(R.drawable.button_border);
             followed.setTextColor(Color.GRAY);
             //viewHolder.followed.setTextColor(context.getResources().getColor(R.color.main_color));
         }
@@ -314,13 +314,13 @@ public class QuestionAskActivity extends AppCompatActivity {
 
     private void renderFollowedButton() {
         followed.setText("已关注");
-        followed.setBackgroundResource(R.drawable.radius_button_shape);
+        followed.setBackgroundResource(R.drawable.button_solid);
         followed.setTextColor(Color.WHITE);
     }
 
     private void renderUnfollowedButton() {
         followed.setText("+关注");
-        followed.setBackgroundResource(R.drawable.follow_button_main);
+        followed.setBackgroundResource(R.drawable.button_border);
         followed.setTextColor(getResources().getColor(R.color.main_color));
     }
 

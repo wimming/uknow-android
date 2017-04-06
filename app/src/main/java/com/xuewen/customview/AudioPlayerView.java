@@ -173,7 +173,7 @@ public class AudioPlayerView extends LinearLayout {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                Log.e("TAG", "stop tracking");
+                Log.e("TAG", "play tracking");
                 userCtrling = false;
             }
         });

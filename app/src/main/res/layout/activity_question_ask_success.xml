@@ -44,7 +44,7 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:src="@drawable/circle_choose"
+            android:src="@drawable/tick_circle"
             android:layout_marginBottom="@dimen/fab_margin"
             android:layout_width="@dimen/base_small_avatar"
             android:layout_height="@dimen/base_small_avatar" />

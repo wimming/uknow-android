@@ -13,12 +13,12 @@
         android:paddingRight="10dp"
         android:lines="1"
         android:ellipsize="end"
-        android:background="@drawable/radius_button_shape"
+        android:background="@drawable/button_solid"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
     <!--<Button-->
         <!--android:id="@+id/button"-->
-        <!--android:background="@drawable/radius_button_shape"-->
+        <!--android:background="@drawable/button_solid"-->
         <!--android:lines="1"-->
         <!--android:ellipsize="end"-->
         <!--android:layout_gravity="center"-->

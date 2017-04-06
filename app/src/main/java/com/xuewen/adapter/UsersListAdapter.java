@@ -126,14 +126,14 @@ public class UsersListAdapter extends BaseAdapter{
         // 渲染层已经做了渲染判断 点击只需更改数据即可 无需再次渲染
         if (list.get(position).followed == 0) {
             //viewHolder.followed.setVisibility(View.INVISIBLE);
-            viewHolder.followed.setBackgroundResource(R.drawable.unfollow_button);
+            viewHolder.followed.setBackgroundResource(R.drawable.button_border);
             viewHolder.followed.setText("+关注");
             viewHolder.followed.setTextColor(context.getResources().getColor(R.color.main_color));
 
 
         } else {
 //            viewHolder.followed.setVisibility(View.VISIBLE);
-            viewHolder.followed.setBackgroundResource(R.drawable.follow_button_gray);
+            viewHolder.followed.setBackgroundResource(R.drawable.button_border_gray);
             viewHolder.followed.setText("已关注");
             viewHolder.followed.setTextColor(Color.GRAY);
         }
@@ -174,7 +174,7 @@ public class UsersListAdapter extends BaseAdapter{
 
                         list.get(position).followed = 1;
                         TextView textView = (TextView)view;
-                        textView.setBackgroundResource(R.drawable.follow_button_gray);
+                        textView.setBackgroundResource(R.drawable.button_border_gray);
                         textView.setText("已关注");
                         textView.setTextColor(Color.GRAY);
                     }

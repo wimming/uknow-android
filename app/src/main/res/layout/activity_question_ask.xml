@@ -74,7 +74,7 @@
                             android:paddingBottom="3dp"
                             android:paddingLeft="10dp"
                             android:paddingRight="10dp"
-                            android:background="@drawable/radius_button_shape"
+                            android:background="@drawable/button_solid"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
                     </RelativeLayout>

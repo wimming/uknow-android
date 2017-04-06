@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content" />
             <ImageView
                 android:id="@+id/confirm"
-                android:src="@drawable/choose"
+                android:src="@drawable/tick"
                 android:layout_gravity="end"
                 android:layout_marginRight="@dimen/base_margin"
                 android:layout_width="25dp"

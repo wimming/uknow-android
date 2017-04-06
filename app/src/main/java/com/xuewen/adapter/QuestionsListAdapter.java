@@ -177,7 +177,6 @@ public class QuestionsListAdapter extends BaseAdapter {
         @Override
         public void onClick(View view) {
             Intent intent = new Intent(context, QuestionAskActivity.class);
-            Toast.makeText(context, ((QRBean)getItem((int)view.getTag())).answerer_id+"", Toast.LENGTH_SHORT).show();
             intent.putExtra("id", ((QRBean)getItem((int)view.getTag())).answerer_id);
             context.startActivity(intent);
         }

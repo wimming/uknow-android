@@ -140,7 +140,7 @@
                     android:paddingBottom="3dp"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
-                    android:background="@drawable/follow_button_gray"
+                    android:background="@drawable/button_border_gray"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
@@ -153,7 +153,7 @@
                     android:paddingBottom="3dp"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
-                    android:background="@drawable/unfollow_button"
+                    android:background="@drawable/button_border"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>

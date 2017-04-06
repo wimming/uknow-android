@@ -184,7 +184,7 @@ public class QuestionAnswerActivity extends AppCompatActivity {
                 voice_length_show.setText(time.format(currentMillis) + "/" + time.format(maxMillis));
 
                 if (currentMillis >= maxMillis) {
-                    speak.setImageResource(R.drawable.stop);
+                    speak.setImageResource(R.drawable.play);
                 }
 
             }
@@ -244,7 +244,7 @@ public class QuestionAnswerActivity extends AppCompatActivity {
 //            @Override
 //            public void onResult() {
 //                state = STATE.IDLE;
-//                speak.setImageResource(R.drawable.playing);
+//                speak.setImageResource(R.drawable.stop);
 //            }
 //        });
 
@@ -327,7 +327,7 @@ public class QuestionAnswerActivity extends AppCompatActivity {
                                 public void onResult() {
                                     //当自然播放完成以后 必须直接设置为等待状态 这样的话 点击时就可以直接播放了
                                     state = STATE.PAUSE;
-                                    speak.setImageResource(R.drawable.stop);
+                                    speak.setImageResource(R.drawable.play);
                                 }
                             });
                             speak.setImageResource(R.drawable.pause);
@@ -338,7 +338,7 @@ public class QuestionAnswerActivity extends AppCompatActivity {
 
                             state = STATE.PAUSE;
                             mediaHelper.pause();
-                            speak.setImageResource(R.drawable.stop);
+                            speak.setImageResource(R.drawable.play);
                         }
                         else if (state == STATE.PAUSE) {
 
@@ -434,7 +434,7 @@ public class QuestionAnswerActivity extends AppCompatActivity {
     private void transToStatus0 () {
 
 //        ListenHelper.clearPlay();
-//        mediaHelper.stop();
+//        mediaHelper.play();
 
         if (state == STATE.PLAYING){
             mediaHelper.pause();
@@ -450,13 +450,13 @@ public class QuestionAnswerActivity extends AppCompatActivity {
     }
 
     private void transToStatus1() {
-        speak.setImageResource(R.drawable.playing);
+        speak.setImageResource(R.drawable.stop);
         voice_status_show.setText(voice_status_show_text1);
         buttonsShowORHide(0);
     }
 
     private void transToStatus2 () {
-        speak.setImageResource(R.drawable.stop);
+        speak.setImageResource(R.drawable.play);
         voice_status_show.setText(voice_status_show_text2);
         buttonsShowORHide(1);
     }
