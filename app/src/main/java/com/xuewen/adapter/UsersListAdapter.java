@@ -2,7 +2,6 @@ package com.xuewen.adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -134,7 +133,7 @@ public class UsersListAdapter extends BaseAdapter{
 
         } else {
 //            viewHolder.followed.setVisibility(View.VISIBLE);
-            viewHolder.followed.setBackgroundResource(R.drawable.follow_button);
+            viewHolder.followed.setBackgroundResource(R.drawable.follow_button_gray);
             viewHolder.followed.setText("已关注");
             viewHolder.followed.setTextColor(Color.GRAY);
         }
@@ -175,7 +174,7 @@ public class UsersListAdapter extends BaseAdapter{
 
                         list.get(position).followed = 1;
                         TextView textView = (TextView)view;
-                        textView.setBackgroundResource(R.drawable.follow_button);
+                        textView.setBackgroundResource(R.drawable.follow_button_gray);
                         textView.setText("已关注");
                         textView.setTextColor(Color.GRAY);
                     }
