@@ -19,23 +19,18 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.j256.ormlite.misc.IOUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xuewen.bean.UUidBean;
 import com.xuewen.networkservice.ApiService;
 import com.xuewen.networkservice.UUidResult;
-import com.xuewen.utility.BitmapDecoder;
 import com.xuewen.utility.CurrentUser;
-import com.xuewen.utility.FileIOUtils;
-import com.xuewen.utility.GlobalUtil;
+import com.xuewen.utility.Global;
 import com.xuewen.utility.MyTextWatcher;
 import com.xuewen.utility.StatisticStorage;
 import com.xuewen.utility.ToastMsg;
 import com.xuewen.utility.TextViewValidator;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -245,7 +240,7 @@ public class ProfileActivity extends AppCompatActivity {
 //                Toast.makeText(ProfileActivity.this, ToastMsg.FILE_OPERATION_ERROR, Toast.LENGTH_SHORT).show();
 //                e.printStackTrace();
 //            }
-            ImageLoader.getInstance().displayImage(data.getData().toString(), avatar, GlobalUtil.getInstance().circleBitmapOptions);
+            ImageLoader.getInstance().displayImage(data.getData().toString(), avatar, Global.getInstance().circleBitmapOptions);
             avatarUri = data.getData();
         }
     }
@@ -271,7 +266,7 @@ public class ProfileActivity extends AppCompatActivity {
                 username.setText(bean.username);
                 status.setText(bean.status);
                 description.setText(bean.description);
-                ImageLoader.getInstance().displayImage(GlobalUtil.getInstance().baseAvatarUrl+bean.avatarUrl, avatar, GlobalUtil.getInstance().circleBitmapOptions);
+                ImageLoader.getInstance().displayImage(Global.getInstance().baseAvatarUrl+bean.avatarUrl, avatar, Global.getInstance().circleBitmapOptions);
                 school.setText(bean.school);
                 major.setText(bean.major);
                 grade.setText(bean.grade);

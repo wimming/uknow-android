@@ -71,7 +71,5 @@ public class BaseApplication extends Application {
         // 微信开放平台
         IWXAPIHelper.regToWx(context);
 
-//        CurrentUser.userId = 3;
-
     }
 }

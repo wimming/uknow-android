@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xuewen.bean.UUidBean;
-import com.xuewen.utility.GlobalUtil;
+import com.xuewen.utility.Global;
 import com.xuewen.xuewen.R;
 
 import java.util.List;
@@ -73,7 +73,7 @@ public class MineAsksAdapter extends BaseAdapter{
 
         viewHolder.isAnswered.setText(list.get(position).finished ? "已回答" : "未回答");
 
-        ImageLoader.getInstance().displayImage(GlobalUtil.getInstance().baseAvatarUrl+list.get(position).answerer_avatarUrl, viewHolder.answerer_avatarUrl, GlobalUtil.getInstance().circleBitmapOptions);
+        ImageLoader.getInstance().displayImage(Global.getInstance().baseAvatarUrl+list.get(position).answerer_avatarUrl, viewHolder.answerer_avatarUrl, Global.getInstance().circleBitmapOptions);
 
         return view;
     }

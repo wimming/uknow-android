@@ -27,7 +27,7 @@ import com.xuewen.networkservice.QResult;
 import com.xuewen.networkservice.UUidFResult;
 import com.xuewen.networkservice.UUidIResult;
 import com.xuewen.utility.CurrentUser;
-import com.xuewen.utility.GlobalUtil;
+import com.xuewen.utility.Global;
 import com.xuewen.utility.MyTextWatcher;
 import com.xuewen.utility.ToastMsg;
 import com.xuewen.utility.TextViewValidator;
@@ -214,7 +214,7 @@ public class QuestionAskActivity extends AppCompatActivity {
             //viewHolder.followed.setTextColor(context.getResources().getColor(R.color.main_color));
         }
 
-        ImageLoader.getInstance().displayImage(GlobalUtil.getInstance().baseAvatarUrl+ data.avatarUrl, avatarUrl, GlobalUtil.getInstance().circleBitmapOptions);
+        ImageLoader.getInstance().displayImage(Global.getInstance().baseAvatarUrl+ data.avatarUrl, avatarUrl, Global.getInstance().circleBitmapOptions);
 
         followedAndAnswerSituation.setText(data.followedNum + "人关注, 回答了" + data.ansNum + "个问题");
 

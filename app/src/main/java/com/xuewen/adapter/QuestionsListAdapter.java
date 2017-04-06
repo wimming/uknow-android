@@ -11,14 +11,13 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.xuewen.bean.QRBean;
 import com.xuewen.utility.BitmapDecoder;
-import com.xuewen.utility.GlobalUtil;
+import com.xuewen.utility.Global;
 import com.xuewen.xuewen.QuestionAskActivity;
 import com.xuewen.xuewen.QuestionDetailActivity;
 import com.xuewen.xuewen.R;
@@ -123,12 +122,12 @@ public class QuestionsListAdapter extends BaseAdapter {
 
         if (viewHolder.answerer_avatarUrl.getTag() == null
                 ||
-                !viewHolder.answerer_avatarUrl.getTag().equals(GlobalUtil.getInstance().baseAvatarUrl+list.get(position).answerer_avatarUrl)) {
+                !viewHolder.answerer_avatarUrl.getTag().equals(Global.getInstance().baseAvatarUrl+list.get(position).answerer_avatarUrl)) {
 
             viewHolder.answerer_avatarUrl.setImageBitmap(defaultAvatar);
-            ImageLoader.getInstance().displayImage(GlobalUtil.getInstance().baseAvatarUrl + list.get(position).answerer_avatarUrl,
+            ImageLoader.getInstance().displayImage(Global.getInstance().baseAvatarUrl + list.get(position).answerer_avatarUrl,
                     viewHolder.answerer_avatarUrl,
-                    GlobalUtil.getInstance().circleBitmapOptions,
+                    Global.getInstance().circleBitmapOptions,
                     new ImageLoadingListener() {
                         @Override
                         public void onLoadingStarted(String imageUri, View view) {

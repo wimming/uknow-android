@@ -2,12 +2,12 @@ package com.xuewen.networkservice;
 
 import android.support.annotation.Nullable;
 
-import com.xuewen.bean.EmptyBean;
 import com.xuewen.utility.CurrentUser;
-import com.xuewen.utility.GlobalUtil;
+import com.xuewen.utility.Global;
+import com.zhy.http.okhttp.https.HttpsUtils;
 
 import java.io.IOException;
-import java.util.List;
+import java.io.InputStream;
 
 import okhttp3.Interceptor;
 import okhttp3.MultipartBody;
@@ -15,6 +15,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import okio.Buffer;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -22,7 +23,6 @@ import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
-import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
@@ -113,11 +113,10 @@ public interface ApiService {
     @GET("api/users/find")
     Call<UFResult> requestUF(@Query("query_string") String query_string);
 
-    static Interceptor interceptor = new Interceptor() {
+     static final Interceptor interceptor = new Interceptor() {
         @Override
         public Response intercept(Chain chain) throws IOException {
             Request oldRequest = chain.request();
-
             // 新的请求
             Request newRequest = oldRequest
                     .newBuilder()
@@ -127,15 +126,19 @@ public interface ApiService {
             return chain.proceed(newRequest);
         }
     };
+    static final String CER_STRING = "";
+    static final HttpsUtils.SSLParams sslParams = HttpsUtils.getSslSocketFactory(
+            new InputStream[] { new Buffer().writeUtf8(CER_STRING).inputStream() },
+            null, null);
     static final OkHttpClient client = new OkHttpClient
             .Builder()
             .addInterceptor(interceptor)
+            .sslSocketFactory(sslParams.sSLSocketFactory, sslParams.trustManager)
             .build();
     public static final Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl(GlobalUtil.getInstance().baseUrl)
+            .baseUrl(Global.getInstance().baseUrl)
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build();
-
 
 }

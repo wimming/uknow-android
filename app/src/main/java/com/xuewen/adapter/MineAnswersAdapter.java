@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xuewen.bean.UUidBean;
-import com.xuewen.utility.GlobalUtil;
+import com.xuewen.utility.Global;
 import com.xuewen.xuewen.R;
 
 import java.util.List;
@@ -72,7 +72,7 @@ public class MineAnswersAdapter extends BaseAdapter{
         viewHolder.asker_username.setText(list.get(position).asker_username+"的提问：");
         viewHolder.description.setText(list.get(position).description);
 
-        ImageLoader.getInstance().displayImage(GlobalUtil.getInstance().baseAvatarUrl+list.get(position).asker_avatarUrl, viewHolder.asker_avatarUrl, GlobalUtil.getInstance().circleBitmapOptions);
+        ImageLoader.getInstance().displayImage(Global.getInstance().baseAvatarUrl+list.get(position).asker_avatarUrl, viewHolder.asker_avatarUrl, Global.getInstance().circleBitmapOptions);
 
         if (list.get(position).finished) {
             viewHolder.answerButton.setVisibility(View.GONE);

@@ -22,7 +22,7 @@ import com.xuewen.networkservice.ApiService;
 import com.xuewen.networkservice.QQidAResult;
 import com.xuewen.networkservice.QQidResult;
 import com.xuewen.utility.CurrentUser;
-import com.xuewen.utility.GlobalUtil;
+import com.xuewen.utility.Global;
 import com.xuewen.utility.ListenHelper;
 import com.xuewen.utility.MediaHelper;
 import com.xuewen.utility.ToastMsg;
@@ -403,7 +403,7 @@ public class QuestionAnswerActivity extends AppCompatActivity {
 
     private void renderView(QQidBean data) {
 
-        ImageLoader.getInstance().displayImage(GlobalUtil.getInstance().baseAvatarUrl+data.asker_avatarUrl, asker_avatarUrl, GlobalUtil.getInstance().circleBitmapOptions);
+        ImageLoader.getInstance().displayImage(Global.getInstance().baseAvatarUrl+data.asker_avatarUrl, asker_avatarUrl, Global.getInstance().circleBitmapOptions);
         asker_username.setText(data.asker_username);
         description.setText(data.description);
 

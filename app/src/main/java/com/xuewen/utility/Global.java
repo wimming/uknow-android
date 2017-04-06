@@ -10,13 +10,13 @@ import com.nostra13.universalimageloader.core.display.CircleBitmapDisplayer;
  * Created by ym on 16-11-2.
  */
 
-public class GlobalUtil {
+public class Global {
 
-    private static GlobalUtil mInstance = null;
-    public static GlobalUtil getInstance(){
+    private static Global mInstance = null;
+    public static Global getInstance(){
         if(mInstance == null)
         {
-            mInstance = new GlobalUtil();
+            mInstance = new Global();
         }
         return mInstance;
     }
@@ -29,7 +29,7 @@ public class GlobalUtil {
     public String baseAvatarUrl = baseUrl+"static/avatar/";
     public String baseAudioUrl = baseUrl+"static/audio/";
 
-    private GlobalUtil() {
+    private Global() {
         circleBitmapOptions = new DisplayImageOptions.Builder()
                 .displayer(new CircleBitmapDisplayer())  // rounded corner bitmap
                 .cacheOnDisk(true)

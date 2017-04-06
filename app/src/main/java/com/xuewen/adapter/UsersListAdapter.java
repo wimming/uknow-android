@@ -20,7 +20,7 @@ import com.xuewen.networkservice.ApiService;
 import com.xuewen.networkservice.UUidFResult;
 import com.xuewen.utility.BitmapDecoder;
 import com.xuewen.utility.CurrentUser;
-import com.xuewen.utility.GlobalUtil;
+import com.xuewen.utility.Global;
 import com.xuewen.utility.ToastMsg;
 import com.xuewen.xuewen.R;
 
@@ -91,12 +91,12 @@ public class UsersListAdapter extends BaseAdapter{
 
         if (viewHolder.avatarUrl.getTag() == null
                 ||
-                !viewHolder.avatarUrl.getTag().equals(GlobalUtil.getInstance().baseAvatarUrl+list.get(position).avatarUrl)) {
+                !viewHolder.avatarUrl.getTag().equals(Global.getInstance().baseAvatarUrl+list.get(position).avatarUrl)) {
 
             viewHolder.avatarUrl.setImageBitmap(defaultAvatar);
-            ImageLoader.getInstance().displayImage(GlobalUtil.getInstance().baseAvatarUrl + list.get(position).avatarUrl,
+            ImageLoader.getInstance().displayImage(Global.getInstance().baseAvatarUrl + list.get(position).avatarUrl,
                     viewHolder.avatarUrl,
-                    GlobalUtil.getInstance().circleBitmapOptions,
+                    Global.getInstance().circleBitmapOptions,
                     new ImageLoadingListener() {
                         @Override
                         public void onLoadingStarted(String imageUri, View view) {

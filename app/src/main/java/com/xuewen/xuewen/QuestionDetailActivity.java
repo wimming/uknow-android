@@ -1,17 +1,10 @@
 package com.xuewen.xuewen;
 
-import android.app.AlertDialog;
-import android.app.ProgressDialog;
-import android.media.AudioManager;
-import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -21,21 +14,14 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xuewen.bean.QQidBean;
 import com.xuewen.customview.AudioPlayerView;
 import com.xuewen.networkservice.ApiService;
-import com.xuewen.networkservice.FileService;
 import com.xuewen.networkservice.QQidCResult;
 import com.xuewen.networkservice.QQidResult;
 import com.xuewen.utility.CurrentUser;
-import com.xuewen.utility.FileWriter;
-import com.xuewen.utility.GlobalUtil;
+import com.xuewen.utility.Global;
 import com.xuewen.utility.ToastMsg;
 
 import org.ocpsoft.prettytime.PrettyTime;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -43,11 +29,9 @@ import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
 /**
  * Created by ym on 16-10-22.
@@ -170,16 +154,16 @@ public class QuestionDetailActivity extends AppCompatActivity {
     }
 
     private void renderView(final QQidBean data) {
-        ImageLoader.getInstance().displayImage(GlobalUtil.getInstance().baseAvatarUrl+data.asker_avatarUrl, asker_avatarUrl, GlobalUtil.getInstance().circleBitmapOptions);
+        ImageLoader.getInstance().displayImage(Global.getInstance().baseAvatarUrl+data.asker_avatarUrl, asker_avatarUrl, Global.getInstance().circleBitmapOptions);
         asker_username.setText(data.asker_username);
         description.setText(data.description);
-        ImageLoader.getInstance().displayImage(GlobalUtil.getInstance().baseAvatarUrl+data.answerer_avatarUrl, answerer_avatarUrl, GlobalUtil.getInstance().circleBitmapOptions);
+        ImageLoader.getInstance().displayImage(Global.getInstance().baseAvatarUrl+data.answerer_avatarUrl, answerer_avatarUrl, Global.getInstance().circleBitmapOptions);
         answerer_username.setText(data.answerer_username);
         answerer_status.setText(data.answerer_status);
         answerer_description.setText(data.answerer_description);
         review.setText(data.listeningNum+"人听过，"+data.praiseNum+"人觉得好");
 
-        audioPlayerView.prepare(GlobalUtil.getInstance().baseAudioUrl + data.audioUrl, data.audioSeconds);
+        audioPlayerView.prepare(Global.getInstance().baseAudioUrl + data.audioUrl, data.audioSeconds);
         audioPlayerView.setOnCompleteListener(new AudioPlayerView.OnCompleteListener() {
             @Override
             public void onComplete() {
@@ -220,7 +204,7 @@ public class QuestionDetailActivity extends AppCompatActivity {
                 Toast.makeText(QuestionDetailActivity.this, ToastMsg.COMMENT_SUCCESS, Toast.LENGTH_SHORT).show();
                 commentLayout.setVisibility(View.INVISIBLE);
 
-                MainActivity.getDataKeeper().mineCached = false;
+                MainActivity.getDataKeeper().questionsCached = false;
             }
 
             @Override

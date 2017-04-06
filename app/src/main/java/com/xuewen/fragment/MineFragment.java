@@ -22,7 +22,7 @@ import com.xuewen.databaseservice.DatabaseHelper;
 import com.xuewen.networkservice.ApiService;
 import com.xuewen.networkservice.UUidResult;
 import com.xuewen.utility.CurrentUser;
-import com.xuewen.utility.GlobalUtil;
+import com.xuewen.utility.Global;
 import com.xuewen.utility.ToastMsg;
 import com.xuewen.xuewen.MainActivity;
 import com.xuewen.xuewen.ProfileActivity;
@@ -177,7 +177,7 @@ public class MineFragment extends Fragment {
     }
 
     private void renderView(UUidBean data) {
-        ImageLoader.getInstance().displayImage(GlobalUtil.getInstance().baseUrl+"static/avatar/"+data.avatarUrl, avatarUrl, GlobalUtil.getInstance().circleBitmapOptions);
+        ImageLoader.getInstance().displayImage(Global.getInstance().baseUrl+"static/avatar/"+data.avatarUrl, avatarUrl, Global.getInstance().circleBitmapOptions);
         username.setText(data.username);
         description.setText(data.description);
         status.setText(data.status);
