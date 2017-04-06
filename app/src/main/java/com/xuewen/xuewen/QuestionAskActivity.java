@@ -210,7 +210,7 @@ public class QuestionAskActivity extends AppCompatActivity {
         if (data.followed == 0) {
             followed.setText("+关注");
             followed.setBackgroundResource(R.drawable.button_border);
-            followed.setTextColor(Color.GRAY);
+            followed.setTextColor(getResources().getColor(R.color.main_color));
             //viewHolder.followed.setTextColor(context.getResources().getColor(R.color.main_color));
         }
 

@@ -91,7 +91,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     @OnClick(R.id.schoolRow)
     void schoolClick() {
-        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(ProfileActivity.this, android.R.layout.select_dialog_singlechoice);
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(ProfileActivity.this, android.R.layout.simple_list_item_1);
         for (int i = 0; i < statisticStorage.schoolsData.length; ++i) {
             arrayAdapter.add(statisticStorage.schoolsData[i]);
         }
@@ -113,7 +113,7 @@ public class ProfileActivity extends AppCompatActivity {
     }
     @OnClick(R.id.majorRow)
     void majorClick() {
-        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(ProfileActivity.this, android.R.layout.select_dialog_singlechoice);
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(ProfileActivity.this, android.R.layout.simple_list_item_1);
         for (int i = 0; i < statisticStorage.majorData.length; ++i) {
             arrayAdapter.add(statisticStorage.majorData[i]);
         }
@@ -135,7 +135,7 @@ public class ProfileActivity extends AppCompatActivity {
     }
     @OnClick(R.id.gradeRow)
     void gradeClick() {
-        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(ProfileActivity.this, android.R.layout.select_dialog_singlechoice);
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(ProfileActivity.this, android.R.layout.simple_list_item_1);
         for (int i = 0; i < statisticStorage.yearData.length; ++i) {
             arrayAdapter.add(statisticStorage.yearData[i]);
         }
@@ -152,6 +152,28 @@ public class ProfileActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 String strName = arrayAdapter.getItem(which);
                 grade.setText(strName);
+
+                // sub dialog
+                final ArrayAdapter<String> innerArrayAdapter = new ArrayAdapter<>(ProfileActivity.this, android.R.layout.simple_list_item_1);
+                for (int i = 0; i < statisticStorage.educationData.length; ++i) {
+                    innerArrayAdapter.add(statisticStorage.educationData[i]);
+                }
+
+                AlertDialog.Builder innerBuilder = new AlertDialog.Builder(ProfileActivity.this);
+                innerBuilder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .setAdapter(innerArrayAdapter, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String strName = innerArrayAdapter.getItem(which);
+                        grade.setText(grade.getText()+strName);
+                    }
+                }).create().show();
+
             }
         }).create().show();
     }

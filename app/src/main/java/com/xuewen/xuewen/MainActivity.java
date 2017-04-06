@@ -72,8 +72,8 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.getTabAt(1).setCustomView(getLayoutInflater().inflate(R.layout.activity_main_tab2, null));
         tabLayout.getTabAt(2).setCustomView(getLayoutInflater().inflate(R.layout.activity_main_tab3, null));
 
-        Toast.makeText(MainActivity.this, ((ActivityManager) getSystemService(ACTIVITY_SERVICE)).getLargeMemoryClass()+"", Toast.LENGTH_SHORT).show();
-        Toast.makeText(MainActivity.this, ((ActivityManager) getSystemService(ACTIVITY_SERVICE)).getMemoryClass()+"", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(MainActivity.this, ((ActivityManager) getSystemService(ACTIVITY_SERVICE)).getLargeMemoryClass()+"", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(MainActivity.this, ((ActivityManager) getSystemService(ACTIVITY_SERVICE)).getMemoryClass()+"", Toast.LENGTH_SHORT).show();
 
 //        searchView.setOnClickListener(new View.OnClickListener() {
 //            @Override
