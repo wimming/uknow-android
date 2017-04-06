@@ -184,7 +184,7 @@ public class QuestionDetailActivity extends AppCompatActivity {
         }
     }
 
-    private void commentRequest(int praise) {
+    private void commentRequest(final int praise) {
 
         ApiService apiService = ApiService.retrofit.create(ApiService.class);
         Call<QQidCResult> call = apiService.requestQQidC(data.id, praise, CurrentUser.userId);
@@ -203,6 +203,13 @@ public class QuestionDetailActivity extends AppCompatActivity {
 
                 Toast.makeText(QuestionDetailActivity.this, ToastMsg.COMMENT_SUCCESS, Toast.LENGTH_SHORT).show();
                 commentLayout.setVisibility(View.INVISIBLE);
+
+                if (praise == 1) {
+                    review.setText(data.listeningNum+1+"人听过，"+data.praiseNum+1+"人觉得好");
+                }
+                else {
+                    review.setText(data.listeningNum+1+"人听过，"+data.praiseNum+"人觉得好");
+                }
 
                 MainActivity.getDataKeeper().questionsCached = false;
             }
