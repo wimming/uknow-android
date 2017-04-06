@@ -211,9 +211,6 @@
                 android:stretchColumns="1" >
 
                 <TableRow
-                    android:id="@+id/schoolRow"
-                    android:background="?attr/selectableItemBackground"
-                    android:clickable="true"
                     android:paddingTop="@dimen/base_margin"
                     android:paddingBottom="@dimen/base_margin">
                     <TextView
@@ -221,21 +218,28 @@
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/base_medium_font"
                         android:text="学校" />
-                    <TextView
+                    <EditText
                         android:id="@+id/school"
+                        android:text="中山大学"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/base_medium_font"
                         android:padding="0dp"
                         android:textSize="@dimen/base_medium_font"
                         android:textColor="@color/black_color"
-                        android:text="中山大学" />
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:background="@null" />
                     <TextView
+                        android:id="@+id/schoolSelector"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="@dimen/base_big_font"
+                        android:textSize="@dimen/base_medium_font"
                         android:paddingRight="@dimen/base_margin"
-                        android:text=">" />
+                        android:paddingLeft="@dimen/base_margin"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:text="选择 >" />
                 </TableRow>
 
                 <View
@@ -244,9 +248,6 @@
                     android:layout_height="1dp"/>
 
                 <TableRow
-                    android:id="@+id/majorRow"
-                    android:background="?attr/selectableItemBackground"
-                    android:clickable="true"
                     android:paddingTop="@dimen/base_margin"
                     android:paddingBottom="@dimen/base_margin">
                     <TextView
@@ -254,20 +255,28 @@
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/base_medium_font"
                         android:text="专业" />
-                    <TextView
+                    <EditText
                         android:id="@+id/major"
+                        android:text="软件工程"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/base_medium_font"
+                        android:padding="0dp"
+                        android:textSize="@dimen/base_medium_font"
+                        android:textColor="@color/black_color"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:background="@null" />
+                    <TextView
+                        android:id="@+id/majorSelector"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/base_medium_font"
-                        android:textColor="@color/black_color"
-                        android:layout_marginLeft="@dimen/base_medium_font"
-                        android:text="软件工程" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="@dimen/base_big_font"
                         android:paddingRight="@dimen/base_margin"
-                        android:text=">" />
+                        android:paddingLeft="@dimen/base_margin"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:text="选择 >" />
                 </TableRow>
 
                 <View
@@ -276,8 +285,6 @@
                     android:layout_height="1dp"/>
 
                 <TableRow
-                    android:id="@+id/gradeRow"
-                    android:background="?attr/selectableItemBackground"
                     android:clickable="true"
                     android:paddingTop="@dimen/base_margin"
                     android:paddingBottom="@dimen/base_margin">
@@ -288,17 +295,26 @@
                         android:text="年级" />
                     <TextView
                         android:id="@+id/grade"
+                        android:text="2014级本科生"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/base_medium_font"
+                        android:padding="0dp"
                         android:textSize="@dimen/base_medium_font"
                         android:textColor="@color/black_color"
-                        android:layout_marginLeft="@dimen/base_medium_font"
-                        android:text="2014级本科生" />
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:background="@null" />
                     <TextView
+                        android:id="@+id/gradeSelector"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/base_medium_font"
-                        android:text=">" />
+                        android:paddingRight="@dimen/base_margin"
+                        android:paddingLeft="@dimen/base_margin"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:text="选择 >" />
                 </TableRow>
 
             </TableLayout>

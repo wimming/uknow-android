@@ -84,7 +84,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     private Dialog dialog;
 
-    @OnClick(R.id.schoolRow)
+    @OnClick(R.id.schoolSelector)
     void schoolClick() {
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(ProfileActivity.this, android.R.layout.simple_list_item_1);
         for (int i = 0; i < statisticStorage.schoolsData.length; ++i) {
@@ -106,7 +106,7 @@ public class ProfileActivity extends AppCompatActivity {
             }
         }).create().show();
     }
-    @OnClick(R.id.majorRow)
+    @OnClick(R.id.majorSelector)
     void majorClick() {
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(ProfileActivity.this, android.R.layout.simple_list_item_1);
         for (int i = 0; i < statisticStorage.majorData.length; ++i) {
@@ -128,7 +128,7 @@ public class ProfileActivity extends AppCompatActivity {
             }
         }).create().show();
     }
-    @OnClick(R.id.gradeRow)
+    @OnClick(R.id.gradeSelector)
     void gradeClick() {
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(ProfileActivity.this, android.R.layout.simple_list_item_1);
         for (int i = 0; i < statisticStorage.yearData.length; ++i) {
