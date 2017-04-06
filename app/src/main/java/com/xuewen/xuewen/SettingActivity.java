@@ -33,7 +33,8 @@ public class SettingActivity extends AppCompatActivity {
 
 //    @BindView(R.id.listView) ListView listView;
 
-    private static final String [] textData = {"使用帮助","关于学问", "意见反馈", "版本更新"};
+//    private static final String [] textData = {"使用帮助","关于优知", "意见反馈", "版本更新"};
+    private static final String [] textData = {};
 
     @BindView(R.id.logout)
     TextView logout;

@@ -176,6 +176,7 @@ public class AudioPlayerView extends LinearLayout {
             public void onStopTrackingTouch(SeekBar seekBar) {
                 Log.e("TAG", "play tracking");
                 userCtrling = false;
+                mediaPlayer.seekTo(mediaPlayer.getDuration() * seekBar.getProgress() / seekBar.getMax());
             }
         });
     }
