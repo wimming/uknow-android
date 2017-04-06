@@ -15,19 +15,34 @@
         android:layout_marginLeft="45dp"
         android:layout_marginRight="45dp"
         android:padding="@dimen/base_margin" />
-    <SeekBar
+    <android.support.v7.widget.AppCompatSeekBar
         android:id="@+id/seekBar"
         android:elevation="2dp"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="0dp"
-        android:layout_marginLeft="90dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginBottom="2dp"
-        android:thumb="@null"
+        android:layout_marginLeft="100dp"
+        android:layout_marginRight="45dp"
+        android:layout_marginBottom="2px"
+        android:thumb="@drawable/seekbar_thumb_audio_player"
         android:progressDrawable="@drawable/seekbar_audio_player"
+        android:maxHeight="50dp"
         android:max="1000" />
+    <!--padding需要在java中修改-->
+    <!--android:padding="0dp"-->
+
+<!--<SeekBar-->
+        <!--android:id="@+id/seekBar"-->
+        <!--android:elevation="2dp"-->
+        <!--android:visibility="gone"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:padding="0dp"-->
+        <!--android:layout_marginLeft="90dp"-->
+        <!--android:layout_marginRight="30dp"-->
+        <!--android:layout_marginBottom="2dp"-->
+        <!--android:thumb="@null"-->
+        <!--android:progressDrawable="@drawable/seekbar_audio_player"-->
+        <!--android:max="1000" />-->
 
 </FrameLayout>
 

@@ -158,6 +158,7 @@ public class AudioPlayerView extends LinearLayout {
             }
         });
 
+        seekBar.setPadding(0, 0, 0, 0);
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
