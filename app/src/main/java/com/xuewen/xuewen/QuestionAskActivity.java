@@ -112,7 +112,6 @@ public class QuestionAskActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 sendSendAskedRequestService(CurrentUser.userId, editText.getText().toString(), id);
-                Toast.makeText(QuestionAskActivity.this, ToastMsg.ASK_SUCCESS, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -252,6 +251,8 @@ public class QuestionAskActivity extends AppCompatActivity {
 
                 MainActivity.getDataKeeper().mineCached = false;
 
+                Toast.makeText(QuestionAskActivity.this, ToastMsg.ASK_SUCCESS, Toast.LENGTH_SHORT).show();
+                
                 Intent intent = new Intent(QuestionAskActivity.this, QuestionAskSuccessActivity.class);
                 startActivity(intent);
                 finish();
