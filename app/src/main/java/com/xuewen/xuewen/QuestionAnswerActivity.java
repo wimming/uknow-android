@@ -287,6 +287,8 @@ public class QuestionAnswerActivity extends AppCompatActivity {
                         public void onError(String errorMsg) {
                             Toast.makeText(QuestionAnswerActivity.this, ToastMsg.RECORD_FAILED, Toast.LENGTH_SHORT).show();
 
+                            handler_countdown.removeCallbacks(r);
+
                             speak.setImageResource(R.drawable.microphone);
 
                             page_state = PAGE_STATE.STATE0;

@@ -42,6 +42,7 @@ public class EntryActivity extends AppCompatActivity {
                     public void call(Boolean granted) {
                         if (granted) {
 //                            Toast.makeText(EntryActivity.this, ToastMsg.AUTHENTICATION_SUCCESS, Toast.LENGTH_SHORT).show();
+                            goOn();
                         } else {
                             Toast.makeText(EntryActivity.this, ToastMsg.AUTHENTICATION_FAILED, Toast.LENGTH_SHORT).show();
                             mHandler.postDelayed(new Runnable() {
@@ -53,6 +54,10 @@ public class EntryActivity extends AppCompatActivity {
                         }
                     }
                 });
+
+    }
+
+    private void goOn() {
 
         String token = getSharedPreferences("login_info", MODE_PRIVATE).getString("token", "");
         final int user_id = getSharedPreferences("login_info", MODE_PRIVATE).getInt("user_id", -1);
@@ -98,4 +103,5 @@ public class EntryActivity extends AppCompatActivity {
         }
 
     }
+
 }
