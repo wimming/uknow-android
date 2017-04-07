@@ -1,11 +1,14 @@
 package com.xuewen.xuewen;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
+import com.tbruyelle.rxpermissions.RxPermissions;
 import com.xuewen.networkservice.ApiService;
 import com.xuewen.networkservice.TKLoginResult;
 import com.xuewen.utility.CurrentUser;
@@ -14,15 +17,42 @@ import com.xuewen.utility.ToastMsg;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import rx.functions.Action1;
 
 /**
  * Created by huangyuming on 17-2-6.
  */
 
 public class EntryActivity extends AppCompatActivity {
+
+    Handler mHandler = new Handler();
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        RxPermissions rxPermissions = new RxPermissions(EntryActivity.this);
+        rxPermissions.request(
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.RECORD_AUDIO,
+                Manifest.permission.READ_PHONE_STATE,
+                Manifest.permission.READ_CONTACTS)
+                .subscribe(new Action1<Boolean>() {
+                    @Override
+                    public void call(Boolean granted) {
+                        if (granted) {
+//                            Toast.makeText(EntryActivity.this, ToastMsg.AUTHENTICATION_SUCCESS, Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(EntryActivity.this, ToastMsg.AUTHENTICATION_FAILED, Toast.LENGTH_SHORT).show();
+                            mHandler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    finish();
+                                }
+                            }, 3000);
+                        }
+                    }
+                });
 
         String token = getSharedPreferences("login_info", MODE_PRIVATE).getString("token", "");
         final int user_id = getSharedPreferences("login_info", MODE_PRIVATE).getInt("user_id", -1);

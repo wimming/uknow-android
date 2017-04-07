@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,6 +57,7 @@ public class MineFragment extends Fragment {
     @BindView(R.id.aboutme_iv_setting) ImageView aboutme_iv_setting;
 
     @BindView(R.id.appbar) AppBarLayout appbar;
+    @BindView(R.id.refresh) SwipeRefreshLayout refresh;
 
     private ViewPager viewPager;
     private TabLayout tabLayout;
@@ -74,6 +76,13 @@ public class MineFragment extends Fragment {
         // 不然和父的 PragmentManager冲突
         viewPager.setAdapter(new AskAndAnswerAdapter(getChildFragmentManager()));
         tabLayout.setupWithViewPager(viewPager);
+
+        refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                requestAndRender();
+            }
+        });
 
         aboutme_iv_edit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,6 +144,7 @@ public class MineFragment extends Fragment {
     }
 
     private void requestAndRender() {
+        refresh.setRefreshing(true);
         ApiService apiService = ApiService.retrofit.create(ApiService.class);
         Call<UUidResult> call = apiService.requestUUid(CurrentUser.userId);
 
@@ -155,6 +165,7 @@ public class MineFragment extends Fragment {
                 appbar.setVisibility(View.VISIBLE);
 
                 data = response.body().data;
+                refresh.setRefreshing(false);
 
                 // 缓存至内存
                 MainActivity.getDataKeeper().mine = response.body().data;

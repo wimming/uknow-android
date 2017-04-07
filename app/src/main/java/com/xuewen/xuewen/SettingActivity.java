@@ -47,9 +47,9 @@ public class SettingActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         textData[0] = "使用帮助";
-        textData[1] = "关于"+getResources().getString(R.string.app_name);
+        textData[1] = "版本更新";
         textData[2] = "意见反馈";
-        textData[3] = "版本更新";
+        textData[3] = "关于"+getResources().getString(R.string.app_name);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.back);
