@@ -116,7 +116,7 @@ public class SettingActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<LogoutResult> call, Throwable t) {
-                Toast.makeText(SettingActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(SettingActivity.this, ToastMsg.NETWORK_ERROR, Toast.LENGTH_SHORT).show();
             }
         });
     }

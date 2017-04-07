@@ -120,7 +120,7 @@ public class PerfectActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<UUidPResult> call, Throwable t) {
-                Toast.makeText(PerfectActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(PerfectActivity.this, ToastMsg.NETWORK_ERROR, Toast.LENGTH_SHORT).show();
             }
         });
 

@@ -62,7 +62,7 @@ public class EntryActivity extends AppCompatActivity {
                 }
                 @Override
                 public void onFailure(Call<TKLoginResult> call, Throwable t) {
-                    Toast.makeText(EntryActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EntryActivity.this, ToastMsg.NETWORK_ERROR, Toast.LENGTH_SHORT).show();
                 }
             });
         }

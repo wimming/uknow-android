@@ -90,7 +90,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
             }
             @Override
             public void onFailure(Call<WXLoginResult> call, Throwable t) {
-                Toast.makeText(WXEntryActivity.this, ToastMsg.NETWORK_ERROR+" : "+t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(WXEntryActivity.this, ToastMsg.NETWORK_ERROR, Toast.LENGTH_SHORT).show();
             }
         });
 
