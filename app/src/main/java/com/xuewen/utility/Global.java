@@ -23,7 +23,7 @@ public class Global {
 
     public DisplayImageOptions circleBitmapOptions;
     public String baseUrl = "http://123.207.233.226:5000/";
-//    public String baseUrl = "http://172.22.192.65:5000/";
+//    public String baseUrl = "http://172.19.101.43:5000/";
 //    public String baseUrl = "http://192.168.1.106:5000/";
 
     public String baseAvatarUrl = baseUrl+"static/avatar/";
