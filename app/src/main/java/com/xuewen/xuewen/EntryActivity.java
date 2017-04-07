@@ -1,7 +1,6 @@
 package com.xuewen.xuewen;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -56,7 +55,7 @@ public class EntryActivity extends AppCompatActivity {
                         startActivity(intent);
                     }
                     else {
-                        Intent intent = new Intent(EntryActivity.this, LoginInfoActivity.class);
+                        Intent intent = new Intent(EntryActivity.this, PerfectActivity.class);
                         startActivity(intent);
                     }
 

@@ -38,6 +38,11 @@
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 
+    <View
+        android:background="#FFCCCCCC"
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

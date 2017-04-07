@@ -1,11 +1,9 @@
 package com.xuewen.xuewen.wxapi;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.tencent.mm.opensdk.modelbase.BaseReq;
@@ -18,7 +16,7 @@ import com.xuewen.utility.CurrentUser;
 import com.xuewen.utility.IWXAPIHelper;
 import com.xuewen.utility.ToastMsg;
 import com.xuewen.xuewen.LoginActivity;
-import com.xuewen.xuewen.LoginInfoActivity;
+import com.xuewen.xuewen.PerfectActivity;
 import com.xuewen.xuewen.MainActivity;
 
 import retrofit2.Call;
@@ -85,7 +83,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                     startActivity(intent);
                 }
                 else {
-                    Intent intent = new Intent(WXEntryActivity.this, LoginInfoActivity.class);
+                    Intent intent = new Intent(WXEntryActivity.this, PerfectActivity.class);
                     startActivity(intent);
                 }
 

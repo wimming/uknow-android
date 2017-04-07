@@ -18,6 +18,9 @@ import butterknife.OnClick;
 
 public class LoginActivity extends AppCompatActivity {
 
+    @BindView(R.id.login)
+    TextView login;
+
     @OnClick(R.id.login)
     void loginOnClick() {
 
@@ -47,8 +50,9 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
         ButterKnife.bind(this);
+
+        login.setText("微信登录"+getResources().getString(R.string.app_name));
 
     }
 

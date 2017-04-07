@@ -25,4 +25,6 @@ public class ToastMsg {
 
     public static final String INVALID_ARG_EMPTY = "输入字段不能为空";
 
+    public static final String UNDER_IMPLEMENTATION = "功能正在开发，敬请期待";
+
 }

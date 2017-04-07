@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -34,7 +35,7 @@ public class SettingActivity extends AppCompatActivity {
 //    @BindView(R.id.listView) ListView listView;
 
 //    private static final String [] textData = {"使用帮助","关于优知", "意见反馈", "版本更新"};
-    private static final String [] textData = {};
+    private static final String [] textData = new String[4];
 
     @BindView(R.id.logout)
     TextView logout;
@@ -43,8 +44,12 @@ public class SettingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
-
         ButterKnife.bind(this);
+
+        textData[0] = "使用帮助";
+        textData[1] = "关于"+getResources().getString(R.string.app_name);
+        textData[2] = "意见反馈";
+        textData[3] = "版本更新";
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.back);
@@ -65,6 +70,12 @@ public class SettingActivity extends AppCompatActivity {
         SimpleAdapter simpleAdapter = new SimpleAdapter(this, list_data,
                 R.layout.activity_setting_item, new String[] {"textview"}, new int[] {R.id.textview});
         listView.setAdapter(simpleAdapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Toast.makeText(SettingActivity.this, ToastMsg.UNDER_IMPLEMENTATION, Toast.LENGTH_SHORT).show();
+            }
+        });
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
