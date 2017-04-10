@@ -205,10 +205,10 @@ public class QuestionDetailActivity extends AppCompatActivity {
                 commentLayout.setVisibility(View.INVISIBLE);
 
                 if (praise == 1) {
-                    review.setText(data.listeningNum+1+"人听过，"+data.praiseNum+1+"人觉得好");
+                    review.setText((data.listeningNum+1)+"人听过，"+(data.praiseNum+1)+"人觉得好");
                 }
                 else {
-                    review.setText(data.listeningNum+1+"人听过，"+data.praiseNum+"人觉得好");
+                    review.setText((data.listeningNum+1)+"人听过，"+(data.praiseNum)+"人觉得好");
                 }
 
                 MainActivity.getDataKeeper().questionsCached = false;

@@ -77,6 +77,7 @@ public class MineFragment extends Fragment {
         viewPager.setAdapter(new AskAndAnswerAdapter(getChildFragmentManager()));
         tabLayout.setupWithViewPager(viewPager);
 
+        refresh.setColorSchemeResources(android.R.color.holo_blue_bright, android.R.color.holo_green_light, android.R.color.holo_orange_light);
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -145,12 +146,14 @@ public class MineFragment extends Fragment {
 
     private void requestAndRender() {
         refresh.setRefreshing(true);
+
         ApiService apiService = ApiService.retrofit.create(ApiService.class);
         Call<UUidResult> call = apiService.requestUUid(CurrentUser.userId);
-
         call.enqueue(new Callback<UUidResult>() {
             @Override
             public void onResponse(Call<UUidResult> call, Response<UUidResult> response) {
+                refresh.setRefreshing(false);
+
                 if (!response.isSuccessful()) {
                     Toast.makeText(getActivity(), ToastMsg.SERVER_ERROR, Toast.LENGTH_SHORT).show();
                     return;
@@ -165,7 +168,6 @@ public class MineFragment extends Fragment {
                 appbar.setVisibility(View.VISIBLE);
 
                 data = response.body().data;
-                refresh.setRefreshing(false);
 
                 // 缓存至内存
                 MainActivity.getDataKeeper().mine = response.body().data;
@@ -173,6 +175,7 @@ public class MineFragment extends Fragment {
 
                 // write back to database
                 try {
+                    DatabaseHelper databaseHelper = DatabaseHelper.getHelper(getActivity());
                     databaseHelper.getUUidBeanDao().createOrUpdate(response.body().data);
                 } catch (SQLException e) {
                     e.printStackTrace();
@@ -183,6 +186,7 @@ public class MineFragment extends Fragment {
             @Override
             public void onFailure(Call<UUidResult> call, Throwable t) {
                 Toast.makeText(getActivity(), ToastMsg.NETWORK_ERROR, Toast.LENGTH_SHORT).show();
+                refresh.setRefreshing(false);
             }
         });
     }

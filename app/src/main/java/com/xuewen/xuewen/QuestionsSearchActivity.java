@@ -77,12 +77,16 @@ public class QuestionsSearchActivity extends AppCompatActivity {
 //        SimpleAdapter adapter = new SimpleAdapter(this, datalist, R.layout.activity_questions_search_item, from, to);
 //        gridView.setAdapter(adapter);
 
+        refresh.setColorSchemeResources(android.R.color.holo_blue_bright, android.R.color.holo_green_light, android.R.color.holo_orange_light);
         // 下拉刷新
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 if (!searchView.getQuery().toString().isEmpty()) {
                     retrieveQuestionsAndRender(searchView.getQuery().toString());
+                }
+                else {
+                    refresh.setRefreshing(false);
                 }
             }
         });

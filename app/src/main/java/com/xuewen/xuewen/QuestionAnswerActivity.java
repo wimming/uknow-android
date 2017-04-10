@@ -47,6 +47,18 @@ import retrofit2.Response;
 
 public class QuestionAnswerActivity extends AppCompatActivity {
 
+    enum STATE {
+        IDLE,
+        PLAYING,
+        PAUSE
+    }
+
+    enum PAGE_STATE {
+        STATE0,
+        STATE1,
+        STATE2
+    }
+
     final static String voice_length_show_text0 = "录音最长2分钟";
     final static String voice_status_show_text0 = "点击按钮开始";
     final static String voice_status_show_text1 = "点击按钮结束";
@@ -85,17 +97,16 @@ public class QuestionAnswerActivity extends AppCompatActivity {
     TextView send_recorded;
     @OnClick(R.id.send_recorded)
     void onClick() {
+
         if (filePath == null) {
             Toast.makeText(QuestionAnswerActivity.this, ToastMsg.EMPTY_RECORD, Toast.LENGTH_SHORT).show();
             return;
         }
+        File file = new File(filePath);
 
         final ProgressDialog dialog = ProgressDialog.show(QuestionAnswerActivity.this, "", "语音文件发送中...");
 
         ApiService apiService = ApiService.retrofit.create(ApiService.class);
-
-        File file = new File(filePath);
-
         RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
         MultipartBody.Part fileBody = MultipartBody.Part.createFormData("audio", file.getName(), requestBody);
 
@@ -107,6 +118,7 @@ public class QuestionAnswerActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<QQidAResult> call, Response<QQidAResult> response) {
                 dialog.dismiss();
+
                 if (!response.isSuccessful()) {
                     Toast.makeText(QuestionAnswerActivity.this, ToastMsg.SERVER_ERROR, Toast.LENGTH_SHORT).show();
                     return;
@@ -118,17 +130,16 @@ public class QuestionAnswerActivity extends AppCompatActivity {
 
                 mIat.cancel();
                 mIat.destroy();
+
                 handler_countdown.removeCallbacks(r);
                 playHandler.removeCallbacks(playRunnable);
 
                 MainActivity.getDataKeeper().mineCached = false;
 
                 Intent intent = new Intent(QuestionAnswerActivity.this, QuestionAnswerSuccessActivity.class);
-//                Intent intent = new Intent(QuestionAnswerActivity.this, QuestionDetailActivity.class);
-                intent.putExtra("id", id);
                 startActivity(intent);
-                finish();
 
+                finish();
             }
             @Override
             public void onFailure(Call<QQidAResult> call, Throwable t) {
@@ -136,13 +147,22 @@ public class QuestionAnswerActivity extends AppCompatActivity {
                 dialog.dismiss();
             }
         });
+
     }
 
     String filePath = null;
     private SimpleDateFormat time = new SimpleDateFormat("mm:ss");
     private int recordLength = RECORD_LENGTH; //2分钟
 
-    Handler handler_countdown = new Handler();
+    private Handler handler_countdown = new Handler();
+    private Handler playHandler = new Handler();
+    SpeechRecognizer mIat = null;
+
+    private PAGE_STATE page_state = PAGE_STATE.STATE0;
+    private STATE state = STATE.IDLE;
+
+    private MediaHelper mediaHelper;
+
     Runnable r = new Runnable() {
         @Override
         public void run() {
@@ -153,26 +173,6 @@ public class QuestionAnswerActivity extends AppCompatActivity {
             }
         }
     };
-
-    SpeechRecognizer mIat = null;
-
-    enum STATE {
-        IDLE,
-        PLAYING,
-        PAUSE
-    }
-
-    enum PAGE_STATE {
-        STATE0,
-        STATE1,
-        STATE2
-    }
-
-    private PAGE_STATE page_state = PAGE_STATE.STATE0;
-
-    private MediaHelper mediaHelper;
-    private Handler playHandler = new Handler();
-    private STATE state = STATE.IDLE;
     private Runnable playRunnable = new Runnable() {
         @Override
         public void run() {
@@ -191,9 +191,6 @@ public class QuestionAnswerActivity extends AppCompatActivity {
             playHandler.postDelayed(playRunnable, 200);
         }
     };
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -231,9 +228,6 @@ public class QuestionAnswerActivity extends AppCompatActivity {
         refresh.setEnabled(false);  // 阻止手动刷新
         requestAndRender();
 
-
-
-
         //初始为0
         transToStatus0();
 
@@ -253,7 +247,6 @@ public class QuestionAnswerActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 if (page_state == PAGE_STATE.STATE0) {
-
                     page_state = PAGE_STATE.STATE1;
 
                     transToStatus1();
@@ -264,18 +257,15 @@ public class QuestionAnswerActivity extends AppCompatActivity {
                         //成功后回调
                         @Override
                         public void onResult(String fileId, String result) {
-//                        ListenHelper.showTip(QuestionAnswerActivity.this, result);
-//                        ListenHelper.showTip(QuestionAnswerActivity.this, ListenHelper.getListenerPath(fileId));
-//                        voice_length_show.setText(result);
                             filePath = ListenHelper.getListenerPath(fileId);
-                            //进入 状态2
+                            // 进入状态2
                             page_state = PAGE_STATE.STATE2;
                             transToStatus2();
                             try {
                                 MediaPlayer tempPlay = new MediaPlayer();
                                 tempPlay.setDataSource(filePath);
                                 tempPlay.prepare();
-                                ACTUAL_RECORD_LENGTH =  (int)Math.ceil(tempPlay.getDuration() / 1000.0);
+                                ACTUAL_RECORD_LENGTH = (int) Math.ceil(tempPlay.getDuration() / 1000.0);
                                 tempPlay.release();
                             } catch (Exception e) {
 
@@ -296,7 +286,6 @@ public class QuestionAnswerActivity extends AppCompatActivity {
                             voice_status_show.setText("输入有错误 请重新输入");
                         }
                     });
-
 
                 } else if (page_state == PAGE_STATE.STATE1) {
 
@@ -319,7 +308,7 @@ public class QuestionAnswerActivity extends AppCompatActivity {
                         // 系统自动完成播放的 需要我们在回调中设置等待状态  这里之前有个bug
                         // 注意 系统自动完成的无需设置为idle 因为无需重复加载同一个资源 让media play重新播放即可
 
-                        //目前 利用 星号 表示正在播放 正方形表示中途停止 三角形表示音频从头开始播放
+                        // 目前 利用 星号 表示正在播放 正方形表示中途停止 三角形表示音频从头开始播放
                         if (state == STATE.IDLE) {
 
                             state = STATE.PLAYING;
@@ -352,7 +341,6 @@ public class QuestionAnswerActivity extends AppCompatActivity {
                             //
                         }
 
-                        return;
                     }
 
                 } else {

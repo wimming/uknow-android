@@ -252,7 +252,7 @@ public class QuestionAskActivity extends AppCompatActivity {
                 MainActivity.getDataKeeper().mineCached = false;
 
                 Toast.makeText(QuestionAskActivity.this, ToastMsg.ASK_SUCCESS, Toast.LENGTH_SHORT).show();
-                
+
                 Intent intent = new Intent(QuestionAskActivity.this, QuestionAskSuccessActivity.class);
                 startActivity(intent);
                 finish();

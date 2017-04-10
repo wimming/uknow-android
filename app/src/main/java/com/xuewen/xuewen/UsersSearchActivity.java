@@ -51,12 +51,16 @@ public class UsersSearchActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
+        refresh.setColorSchemeResources(android.R.color.holo_blue_bright, android.R.color.holo_green_light, android.R.color.holo_orange_light);
         // 下拉刷新
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 if (!searchView.getQuery().toString().isEmpty()) {
                     retrieveUsersAndRender(searchView.getQuery().toString());
+                }
+                else {
+                    refresh.setRefreshing(false);
                 }
             }
         });
