@@ -73,6 +73,7 @@ public interface ApiService {
     Call<QQidAResult> requestQQidA(@Path("question_id") int qid,
                                    @Part("answerer_id") RequestBody answerer_id,
                                    @Part("audioSeconds") RequestBody audioSeconds,
+                                   @Part("recognizeResult") RequestBody recognizeResult,
                                    @Nullable @Part MultipartBody.Part audio);
 
     // for users
