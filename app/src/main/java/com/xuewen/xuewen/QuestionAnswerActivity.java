@@ -194,8 +194,13 @@ public class QuestionAnswerActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         goToStatus0();
-        mediaHelper.release();
         super.onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        mediaHelper.release();
+        super.onDestroy();
     }
 
     private void requestAndRender() {
@@ -380,9 +385,6 @@ public class QuestionAnswerActivity extends AppCompatActivity {
                     // 成功后进入状态RECORDED
                     @Override
                     public void onResult(String fileId, String result) {
-
-                        goToStatus2();
-
                         recognizeResult = result;
                         filePath = ListenHelper.getListenerPath(fileId);
                         try {
@@ -394,6 +396,9 @@ public class QuestionAnswerActivity extends AppCompatActivity {
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
+
+                        goToStatus2();
+
                     }
 
                     // 失败后进入状态PRERECORD
