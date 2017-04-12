@@ -58,11 +58,11 @@ public class QuestionAnswerActivity extends AppCompatActivity {
         RECORDED
     }
 
-    final static String text_record_max_length = "录音最长2分钟";
+    final static int MAX_RECORD_LENGTH = 60000;
+    final static String text_record_max_length = "录音最长"+(int)(MAX_RECORD_LENGTH/1000/60)+"分钟";
     final static String text_start_record = "点击按钮开始";
     final static String text_stop_record = "点击按钮结束";
     final static String text_start_pre_listen = "点击按钮试听";
-    final static int MAX_RECORD_LENGTH = 120000;
 
     private int id;
 
@@ -119,10 +119,15 @@ public class QuestionAnswerActivity extends AppCompatActivity {
     private Runnable countdownRunnable = new Runnable() {
         @Override
         public void run() {
-            if (recordState == RECORD_STATE.RECORDING && recordCountdown > 0) {
-                voice_length_show.setText(time.format(recordCountdown));
-                countDownHandler.postDelayed(this, 1000);
-                recordCountdown -= 1000;
+            if (recordState == RECORD_STATE.RECORDING) {
+                if (recordCountdown > 0) {
+                    voice_length_show.setText(time.format(recordCountdown));
+                    countDownHandler.postDelayed(this, 1000);
+                    recordCountdown -= 1000;
+                }
+                else {
+                    speak.callOnClick();
+                }
             }
         }
     };
@@ -419,14 +424,14 @@ public class QuestionAnswerActivity extends AppCompatActivity {
                     return;
                 }
 
-                mIat.stopListening();
-
                 // 提前remove
                 countDownHandler.removeCallbacks(countdownRunnable);
                 speak.setImageResource(R.drawable.microphone);
                 // 讯飞回调函数 OnError有个延迟 所以需要给用户提示一下
                 Toast.makeText(QuestionAnswerActivity.this, "分析中", Toast.LENGTH_SHORT).show();
                 // 不设置进入STATE2 是否进入由讯飞的回调函数决定
+
+                mIat.stopListening();
 
             } else if (recordState == RECORD_STATE.RECORDED) {
 
