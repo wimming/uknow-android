@@ -198,12 +198,18 @@ public class QuestionAnswerActivity extends AppCompatActivity {
 
     @Override
     protected void onPause() {
-        goToStatus0();
+        if (recordState == RECORD_STATE.RECORDING) {
+            speak.callOnClick();
+        }
+        if (recordState == RECORD_STATE.RECORDED && preListenState == PRE_LISTEN_STATE.PLAYING) {
+            speak.callOnClick();
+        }
         super.onPause();
     }
 
     @Override
     protected void onDestroy() {
+        goToStatus0();
         mediaHelper.release();
         super.onDestroy();
     }
