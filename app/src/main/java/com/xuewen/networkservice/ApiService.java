@@ -114,7 +114,23 @@ public interface ApiService {
     @GET("api/users/find")
     Call<UFResult> requestUF(@Query("query_string") String query_string);
 
-     static final Interceptor interceptor = new Interceptor() {
+    static final String CER_STRING = "-----BEGIN CERTIFICATE-----\n" +
+            "MIICgzCCAewCCQD3Zd/dyXNaATANBgkqhkiG9w0BAQUFADCBhTELMAkGA1UEBhMC\n" +
+            "Q04xEjAQBgNVBAgTCUd1YW5nZG9uZzESMBAGA1UEBxMJR3Vhbmd6aG91MQ4wDAYD\n" +
+            "VQQKEwV1a25vdzENMAsGA1UECxMEa25vdzEOMAwGA1UEAxMFdWtub3cxHzAdBgkq\n" +
+            "hkiG9w0BCQEWEDgyNDkyODIwN0BxcS5jb20wHhcNMTcwNDEyMTExMjA3WhcNMTgw\n" +
+            "NDEyMTExMjA3WjCBhTELMAkGA1UEBhMCQ04xEjAQBgNVBAgTCUd1YW5nZG9uZzES\n" +
+            "MBAGA1UEBxMJR3Vhbmd6aG91MQ4wDAYDVQQKEwV1a25vdzENMAsGA1UECxMEa25v\n" +
+            "dzEOMAwGA1UEAxMFdWtub3cxHzAdBgkqhkiG9w0BCQEWEDgyNDkyODIwN0BxcS5j\n" +
+            "b20wgZ8wDQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBAMegpECDXyH4XVsfU/rbfmdc\n" +
+            "qHrsyFHkI7bK3J5p1FaBq/EuueFHaR0EcgXfTp1O1YtUTg3MOGX/VlTSpWeOFQIZ\n" +
+            "RAeMLI7y9mjhtMCCHFIx48NHd20hH3vSkVL/Y9fdI5RL3VaZ/eqRlywCbUgIJ5Ec\n" +
+            "ShH5DyMMnTawUu4lTR+rAgMBAAEwDQYJKoZIhvcNAQEFBQADgYEAhGzdZkIY872+\n" +
+            "AWAF77Td+N/wyDlbFeE9SD6Ry5l7dY2MyqMumu6CGUL2BMNabiZWgEu35wDHvN10\n" +
+            "H6RhOjgmrXDDPpJRGmtJLt+GyhDZ8MMGpiaj+5KUZRnlfgTmMCYd79XPzUkTugDe\n" +
+            "WwXLZqnkS7zXWce/rEg4LIATtfG0KxU=\n" +
+            "-----END CERTIFICATE-----";
+    static final Interceptor interceptor = new Interceptor() {
         @Override
         public Response intercept(Chain chain) throws IOException {
             Request oldRequest = chain.request();
@@ -127,7 +143,6 @@ public interface ApiService {
             return chain.proceed(newRequest);
         }
     };
-    static final String CER_STRING = "";
     static final HttpsUtils.SSLParams sslParams = HttpsUtils.getSslSocketFactory(
             new InputStream[] { new Buffer().writeUtf8(CER_STRING).inputStream() },
             null, null);
@@ -136,7 +151,7 @@ public interface ApiService {
             .addInterceptor(interceptor)
             .sslSocketFactory(sslParams.sSLSocketFactory, sslParams.trustManager)
             .build();
-    public static final Retrofit retrofit = new Retrofit.Builder()
+    static final Retrofit retrofit = new Retrofit.Builder()
             .baseUrl(Global.getInstance().baseUrl)
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
