@@ -215,7 +215,7 @@ public class QuestionAskActivity extends AppCompatActivity {
 
         ImageLoader.getInstance().displayImage(Global.getInstance().baseAvatarUrl+ data.avatarUrl, avatarUrl, Global.getInstance().circleBitmapOptions);
 
-        followedAndAnswerSituation.setText(data.followedNum + "人关注, 回答了" + data.ansNum + "个问题");
+        followedAndAnswerSituation.setText(data.followedNum + "人关注，回答了" + data.ansNum + "个问题");
 
         final QuestionsListAdapter adapter = new QuestionsListAdapter(data.answers, QuestionAskActivity.this);
         questionListView.setAdapter(adapter);

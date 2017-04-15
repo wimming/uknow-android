@@ -2,6 +2,9 @@ package com.xuewen.xuewen;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -73,7 +76,30 @@ public class SettingActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(SettingActivity.this, ToastMsg.UNDER_IMPLEMENTATION, Toast.LENGTH_SHORT).show();
+                if (i == 1) {
+                    Intent intent = new Intent();
+                    intent.setAction("android.intent.action.VIEW");
+                    Uri content_url = Uri.parse("http://uknow.online");
+                    intent.setData(content_url);
+                    startActivity(intent);
+                }
+                else if (i == 3) {
+                    String versionName = "";
+                    int versioncode = 0;
+                    try {
+                        PackageManager pm = SettingActivity.this.getPackageManager();
+                        PackageInfo pi = pm.getPackageInfo(SettingActivity.this.getPackageName(), 0);
+                        versionName = pi.versionName;
+                        versioncode = pi.versionCode;
+                    } catch (PackageManager.NameNotFoundException e) {
+                        e.printStackTrace();
+                    }
+
+                    Toast.makeText(SettingActivity.this, "当前版本："+versionName, Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Toast.makeText(SettingActivity.this, ToastMsg.UNDER_IMPLEMENTATION, Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

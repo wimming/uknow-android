@@ -36,6 +36,10 @@ import retrofit2.http.Query;
 
 public interface ApiService {
 
+    // for update
+    @GET("api/update")
+    Call<UpdateResult> getUpdate(@Query("currentVersion") String currentVersion);
+
     // for authentication
     @POST("api/wxlogin")
     @FormUrlEncoded

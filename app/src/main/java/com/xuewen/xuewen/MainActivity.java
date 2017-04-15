@@ -1,7 +1,13 @@
 package com.xuewen.xuewen;
 
 import android.app.ActivityManager;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.support.design.widget.TabLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 
 import android.support.v4.app.Fragment;
@@ -19,11 +25,16 @@ import com.xuewen.bean.UUidFARBean;
 import com.xuewen.fragment.MineFragment;
 import com.xuewen.fragment.QuestionsRcmdFragment;
 import com.xuewen.fragment.UsersRelatedFragment;
+import com.xuewen.networkservice.ApiService;
+import com.xuewen.networkservice.UpdateResult;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -92,6 +103,70 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        });
 
+        retrieveUpdate();
+
+    }
+
+    private void retrieveUpdate() {
+
+        String versionName = "";
+        try {
+            PackageManager pm = MainActivity.this.getPackageManager();
+            PackageInfo pi = pm.getPackageInfo(MainActivity.this.getPackageName(), 0);
+            versionName = pi.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        ApiService apiService = ApiService.retrofit.create(ApiService.class);
+        Call<UpdateResult> call = apiService.getUpdate(versionName);
+
+        call.enqueue(new Callback<UpdateResult>() {
+            @Override
+            public void onResponse(Call<UpdateResult> call, Response<UpdateResult> response) {
+                if (!response.isSuccessful()) {
+                    return;
+                }
+                if (response.body().status != 200) {
+                    return;
+                }
+
+                if (response.body().data.need == 1) {
+                    showUpdateDialog(response.body().data.newestVersion);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateResult> call, Throwable t) {
+
+            }
+        });
+
+    }
+
+    private void showUpdateDialog(String newestVersion) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder
+                .setTitle("发现新版本："+newestVersion)
+                .setMessage("是否立即下载？\n也可以前往 设置->版本更新 处更新")
+                .setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Intent intent = new Intent();
+                        intent.setAction("android.intent.action.VIEW");
+                        Uri content_url = Uri.parse("http://uknow.online/uKnow.apk");
+                        intent.setData(content_url);
+                        startActivity(intent);
+                        dialogInterface.dismiss();
+                    }
+                })
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+        builder.create().show();
     }
 
 
