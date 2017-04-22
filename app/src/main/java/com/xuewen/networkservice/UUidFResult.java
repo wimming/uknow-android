@@ -1,6 +1,6 @@
 package com.xuewen.networkservice;
 
-import com.xuewen.bean.UUidFANDUUidRBean;
+import com.xuewen.bean.UUidFORUUidRBean;
 
 import java.util.List;
 
@@ -9,5 +9,5 @@ import java.util.List;
  */
 
 public class UUidFResult extends BaseResult {
-    public List<UUidFANDUUidRBean> data;
+    public List<UUidFORUUidRBean> data;
 }

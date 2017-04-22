@@ -1,13 +1,14 @@
 package com.xuewen.xuewen;
 
-import android.app.SearchManager;
-import android.content.Context;
+import android.app.ActivityManager;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.support.design.widget.TabLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SearchView;
-import android.support.v7.widget.Toolbar;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -16,28 +17,24 @@ import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
+import android.widget.Toast;
 
-import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
-import com.nostra13.universalimageloader.cache.disc.naming.HashCodeFileNameGenerator;
-import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
-import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
-import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.xuewen.bean.QRBean;
 import com.xuewen.bean.UUidBean;
-import com.xuewen.bean.UUidFANDUUidRBean;
-import com.xuewen.networkservice.APITestActivity;
-import com.xuewen.utility.CurrentUser;
-import com.xuewen.utility.ListenHelper;
+import com.xuewen.bean.UUidFARBean;
+import com.xuewen.fragment.MineFragment;
+import com.xuewen.fragment.QuestionsRcmdFragment;
+import com.xuewen.fragment.UsersRelatedFragment;
+import com.xuewen.networkservice.ApiService;
+import com.xuewen.networkservice.UpdateResult;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -77,21 +74,22 @@ public class MainActivity extends AppCompatActivity {
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
-        mViewPager.setOffscreenPageLimit(1);
+        mViewPager.setOffscreenPageLimit(2);
 
         tabLayout = (TabLayout)findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(mViewPager);
-//        tabLayout.getTabAt(0).setIcon(R.drawable.star_selector);
-//        tabLayout.getTabAt(1).setIcon(R.drawable.search_selector);
-//        tabLayout.getTabAt(2).setIcon(R.drawable.user_selector);
+
         tabLayout.getTabAt(0).setCustomView(getLayoutInflater().inflate(R.layout.activity_main_tab1, null));
         tabLayout.getTabAt(1).setCustomView(getLayoutInflater().inflate(R.layout.activity_main_tab2, null));
         tabLayout.getTabAt(2).setCustomView(getLayoutInflater().inflate(R.layout.activity_main_tab3, null));
 
+//        Toast.makeText(MainActivity.this, ((ActivityManager) getSystemService(ACTIVITY_SERVICE)).getLargeMemoryClass()+"", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(MainActivity.this, ((ActivityManager) getSystemService(ACTIVITY_SERVICE)).getMemoryClass()+"", Toast.LENGTH_SHORT).show();
+
 //        searchView.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
-////                startActivity(new Intent(MainActivity.this, SearchActivity.class));
+////                startActivity(new Intent(MainActivity.this, QuestionsSearchActivity.class));
 //                startActivity(new Intent(MainActivity.this, APITestActivity.class));
 //            }
 //        });
@@ -100,11 +98,75 @@ public class MainActivity extends AppCompatActivity {
 //        fab.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_SHORT)
 //                        .setAction("Action", null).show();
 //            }
 //        });
 
+        retrieveUpdate();
+
+    }
+
+    private void retrieveUpdate() {
+
+        String versionName = "";
+        try {
+            PackageManager pm = MainActivity.this.getPackageManager();
+            PackageInfo pi = pm.getPackageInfo(MainActivity.this.getPackageName(), 0);
+            versionName = pi.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        ApiService apiService = ApiService.retrofit.create(ApiService.class);
+        Call<UpdateResult> call = apiService.getUpdate(versionName);
+
+        call.enqueue(new Callback<UpdateResult>() {
+            @Override
+            public void onResponse(Call<UpdateResult> call, Response<UpdateResult> response) {
+                if (!response.isSuccessful()) {
+                    return;
+                }
+                if (response.body().status != 200) {
+                    return;
+                }
+
+                if (response.body().data.need == 1) {
+                    showUpdateDialog(response.body().data.newestVersion);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateResult> call, Throwable t) {
+
+            }
+        });
+
+    }
+
+    private void showUpdateDialog(String newestVersion) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder
+                .setTitle("发现新版本："+newestVersion)
+                .setMessage("是否立即下载？\n也可以前往 设置->版本更新 处更新")
+                .setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Intent intent = new Intent();
+                        intent.setAction("android.intent.action.VIEW");
+                        Uri content_url = Uri.parse("http://uknow.online/uKnow.apk");
+                        intent.setData(content_url);
+                        startActivity(intent);
+                        dialogInterface.dismiss();
+                    }
+                })
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+        builder.create().show();
     }
 
 
@@ -143,12 +205,6 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private class DataHolder {
-        public List<QRBean> qRBeanList;
-        public List<UUidFANDUUidRBean> uUidFANDUUidRBeanList;
-        public UUidBean uUidBean;
-    }
-
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
@@ -167,19 +223,19 @@ public class MainActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             if (position == 0) {
                 if (recommendationFragment == null) {
-                    recommendationFragment = new RecommendationFragment();
+                    recommendationFragment = new QuestionsRcmdFragment();
                 }
                 return recommendationFragment;
             }
             else if (position == 1) {
                 if (searchingFragment == null) {
-                    searchingFragment = new SearchingFragment();
+                    searchingFragment = new UsersRelatedFragment();
                 }
                 return searchingFragment;
             }
             else if (position == 2) {
                 if (profileFragment == null) {
-                    profileFragment = new ProfileFragment();
+                    profileFragment = new MineFragment();
                 }
                 return profileFragment;
             }
@@ -207,4 +263,18 @@ public class MainActivity extends AppCompatActivity {
             return null;
         }
     }
+
+    private static DataKeeper dataKeeper = new DataKeeper();
+    public static DataKeeper getDataKeeper() {
+        return dataKeeper;
+    }
+    public static class DataKeeper {
+        public List<QRBean> questionsList = new ArrayList<>();
+        public List<UUidFARBean> usersList = new ArrayList<>();
+        public UUidBean mine;
+        public boolean questionsCached = false;
+        public boolean usersCached = false;
+        public boolean mineCached = false;
+    }
+
 }

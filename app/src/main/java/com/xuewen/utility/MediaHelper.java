@@ -9,48 +9,39 @@ import android.media.MediaPlayer;
 public class MediaHelper {
 
     public interface OnResultListener {
-        public void onResult();
+        void onResult();
     }
-//    private OnResultListener onResultListener;
-//    public void setOnResultListener(OnResultListener onResultListener) {
-//        this.onResultListener = onResultListener;
-//    }
+    private OnResultListener onResultListener;
+    public void setOnResultListener(OnResultListener onResultListener) {
+        this.onResultListener = onResultListener;
+    }
 
     private MediaPlayer mediaPlayer = new MediaPlayer();
-
-    public MediaHelper() {
-//        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-//            @Override
-//            public void onCompletion(MediaPlayer mp) {
-//                if (onResultListener != null) {
-//                    onResultListener.onResult();
-//                }
-//            }
-//        });
-    }
-
-    public  boolean isPlaying() {
-        return mediaPlayer.isPlaying();
-    }
-
-    public int currentMillis() {
-        return mediaPlayer.getCurrentPosition();
-    }
 
     public int maxMillis() {
         return mediaPlayer.getDuration();
     }
+    public int currentMillis() {
+        return mediaPlayer.getCurrentPosition();
+    }
 
-    public void play(String filePath, final OnResultListener onResultListener ) {
+    public void reset() {
+        mediaPlayer.reset();
+    }
+    public void pause() {
+        mediaPlayer.pause();
+    }
+    public void start() {
+        mediaPlayer.start();
+    }
+    public void release() {
+        mediaPlayer.release();
+    }
+
+    public void playOnce(String filePath, final OnResultListener onResultListener ) {
+        mediaPlayer.reset();
+
         try {
-
-            if (mediaPlayer != null) {
-                mediaPlayer.stop();
-                mediaPlayer.release();
-            }
-
-            mediaPlayer = new MediaPlayer();
-
             mediaPlayer.setDataSource(filePath);
             mediaPlayer.prepare();
             mediaPlayer.start();
@@ -61,26 +52,9 @@ public class MediaHelper {
                     onResultListener.onResult();
                 }
             });
-
-
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    public void pause() {
-        mediaPlayer.pause();
-    }
-    public void resume() {
-        mediaPlayer.start();
-    }
-    public void stop() {
-
-        mediaPlayer.stop();
-        mediaPlayer.reset();
-    }
-    public  void seekToStart() {
-        mediaPlayer.seekTo(0);
     }
 
 }

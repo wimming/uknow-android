@@ -7,9 +7,12 @@
     <color name="tab_selected_text_color">#13BFB1</color>
     <color name="main_color">#13BFB1</color>
     <color name="light_main_color">#9613bfb1</color>
+    <color name="heavy_gray_color">#FFA0A0A0</color>
     <color name="gray_color">#FFE1E1E6</color>
     <color name="black_color">#000000</color>
     <color name="white_color">#ffffff</color>
     <color name="app_background">#00ff00ff</color>
     <color name="AppBarLayout_color">#13BFB1</color>
+    <color name="first_progress_color">#9635E1D3</color>
+    <color name="second_progress_color">#3235E1D3</color>
 </resources>

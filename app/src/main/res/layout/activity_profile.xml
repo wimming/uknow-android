@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="0dp"
+    tools:context="com.xuewen.xuewen.ProfileActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
+        app:elevation="0dp"
+        android:background="@color/white_color"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/base_toolbar_height"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+            <TextView
+                android:text="修改信息"
+                android:textColor="@color/black_color"
+                android:textSize="@dimen/base_big_font"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:id="@+id/confirm"
+                android:src="@drawable/tick"
+                android:layout_gravity="end"
+                android:layout_marginRight="@dimen/base_margin"
+                android:layout_width="25dp"
+                android:layout_height="25dp" />
+        </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
+
+    <View
+        android:background="#FFCCCCCC"
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/visibilityController"
+            android:background="@color/white_color"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/base_margin"
+                android:paddingRight="@dimen/base_margin"
+                android:paddingTop="@dimen/base_margin"
+                android:paddingBottom="@dimen/base_margin">
+                <TextView
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="头像"
+                    android:textSize="@dimen/base_medium_font"/>
+                <ImageView
+                    android:id="@+id/avatar"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="@dimen/base_mediun_avatar"
+                    android:layout_height="@dimen/base_mediun_avatar" />
+            </RelativeLayout>
+
+            <View
+                android:background="#E6E6E6"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/base_small_margin"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:paddingTop="@dimen/base_margin"
+                android:paddingBottom="@dimen/base_margin"
+                android:paddingLeft="@dimen/base_margin"
+                android:paddingRight="@dimen/base_margin" >
+                <TextView
+                    android:text="昵称"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:textSize="@dimen/base_medium_font" />
+
+                <TextView
+                    android:id="@+id/usernameTextInfo"
+                    android:text="2/10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true" />
+
+                <EditText
+                    android:id="@+id/username"
+                    android:text="张三"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:maxLength="10"
+                    android:background="@null"
+                    android:textSize="@dimen/base_medium_font"
+                    android:textColor="@color/black_color" />
+            </RelativeLayout>
+
+            <View
+                android:background="#E6E6E6"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/base_small_margin"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:paddingTop="@dimen/base_margin"
+                android:paddingBottom="@dimen/base_margin"
+                android:paddingLeft="@dimen/base_margin"
+                android:paddingRight="@dimen/base_margin" >
+                <TextView
+                    android:text="身份"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:textSize="@dimen/base_medium_font" />
+                <EditText
+                    android:id="@+id/status"
+                    android:text="中山大学软件学院学生"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:maxLength="20"
+                    android:background="@null"
+                    android:textSize="@dimen/base_medium_font"
+                    android:textColor="@color/black_color" />
+                <TextView
+                    android:id="@+id/statusTextInfo"
+                    android:text="2/20"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true" />
+            </RelativeLayout>
+
+            <View
+                android:background="#E6E6E6"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/base_small_margin"/>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/base_margin"
+                android:paddingRight="@dimen/base_margin"
+                android:paddingTop="@dimen/base_margin"
+                android:paddingBottom="@dimen/base_margin">
+                <TextView
+                    android:text="简介"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/base_margin"
+                    android:textSize="@dimen/base_medium_font" />
+                <EditText
+                    android:id="@+id/description"
+                    android:text="爱好产品，曾在腾讯工作，对软件编写，电子有一定的了解，从事软件行业好多年"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/base_margin"
+                    android:inputType="textMultiLine"
+                    android:maxLength="50"
+                    android:textColor="@color/black_color"
+                    android:background="@null"
+                    android:textSize="@dimen/base_medium_font" />
+                <TextView
+                    android:id="@+id/descriptionTextInfo"
+                    android:text="49/50"
+                    android:layout_gravity="right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <View
+                android:background="#E6E6E6"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/base_small_margin"/>
+
+            <!--<ListView-->
+                <!--android:id="@+id/settingList"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content" />-->
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/base_margin"
+                android:paddingRight="@dimen/base_margin"
+                android:stretchColumns="1" >
+
+                <TableRow
+                    android:paddingTop="@dimen/base_margin"
+                    android:paddingBottom="@dimen/base_margin">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/base_medium_font"
+                        android:text="学校" />
+                    <EditText
+                        android:id="@+id/school"
+                        android:text="中山大学"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/base_medium_font"
+                        android:padding="0dp"
+                        android:textSize="@dimen/base_medium_font"
+                        android:textColor="@color/black_color"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:background="@null" />
+                    <TextView
+                        android:id="@+id/schoolSelector"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/base_medium_font"
+                        android:paddingRight="@dimen/base_margin"
+                        android:paddingLeft="@dimen/base_margin"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:text="选择 >" />
+                </TableRow>
+
+                <View
+                    android:background="@color/gray_color"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"/>
+
+                <TableRow
+                    android:paddingTop="@dimen/base_margin"
+                    android:paddingBottom="@dimen/base_margin">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/base_medium_font"
+                        android:text="专业" />
+                    <EditText
+                        android:id="@+id/major"
+                        android:text="软件工程"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/base_medium_font"
+                        android:padding="0dp"
+                        android:textSize="@dimen/base_medium_font"
+                        android:textColor="@color/black_color"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:background="@null" />
+                    <TextView
+                        android:id="@+id/majorSelector"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/base_medium_font"
+                        android:paddingRight="@dimen/base_margin"
+                        android:paddingLeft="@dimen/base_margin"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:text="选择 >" />
+                </TableRow>
+
+                <View
+                    android:background="@color/gray_color"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"/>
+
+                <TableRow
+                    android:clickable="true"
+                    android:paddingTop="@dimen/base_margin"
+                    android:paddingBottom="@dimen/base_margin">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/base_medium_font"
+                        android:text="年级" />
+                    <TextView
+                        android:id="@+id/grade"
+                        android:text="2014级本科生"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/base_medium_font"
+                        android:padding="0dp"
+                        android:textSize="@dimen/base_medium_font"
+                        android:textColor="@color/black_color"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:background="@null" />
+                    <TextView
+                        android:id="@+id/gradeSelector"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/base_medium_font"
+                        android:paddingRight="@dimen/base_margin"
+                        android:paddingLeft="@dimen/base_margin"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:text="选择 >" />
+                </TableRow>
+
+            </TableLayout>
+            <View
+                android:background="#FFCCCCCC"
+                android:layout_width="match_parent"
+                android:layout_height="1dp" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

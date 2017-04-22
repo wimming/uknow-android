@@ -17,7 +17,10 @@ import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.decode.BaseImageDecoder;
 import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 import com.nostra13.universalimageloader.utils.StorageUtils;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.xuewen.utility.CurrentUser;
+import com.xuewen.utility.IWXAPIHelper;
 import com.xuewen.utility.ListenHelper;
 
 import java.io.File;
@@ -36,7 +39,9 @@ public class BaseApplication extends Application {
         // configuration of image loader
         DisplayImageOptions displayOptions = new DisplayImageOptions.Builder()
                 .cacheOnDisk(true)
-                .cacheInMemory(true)
+//                .cacheInMemory(false)
+                .bitmapConfig(Bitmap.Config.RGB_565)
+                .imageScaleType(ImageScaleType.IN_SAMPLE_INT)
                 .build();
 
         File cacheDir = StorageUtils.getCacheDirectory(context);
@@ -48,19 +53,23 @@ public class BaseApplication extends Application {
                 .diskCacheFileCount(100)
                 .diskCacheFileNameGenerator(new HashCodeFileNameGenerator()) // default
 
+                .memoryCache(new WeakMemoryCache())
+
                 .threadPoolSize(3)
 
                 .defaultDisplayImageOptions(displayOptions)
+
                 .writeDebugLogs()
                 .build();
 
         ImageLoader.getInstance().init(imageLoaderConfiguration);
 //        ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(context));
 
-        //科大讯飞整体初始化
+        // 科大讯飞整体初始化
         ListenHelper.Init(context);
 
-        CurrentUser.userId = 3;
+        // 微信开放平台
+        IWXAPIHelper.regToWx(context);
 
     }
 }

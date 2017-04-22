@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+    <Button
+        android:id="@+id/listenButton"
+        android:text="00''"
+        android:elevation="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@drawable/listen_view"
+        android:textColor="@color/white_color"
+        android:gravity="right|center"
+        android:layout_marginLeft="45dp"
+        android:layout_marginRight="45dp"
+        android:padding="@dimen/base_margin" />
+    <android.support.v7.widget.AppCompatSeekBar
+        android:id="@+id/seekBar"
+        android:elevation="2dp"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="100dp"
+        android:layout_marginRight="45dp"
+        android:layout_marginBottom="2px"
+        android:thumb="@drawable/seekbar_thumb_audio_player"
+        android:progressDrawable="@drawable/seekbar_audio_player"
+        android:maxHeight="50dp"
+        android:max="1000" />
+    <!--padding需要在java中修改-->
+    <!--android:padding="0dp"-->
+
+<!--<SeekBar-->
+        <!--android:id="@+id/seekBar"-->
+        <!--android:elevation="2dp"-->
+        <!--android:visibility="gone"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:padding="0dp"-->
+        <!--android:layout_marginLeft="90dp"-->
+        <!--android:layout_marginRight="30dp"-->
+        <!--android:layout_marginBottom="2dp"-->
+        <!--android:thumb="@null"-->
+        <!--android:progressDrawable="@drawable/seekbar_audio_player"-->
+        <!--android:max="1000" />-->
+
+</FrameLayout>
+
+
+    <!--android:scaleType="centerCrop"-->
+    <!--<RelativeLayout-->
+    <!--android:background="@drawable/listen_view3_9p"-->
+    <!---->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="40dp">-->
+    <!--<TextView-->
+    <!--android:text="听听看"-->
+    <!--android:layout_alignParentLeft="true"-->
+    <!--android:layout_centerVertical="true"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content" />-->
+    <!--<TextView-->
+    <!--android:text="00''"-->
+    <!--android:layout_alignParentRight="true"-->
+    <!--android:layout_centerVertical="true"-->
+    <!--android:marginLeft="100dp"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content" />-->
+    <!--</RelativeLayout>-->
+
+    <!--<Button-->
+    <!--android:id="@+id/listenButton"-->
+    <!--android:text="00''"-->
+    <!--android:layout_gravity="center"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="40dp"-->
+    <!--android:background="@drawable/listen_view"-->
+    <!--android:textColor="@color/white_color"-->
+    <!--android:gravity="right|center"-->
+    <!--android:padding="@dimen/base_margin" />-->
+
+    <!--<Button-->
+    <!--android:id="@+id/listenButton"-->
+    <!--android:text="00''"-->
+    <!--android:layout_gravity="center"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="40dp"-->
+    <!--android:background="@drawable/listen_view2"-->
+    <!--android:textColor="@color/white_color"-->
+    <!--android:gravity="right|center"-->
+    <!--android:padding="@dimen/base_margin" />-->
+
+    <!--<Button-->
+    <!--android:id="@+id/listenButton"-->
+    <!--android:text="00''"-->
+    <!--android:layout_gravity="center"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="40dp"-->
+    <!--android:background="@drawable/listen_view3"-->
+    <!--android:textColor="@color/white_color"-->
+    <!--android:gravity="right|center"-->
+    <!--android:padding="@dimen/base_margin" />-->
+
+    <!--<Button-->
+    <!--android:id="@+id/listenButton"-->
+    <!--android:text="00''"-->
+    <!--android:layout_gravity="center"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="40dp"-->
+    <!--android:background="@drawable/listen_view_9p"-->
+    <!--android:textColor="@color/white_color"-->
+    <!--android:gravity="right|center"-->
+    <!--android:padding="@dimen/base_margin" />-->
+
+    <!--<Button-->
+    <!--android:id="@+id/listenButton"-->
+    <!--android:text="00''"-->
+    <!--android:layout_gravity="center"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="40dp"-->
+    <!--android:background="@drawable/listen_view3_9p"-->
+    <!--android:textColor="@color/white_color"-->
+    <!--android:gravity="right|center"-->
+    <!--android:padding="@dimen/base_margin" />-->

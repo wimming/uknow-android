@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="15dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingBottom="15dp">
+    <ImageView
+        android:id="@+id/avatarUrl"
+        android:layout_marginRight="@dimen/base_margin"
+        android:layout_width="@dimen/base_small_avatar"
+        android:layout_height="@dimen/base_small_avatar" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_weight="1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/username"
+                android:text="张三"
+                android:textSize="@dimen/base_big_font"
+                android:textColor="@color/black_color"
+                android:layout_marginBottom="@dimen/base_margin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@id/followed"
+                android:layout_alignParentRight="true"
+                android:text="已关注"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:background="@drawable/button_border_gray"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+        <TextView
+            android:id="@+id/status"
+            android:textSize="@dimen/base_medium_font"
+            android:ellipsize="end"
+            android:lines="1"
+            android:text="中山大学软件学院大三学生"
+            android:layout_marginBottom="@dimen/base_margin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/description"
+            android:textSize="@dimen/base_medium_font"
+            android:ellipsize="end"
+            android:lines="1"
+            android:text="产品爱好， 曾在腾讯实习， 懂得开发"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+</LinearLayout>

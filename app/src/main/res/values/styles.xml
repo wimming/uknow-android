@@ -23,4 +23,15 @@
         <item name="android:textSize">@dimen/base_big_font</item>
     </style>
 
+    <!--<style name="AudioViewPlayerProgressBarHorizontal" parent="android:Widget.ProgressBar.Horizontal">-->
+        <!--&lt;!&ndash;<item name="android:indeterminateOnly">false</item>&ndash;&gt;-->
+        <!--&lt;!&ndash;<item name="android:indeterminateDrawable">@drawable/seekbar_audio_player</item>&ndash;&gt;-->
+
+        <!--&lt;!&ndash;<item name="android:progressDrawable">@drawable/seekbar_audio_player</item>&ndash;&gt;-->
+
+        <!--&lt;!&ndash;<item name="app:thumbOffset">8dp</item>&ndash;&gt;-->
+        <!--&lt;!&ndash;<item name="android:thumb">@drawable/seekbar_thumb_audio_player</item>&ndash;&gt;-->
+
+    <!--</style>-->
+
 </resources>
