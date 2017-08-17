@@ -10,6 +10,7 @@ A voice question and answer platform android app。
 
 ## Technology
 ### Retrofit2 with RESTful API
+See files below:
 ```
 ├── networkservice
 │   ├── ApiService.java
@@ -37,4 +38,17 @@ A voice question and answer platform android app。
 │   └── WXLoginResult.java
 ```
 ### Custom Audio Player
+See files below:
+```
+├── customview
+│   └── AudioPlayerView.java
+```
 ### Optimization of listview
+See files below:
+```
+├── adapter
+│   ├── MineAnswersAdapter.java
+│   ├── MineAsksAdapter.java
+│   ├── QuestionsListAdapter.java
+│   └── UsersListAdapter.java
+```
